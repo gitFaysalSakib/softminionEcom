@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:softminion/Ssystem_Architecture/View/home_bottom_page/home_bottom_screen.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/home_bottom_screen.dart';
 
 import '../../Controller/bottom_navigation_controller.dart';
+import 'card_bottom_page/card_bottom_screen.dart';
+import 'category_bottom_page/category_bottom_screen.dart';
 
 class AllBottomScreenAdd extends StatelessWidget {
   final NavigationController navigationController =
@@ -10,6 +12,8 @@ class AllBottomScreenAdd extends StatelessWidget {
 
   final List<Widget> pages = [
     HomeScreen(),
+    CategoriesBottomScreen(),
+    CardBottomScreen(),
   ];
 
   @override
@@ -28,12 +32,12 @@ class AllBottomScreenAdd extends StatelessWidget {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
+              icon: Icon(Icons.shop),
+              label: 'Category',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
+              icon: Icon(Icons.card_giftcard),
+              label: 'Bag',
             ),
           ],
         ),

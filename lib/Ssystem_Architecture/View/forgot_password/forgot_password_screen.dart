@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:softminion/Core/import_file_all.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Core/utils/sizer.dart';
-import 'package:softminion/Ssystem_Architecture/View/all_bottom_page_add/all_bottom_screen_add.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/all_bottom_screen_add.dart';
 import 'package:softminion/theme/custom_text_style.dart';
 import 'package:softminion/theme/theme_helper.dart';
 import 'package:softminion/widgets/app_bar/app_bar_leading_image.dart';
