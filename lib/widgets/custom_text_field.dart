@@ -6,8 +6,7 @@ class CustomTextWidget extends StatelessWidget {
   final TextAlign? textAlign;
   final int? maxLines;
   final TextOverflow? overflow;
-    final Color? background;
-
+  final Color? background;
 
   CustomTextWidget({
     Key? key,
@@ -16,14 +15,16 @@ class CustomTextWidget extends StatelessWidget {
     this.textAlign,
     this.maxLines,
     this.overflow,
-    this.background = Colors.black
+    this.background = Colors.black,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(color: background),
+      style: TextStyle(
+        color: background,
+      ),
       textAlign: textAlign,
       maxLines: maxLines,
       overflow: overflow,

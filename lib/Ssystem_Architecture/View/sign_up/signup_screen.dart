@@ -92,14 +92,11 @@ class SignupScreen extends StatelessWidget {
 
   Widget _nameTextWidget(BuildContext context) {
     return CustomFloatingTextField(
-      //  textHint: Colors.black,
-
       controller: nameController,
       labelText: "Name",
       labelStyle: customFloatingText.labelStyle,
       hintText: "Name",
       hintStyle: customFloatingText.hintStyle,
-      // textLevel: Colors.red,
       prefixIcon: Icon(Icons.person),
     );
   }
@@ -128,11 +125,6 @@ class SignupScreen extends StatelessWidget {
 }
 
 Widget _buildNavigationbar(BuildContext context) {
-  // CustomAppBar customAppBar = CustomAppBar();
-  CustomTextWidget customTextWidget = CustomTextWidget(
-    text: '',
-  );
-
   print("app bar");
   return Container(
     width: double.maxFinite,
@@ -152,7 +144,6 @@ Widget _buildNavigationbar(BuildContext context) {
             icon: Icon(Icons.arrow_back),
             onPressed: () {
               Get.back();
-              // Handle back button press
             },
           ),
         ),
@@ -167,27 +158,14 @@ Widget _buildNavigationbar(BuildContext context) {
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.normal),
-            )
-
-            // Text(
-            //   "",
-            //   style: Theme.of(context)
-            //       .textTheme
-            //       .displayMedium, // Correct access to the text theme
-            // ),
-            )
+            ))
       ],
     ),
   );
 }
 
 Widget _signUpButton(BuildContext context) {
-  //  CustomButton customButton = CustomButton(text: "",);
-
   return CustomButton(
-    //textStyle: TextStyle(color: Colors.white),
-    // borderRadius: BorderRadius.circular(8.0),
-    //icon: Icon(Icons.login, color: Colors.white),
     isLoading: false,
     text: "SIGN UP",
     onPressed: () {

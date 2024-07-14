@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 
 class CustomButton extends StatelessWidget {
-
-
   CustomButton({
     Key? key,
     required this.text,
     this.textStyle,
-    this.backgroundColor = Colors.red,
+    this.backgroundColor = const Color.fromARGB(255, 248, 25, 9),
     this.width,
     this.height,
     this.onPressed,
@@ -31,7 +29,6 @@ class CustomButton extends StatelessWidget {
   final Icon? icon;
   final bool isLoading;
 
-  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,7 +38,7 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
-          padding:  EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
