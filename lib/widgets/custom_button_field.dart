@@ -14,6 +14,10 @@ class CustomButton extends StatelessWidget {
     this.margin,
     this.borderRadius,
     this.icon,
+    // this.alignment = Alignment.center,
+
+    //required this.buttonStyle,
+    //required this.buttonTextStyle,
     this.isLoading = false,
   }) : super(key: key);
 
@@ -28,6 +32,11 @@ class CustomButton extends StatelessWidget {
   final BorderRadius? borderRadius;
   final Icon? icon;
   final bool isLoading;
+  // final Alignment alignment;
+
+  // final EdgeInsetsGeometry? margin;
+  // final ButtonStyle buttonStyle;
+  //final TextStyle buttonTextStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +62,9 @@ class CustomButton extends StatelessWidget {
                 children: [
                   if (icon != null) icon!,
                   if (icon != null) SizedBox(width: 8.0),
-                  Text(
-                    text,
-                    style: TextStyle(color: Colors.white, fontSize: 16.0),
-                  ),
+                  Text(text,
+                      style: textStyle ??
+                          TextStyle(color: Colors.white, fontSize: 16.0)),
                 ],
               ),
       ),
