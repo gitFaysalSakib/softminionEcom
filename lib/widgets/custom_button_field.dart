@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 
 class CustomButton extends StatelessWidget {
@@ -14,7 +15,7 @@ class CustomButton extends StatelessWidget {
     this.margin,
     this.borderRadius,
     this.icon,
-    // this.alignment = Alignment.center,
+    this.alignment = Alignment.center,
 
     //required this.buttonStyle,
     //required this.buttonTextStyle,
@@ -32,7 +33,7 @@ class CustomButton extends StatelessWidget {
   final BorderRadius? borderRadius;
   final Icon? icon;
   final bool isLoading;
-  // final Alignment alignment;
+  final Alignment alignment;
 
   // final EdgeInsetsGeometry? margin;
   // final ButtonStyle buttonStyle;
@@ -42,6 +43,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width ?? double.infinity,
+      // alignment: alignment,
       height: height ?? 50.0,
       margin: margin ?? EdgeInsets.all(8.0),
       child: ElevatedButton(
@@ -58,7 +60,8 @@ class CustomButton extends StatelessWidget {
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               )
             : Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: _getAlignment(),
                 children: [
                   if (icon != null) icon!,
                   if (icon != null) SizedBox(width: 8.0),
@@ -69,5 +72,23 @@ class CustomButton extends StatelessWidget {
               ),
       ),
     );
+  }
+
+  MainAxisAlignment _getAlignment() {
+    switch (alignment) {
+      case Alignment.topLeft:
+      case Alignment.centerLeft:
+      case Alignment.bottomLeft:
+        return MainAxisAlignment.start;
+      case Alignment.topRight:
+      case Alignment.centerRight:
+      case Alignment.bottomRight:
+        return MainAxisAlignment.end;
+      case Alignment.topCenter:
+      case Alignment.bottomCenter:
+      case Alignment.center:
+      default:
+        return MainAxisAlignment.center;
+    }
   }
 }

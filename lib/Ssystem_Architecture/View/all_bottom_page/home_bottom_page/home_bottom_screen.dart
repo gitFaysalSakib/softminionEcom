@@ -14,38 +14,40 @@ import 'home_product_item_show_screen.dart';
 class HomeBottomScreen extends StatelessWidget {
   HomeBottomScreen({Key? key}) : super(key: key);
 
-  // HomePageScrenController homePageScrenController =
-  //     Get.put(HomePageScrenController(HomePageScreenModel().obs));
+  HomePageScrenController homePageScrenController =
+      Get.put(HomePageScrenController(HomePageScreenModel().obs));
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Column(
           children: [
             Expanded(
               child: SingleChildScrollView(
+                // padding: EdgeInsets.only(
+                //   bottom: MediaQuery.of(context).viewInsets.bottom,
+                // ),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                      height: 492.h,
+                      //  height: 492.h,
                       width: double.infinity,
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
+                          //  _buildCheckButton(context),
+
                           _buildimageView(context),
-                          // CustomImageView(
-                          //   imagePath: ImageConstant.homePageImage,
-                          //   height: 500.h,
-                          //   width: double.infinity,
-                          //   alignment: Alignment.topCenter,
-                          // ),
-                          Container(
-                            height: 492.h,
+
+                          SizedBox(
+                            //height: 492.h,
+                            width: double.infinity,
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                //  _buildimageView(context),
                                 Align(
                                   alignment: Alignment.bottomCenter,
                                   child: Container(
@@ -72,25 +74,9 @@ class HomeBottomScreen extends StatelessWidget {
                                                   fontWeight: FontWeight.bold,
                                                   fontStyle: FontStyle.normal,
                                                   color: Colors.white,
-                                                ))
-                                            // Text(
-                                            //   "lbl_fashion_sale",
-                                            //   maxLines: null,
-                                            //   overflow: TextOverflow.ellipsis,
-                                            //   style: CustomTextStyles
-                                            //       .displayMediumOnPrimary,
-                                            // ),
-
-                                            ),
+                                                ))),
                                         SizedBox(height: 18.h),
                                         _buildCheckButton(context)
-                                        // CustomElevatedButton(
-                                        //   height: 36.h,
-                                        //   width: 160.w,
-                                        //   text: "llb_check".tr,
-                                        //   buttonStyle:
-                                        //       CustomButtonStyle.outLineRedFTL18,
-                                        // ),
                                       ],
                                     ),
                                   ),
@@ -102,7 +88,7 @@ class HomeBottomScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20.h),
-                    _buildColumnSubtitle()
+                    _buildColumnSubtitle(),
                   ],
                 ),
               ),
@@ -112,104 +98,86 @@ class HomeBottomScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _buildColumnSubtitle() {
-  final List<String> items = List.generate(10, (index) => 'Item ${index + 1}');
-  HomePageScrenController homePageScrenController =
-      Get.put(HomePageScrenController(HomePageScreenModel().obs));
-
-  return Container(
-    width: double.infinity,
-    margin: EdgeInsets.only(
-      left: 14.h,
-      right: 6.h,
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 354.h,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "New",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 40),
-                          ),
-                          Text(
-                            "New",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 40),
-                          ),
-                          Text(
-                            "New",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 40),
-                          ),
-                          SizedBox(height: 2.h),
-                          Text(
-                            "You've never seen it befor!",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 88, 87, 87),
-                                fontSize: 10),
-                          ),
-                        ],
+  Widget _buildColumnSubtitle() {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(
+        left: 14.h,
+        right: 6.h,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "New",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 40),
+                            ),
+                            SizedBox(height: 2.h),
+                            Text(
+                              "You've never seen it befor!",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 87, 87),
+                                  fontSize: 10),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    // Text(
-                    //   "lbl_view_all".tr,
-                    //   style: CustomTextStyles.bodySmallGray90011,
-                    // ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 22.h),
-              SizedBox(
-                height: 500.h,
-                width: double.infinity,
-                child: Obx(
-                  () =>
-                      //  ListView.separated(
-                      //   scrollDirection: Axis.horizontal,
-                      //   separatorBuilder: (context, index) {
-                      //     return SizedBox(width: 16);
-                      //   },
-                      //   itemCount: items.length,
-                      //   itemBuilder: (context, index) {
-                      //     return Container(
-                      //       width: 100,
-                      //       color: Colors.blueAccent,
-                      //       child: Center(
-                      //         child: Text(
-                      //           items[index],
-                      //           style: TextStyle(color: Colors.white, fontSize: 18),
-                      //         ),
-                      //       ),
-                      //     );
-                      //   },
+                      // Text(
+                      //   "lbl_view_all".tr,
+                      //   style: CustomTextStyles.bodySmallGray90011,
                       // ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 22.h),
+                // SizedBox(
+                //   height: 266.h,
+                //   width: double.infinity,
+                //   child:
 
-                      /////
-                      ///
+                //       //  ListView.separated(
+                //       //   scrollDirection: Axis.horizontal,
+                //       //   separatorBuilder: (context, index) {
+                //       //     return SizedBox(width: 16);
+                //       //   },
+                //       //   itemCount: items.length,
+                //       //   itemBuilder: (context, index) {
+                //       //     return Container(
+                //       //       width: 100,
+                //       //       color: Colors.blueAccent,
+                //       //       child: Center(
+                //       //         child: Text(
+                //       //           items[index],
+                //       //           style: TextStyle(color: Colors.white, fontSize: 18),
+                //       //         ),
+                //       //       ),
+                //       //     );
+                //       //   },
+                //       // ),
 
-                      ListView.separated(
+                //       /////
+                //       ///
+
+                Obx(
+                  () => ListView.separated(
                     scrollDirection: Axis.horizontal,
                     separatorBuilder: (context, index) {
                       return SizedBox(
@@ -225,19 +193,19 @@ Widget _buildColumnSubtitle() {
                     },
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }
 
 Widget _buildimageView(BuildContext context) {
   return CustomImageView(
     imagePath: ImageConstant.homePageImage,
-    height: 500.h,
+    //height: 500.h,
     width: double.infinity,
     alignment: Alignment.topCenter,
   );
@@ -245,6 +213,7 @@ Widget _buildimageView(BuildContext context) {
 
 Widget _buildCheckButton(BuildContext context) {
   return CustomButton(
+    // backgroundColor: Colors.black,
     textStyle: TextStyle(
         fontSize: 15.h, color: Colors.white, fontWeight: FontWeight.bold),
     height: 40.h,

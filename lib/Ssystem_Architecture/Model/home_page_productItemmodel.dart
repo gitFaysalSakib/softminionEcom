@@ -4,17 +4,17 @@ import '../../Core/utils/image_constant.dart';
 
 /// This class is used in the [productcard_item_widget] screen.
 // ignore_for_file: must_be_immutable
-class HomePageProductConnectHomePageModel {
-  HomePageProductConnectHomePageModel(
+class HomePageProductitemmodel {
+  HomePageProductitemmodel(
       {this.image,
-      this.image1,
+      //  this.image1,
       this.ratingNumber,
       this.brandName,
       this.item,
       this.newPrice,
       this.id}) {
-    image = image ?? Rx(ImageConstant.homePage2);
-    image1 = image1 ?? Rx(ImageConstant.homepage1);
+    image = image ?? Rx(ImageConstant.homePage3);
+    // image1 = image1 ?? Rx(ImageConstant.homePage3);
     ratingNumber = ratingNumber ?? Rx("(0)");
     brandName = brandName ?? Rx("OVS");
     item = item ?? Rx("Blouse");
