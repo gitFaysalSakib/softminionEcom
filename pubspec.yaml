@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   device_info_plus: ^9.0.0
   get: ^4.6.6
+  flutter_staggered_animations: ^1.1.1
 
 dev_dependencies:
   flutter_test:

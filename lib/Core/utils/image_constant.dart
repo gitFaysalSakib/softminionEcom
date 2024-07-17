@@ -5,4 +5,5 @@ class ImageConstant {
   static String homePageImage1 = '$imagepath/homepage1.jpg';
 
   static String homePage3 = '$imagepath/dd.jpg';
+  static String homePageRed = '$imagepath/red.jpg';
 }
