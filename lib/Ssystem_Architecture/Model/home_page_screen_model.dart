@@ -43,12 +43,31 @@ class HomePageScreenModel {
   HomePageScreenModel() {
     productCardItemList = [
       HomePageProductItemModel(
-        image: ImageConstant.homePageRed.obs,
+        image: ImageConstant.card.obs,
         ratingNumber: "(0)".obs,
         brandName: "OVS".obs,
         item: "Blouse".obs,
         newPrice: "30\$".obs,
         id: "".obs,
+        showNewTextOrDiscountPrice: "NEW".obs,
+      ),
+      HomePageProductItemModel(
+        image: ImageConstant.card2.obs,
+        ratingNumber: "(0)".obs,
+        brandName: "OVS".obs,
+        item: "Blouse".obs,
+        newPrice: "30\$".obs,
+        id: "".obs,
+        showNewTextOrDiscountPrice: "NEW".obs,
+      ),
+      HomePageProductItemModel(
+        image: ImageConstant.card2.obs,
+        ratingNumber: "(0)".obs,
+        brandName: "OVS".obs,
+        item: "Blouse".obs,
+        newPrice: "30\$".obs,
+        id: "".obs,
+        showNewTextOrDiscountPrice: "NEW".obs,
       ),
       HomePageProductItemModel(
         image: ImageConstant.homePageRed.obs,
@@ -57,6 +76,7 @@ class HomePageScreenModel {
         item: "Blouse".obs,
         newPrice: "30\$".obs,
         id: "".obs,
+        showNewTextOrDiscountPrice: "NEW".obs,
       ),
       HomePageProductItemModel(
         image: ImageConstant.homePageRed.obs,
@@ -65,6 +85,7 @@ class HomePageScreenModel {
         item: "Blouse".obs,
         newPrice: "30\$".obs,
         id: "".obs,
+        showNewTextOrDiscountPrice: "NEW".obs,
       ),
       HomePageProductItemModel(
         image: ImageConstant.homePageRed.obs,
@@ -73,6 +94,7 @@ class HomePageScreenModel {
         item: "Blouse".obs,
         newPrice: "30\$".obs,
         id: "".obs,
+        showNewTextOrDiscountPrice: "NEW".obs,
       ),
       HomePageProductItemModel(
         image: ImageConstant.homePageRed.obs,
@@ -81,22 +103,7 @@ class HomePageScreenModel {
         item: "Blouse".obs,
         newPrice: "30\$".obs,
         id: "".obs,
-      ),
-      HomePageProductItemModel(
-        image: ImageConstant.homePageRed.obs,
-        ratingNumber: "(0)".obs,
-        brandName: "OVS".obs,
-        item: "Blouse".obs,
-        newPrice: "30\$".obs,
-        id: "".obs,
-      ),
-      HomePageProductItemModel(
-        image: ImageConstant.homePageRed.obs,
-        ratingNumber: "(0)".obs,
-        brandName: "OVS".obs,
-        item: "Blouse".obs,
-        newPrice: "30\$".obs,
-        id: "".obs,
+        showNewTextOrDiscountPrice: "NEW".obs,
       ),
     ].obs;
   }

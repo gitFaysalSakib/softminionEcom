@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:softminion/Core/import_file_all.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Core/utils/sizer.dart';
 import 'package:softminion/Ssystem_Architecture/View/login/login_screen.dart';
-import 'package:softminion/theme/custom_text_style.dart';
-import 'package:softminion/widgets/app_bar/app_bar_leading_image.dart';
 import 'package:softminion/widgets/app_bar/custom_app_bar.dart';
 import 'package:softminion/widgets/custom_button_field.dart';
 import 'package:softminion/widgets/custom_floating_text_field.dart';
-import 'package:softminion/widgets/custom_text_field.dart';
 
 class SignupScreen extends StatelessWidget {
   SignupScreen({Key? key}) : super(key: key);
@@ -50,11 +45,11 @@ class SignupScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             SizedBox(height: 58.h),
-                            _nameTextWidget(context),
+                            _nameTextFieldWidget(context),
                             SizedBox(height: 20.h),
-                            _emailTextWidget(context),
+                            _emailTextFieldWidget(context),
                             SizedBox(height: 20.h),
-                            _passwordTextWidget(context),
+                            _passwordTextFieldWidget(context),
                             SizedBox(height: 20.h),
                             _buildRowconfirmation(context),
                             SizedBox(height: 20.h),
@@ -90,7 +85,7 @@ class SignupScreen extends StatelessWidget {
     );
   }
 
-  Widget _nameTextWidget(BuildContext context) {
+  Widget _nameTextFieldWidget(BuildContext context) {
     return CustomFloatingTextField(
       controller: nameController,
       labelText: "Name",
@@ -101,7 +96,7 @@ class SignupScreen extends StatelessWidget {
     );
   }
 
-  Widget _emailTextWidget(BuildContext context) {
+  Widget _emailTextFieldWidget(BuildContext context) {
     return CustomFloatingTextField(
       controller: editingController,
       labelText: "Email",
@@ -112,7 +107,7 @@ class SignupScreen extends StatelessWidget {
     );
   }
 
-  Widget _passwordTextWidget(BuildContext context) {
+  Widget _passwordTextFieldWidget(BuildContext context) {
     return CustomFloatingTextField(
       controller: passwordController,
       labelText: "Password",

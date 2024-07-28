@@ -5,14 +5,14 @@ import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/home_page_scren_controller.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/RND%20Page/home_product_item_show_screen.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/home_screen_product_card_item.dart';
-import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_bottom_screen_page.dart';
+import 'package:softminion/widgets/custom_banner.dart';
 import 'package:softminion/widgets/custom_image_view.dart';
 import 'package:softminion/widgets/custom_button_field.dart';
 import 'package:softminion/Ssystem_Architecture/Model/home_page_productItemmodel.dart';
 import 'package:softminion/widgets/custom_list_view_seperate_widget.dart';
 
-class HomeBottomScreen extends StatelessWidget {
-  HomeBottomScreen({Key? key}) : super(key: key);
+class HomeBottomScreenTWO extends StatelessWidget {
+  HomeBottomScreenTWO({Key? key}) : super(key: key);
 
   final HomePageScrenController homePageScrenController =
       Get.put(HomePageScrenController());
@@ -35,42 +35,30 @@ class HomeBottomScreen extends StatelessWidget {
                       child: Stack(
                         alignment: Alignment.topCenter,
                         children: [
-                          _buildimageView(context),
+                          _buildImageView(context),
                           SizedBox(
                             width: double.infinity,
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
                                 Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Container(
-                                    width: double.infinity,
-                                    padding: EdgeInsets.only(
-                                      left: 10.h,
-                                      top: 100.h,
-                                      // bottom: 10.h,
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(height: 200.h),
-                                        Padding(
-                                            padding: EdgeInsets.only(left: 4.h),
-                                            child: Text('Fashion Sale',
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                  fontSize: 50.w,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle: FontStyle.normal,
-                                                  color: Colors.white,
-                                                ))),
-                                        SizedBox(height: 18.h),
-                                        _buildCheckButton(context)
-                                      ],
-                                    ),
-                                  ),
+                                  alignment: Alignment.bottomLeft,
+                                  child: Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 16.w,
+                                        top: 80.h,
+                                        bottom: 26.h,
+                                      ),
+
+                                      // SizedBox(height: 200.h),
+
+                                      child: Text('Fashion Sale',
+                                          style: TextStyle(
+                                            fontSize: 30.w,
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.normal,
+                                            color: Colors.white,
+                                          ))),
                                 ),
                               ],
                             ),
@@ -79,6 +67,7 @@ class HomeBottomScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20.h),
+                    _buildSubtitleWithProductVieww(),
                     _buildSubtitleWithProductVieww(),
                   ],
                 ),
@@ -213,17 +202,12 @@ class HomeBottomScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          Get.to(() => HomeBottomScreenTWO());
-                        },
-                        child: Text(
-                          "View All",
-                          style: TextStyle(
-                              color: const Color.fromARGB(255, 79, 78, 78),
-                              fontWeight: FontWeight.normal,
-                              fontSize: 15),
-                        ),
+                      Text(
+                        "View All",
+                        style: TextStyle(
+                            color: const Color.fromARGB(255, 79, 78, 78),
+                            fontWeight: FontWeight.normal,
+                            fontSize: 15),
                       ),
                       SizedBox(height: 2.h),
                       // Add any other text or widgets if needed
@@ -232,6 +216,9 @@ class HomeBottomScreen extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          SizedBox(
+            height: 4.h,
           ),
           CustomProductListView(
             itemBuilder: (context, model) {
@@ -243,11 +230,23 @@ class HomeBottomScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildimageView(BuildContext context) {
+  Widget _buildImageView(BuildContext context) {
     return CustomImageView(
-      imagePath: ImageConstant.homePageImage,
+      imagePath: ImageConstant.homePageImageTest2,
       width: double.infinity,
       alignment: Alignment.topCenter,
+      height: 150.h,
+    );
+  }
+
+  Widget _buildBannerImage(BuildContext context) {
+    return CustomImageBanner(
+      imageUrl: 'https://example.com/your-image-url.jpg',
+      title: 'Welcome to SoftMinion!',
+      subtitle: 'The best place for your needs.',
+      height: 150.0,
+      overlayColor: Colors.black,
+      overlayOpacity: 0.6,
     );
   }
 

@@ -78,7 +78,7 @@ class ProductcardItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 266.h,
+      height: double.infinity,
       width: 150.h,
       child: Stack(
         alignment: Alignment.bottomCenter,
@@ -86,7 +86,7 @@ class ProductcardItemWidget extends StatelessWidget {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              height: 184.h,
+              height: 160.h,
               child: Stack(
                 alignment: Alignment.center,
                 children: [
@@ -110,13 +110,15 @@ class ProductcardItemWidget extends StatelessWidget {
                       ),
                       padding:
                           EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                      child: Text(
-                        'NEW',
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.normal,
-                          color: Colors.white,
+                      child: Obx(
+                        () => Text(
+                          homeProductModel.showNewTextOrDiscountPrice!.value,
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.normal,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -133,7 +135,7 @@ class ProductcardItemWidget extends StatelessWidget {
                       child: Icon(
                         Icons.favorite_border,
                         color: Colors.grey,
-                        size: 24.0,
+                        size: 15.0,
                       ),
                     ),
                   ),
@@ -153,17 +155,15 @@ class ProductcardItemWidget extends StatelessWidget {
                   Obx(() => Text(homeProductModel.brandName!.value,
                       style: TextStyle(
                           fontSize: 10, fontWeight: FontWeight.normal))),
-                  SizedBox(height: 4.h),
+
                   Obx(() => Text(homeProductModel.item!.value,
                       style: TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold))),
-                  SizedBox(height: 4.h),
                   Obx(() => Text(homeProductModel.newPrice!.value,
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.red))),
-                  SizedBox(height: 4.h),
                   // Obx(() => Text(homeProductModel.ratingNumber!.value,
                   //     style: TextStyle(fontSize: 12.w, color: Colors.grey))),
                 ],

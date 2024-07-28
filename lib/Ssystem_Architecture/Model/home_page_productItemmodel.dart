@@ -38,6 +38,7 @@ import '../../Core/utils/image_constant.dart';
 class HomePageProductItemModel {
   HomePageProductItemModel({
     required this.image,
+    required this.showNewTextOrDiscountPrice,
     required this.ratingNumber,
     required this.brandName,
     required this.item,
@@ -46,6 +47,8 @@ class HomePageProductItemModel {
   });
 
   final Rx<String> image;
+  Rx<String>? showNewTextOrDiscountPrice;
+
   Rx<String>? ratingNumber;
   Rx<String>? brandName;
   Rx<String>? item;

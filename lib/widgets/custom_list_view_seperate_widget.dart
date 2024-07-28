@@ -94,10 +94,10 @@ class CustomProductListView extends StatelessWidget {
               separatorBuilder: (context, index) {
                 return SizedBox(
                   width: 16.h,
-                  child: Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  ),
+                  // child: Divider(
+                  //   color: Colors.grey,
+                  //   thickness: 1,
+                  // ),
                 );
               },
               itemCount: homePageScrenController
@@ -107,7 +107,7 @@ class CustomProductListView extends StatelessWidget {
                     .homePageScreenModel.value.productCardItemList[index];
                 return AnimationConfiguration.staggeredList(
                   position: index,
-                  duration: const Duration(milliseconds: 375),
+                  duration: const Duration(milliseconds: 700),
                   child: SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
