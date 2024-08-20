@@ -72,7 +72,8 @@ import 'package:softminion/Ssystem_Architecture/Controller/home_page_scren_contr
 import 'package:softminion/Ssystem_Architecture/Model/home_page_productItemmodel.dart';
 
 class CustomProductListView extends StatelessWidget {
-  final HomePageScrenController homePageScrenController = Get.find();
+  final HomePageScrenController homePageScrenController =
+      Get.put(HomePageScrenController());
 
   // Accept a builder function for the item widget
   final Widget Function(BuildContext, HomePageProductItemModel) itemBuilder;
@@ -86,7 +87,7 @@ class CustomProductListView extends StatelessWidget {
         height: 266.h,
         width: double.infinity, // Adjust the height according to your need
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.h),
+          padding: EdgeInsets.symmetric(horizontal: 0.h),
           child: AnimationLimiter(
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
@@ -96,7 +97,7 @@ class CustomProductListView extends StatelessWidget {
                   width: 16.h,
                   // child: Divider(
                   //   color: Colors.grey,
-                  //   thickness: 1,
+                  //   thickness: 5,
                   // ),
                 );
               },

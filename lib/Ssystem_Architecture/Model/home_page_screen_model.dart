@@ -43,13 +43,14 @@ class HomePageScreenModel {
   HomePageScreenModel() {
     productCardItemList = [
       HomePageProductItemModel(
-        image: ImageConstant.card.obs,
+        image: ImageConstant.displayN6.obs,
         ratingNumber: "(0)".obs,
         brandName: "OVS".obs,
         item: "Blouse".obs,
         newPrice: "30\$".obs,
         id: "".obs,
         showNewTextOrDiscountPrice: "NEW".obs,
+        demoText: "3.4 (756)  | 13.9K sold".obs,
       ),
       HomePageProductItemModel(
         image: ImageConstant.card2.obs,
@@ -59,6 +60,7 @@ class HomePageScreenModel {
         newPrice: "30\$".obs,
         id: "".obs,
         showNewTextOrDiscountPrice: "NEW".obs,
+        demoText: "3.4 (756)  | 13.9K sold".obs,
       ),
       HomePageProductItemModel(
         image: ImageConstant.card2.obs,
@@ -68,6 +70,7 @@ class HomePageScreenModel {
         newPrice: "30\$".obs,
         id: "".obs,
         showNewTextOrDiscountPrice: "NEW".obs,
+        demoText: "3.4 (756)  | 13.9K sold".obs,
       ),
       HomePageProductItemModel(
         image: ImageConstant.homePageRed.obs,
@@ -77,6 +80,7 @@ class HomePageScreenModel {
         newPrice: "30\$".obs,
         id: "".obs,
         showNewTextOrDiscountPrice: "NEW".obs,
+        demoText: "3.4 (756)  | 13.9K sold".obs,
       ),
       HomePageProductItemModel(
         image: ImageConstant.homePageRed.obs,
@@ -86,6 +90,7 @@ class HomePageScreenModel {
         newPrice: "30\$".obs,
         id: "".obs,
         showNewTextOrDiscountPrice: "NEW".obs,
+        demoText: "3.4 (756)  | 13.9K sold".obs,
       ),
       HomePageProductItemModel(
         image: ImageConstant.homePageRed.obs,
@@ -95,6 +100,7 @@ class HomePageScreenModel {
         newPrice: "30\$".obs,
         id: "".obs,
         showNewTextOrDiscountPrice: "NEW".obs,
+        demoText: "3.4 (756)  | 13.9K sold".obs,
       ),
       HomePageProductItemModel(
         image: ImageConstant.homePageRed.obs,
@@ -104,6 +110,7 @@ class HomePageScreenModel {
         newPrice: "30\$".obs,
         id: "".obs,
         showNewTextOrDiscountPrice: "NEW".obs,
+        demoText: "3.4 (756)  | 13.9K sold".obs,
       ),
     ].obs;
   }

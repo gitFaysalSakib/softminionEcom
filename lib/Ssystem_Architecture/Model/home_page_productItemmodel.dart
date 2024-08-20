@@ -44,6 +44,7 @@ class HomePageProductItemModel {
     required this.item,
     required this.newPrice,
     required this.id,
+    required this.demoText,
   });
 
   final Rx<String> image;
@@ -54,4 +55,5 @@ class HomePageProductItemModel {
   Rx<String>? item;
   Rx<String>? newPrice;
   Rx<String>? id;
+  Rx<String>? demoText;
 }

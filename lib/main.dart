@@ -38,7 +38,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Core/utils/sizer.dart';
-import 'package:softminion/Ssystem_Architecture/View/sign_up/signup_screen.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/all_bottom_screen_add.dart';
+import 'package:softminion/all_test_class.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Sizer(
         builder: (context, orientation, deviceType) {
-          return SignupScreen();
+          return AllBottomScreenAdd();
         },
       ),
     );

@@ -51,7 +51,7 @@ class SignupScreen extends StatelessWidget {
                             SizedBox(height: 20.h),
                             _passwordTextFieldWidget(context),
                             SizedBox(height: 20.h),
-                            _buildRowconfirmation(context),
+                            _buildAllReadyAccountText(context),
                             SizedBox(height: 20.h),
                             _signUpButton(context),
                             SizedBox(height: 20.h),
@@ -69,7 +69,7 @@ class SignupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRowconfirmation(BuildContext context) {
+  Widget _buildAllReadyAccountText(BuildContext context) {
     return Container(
       width: double.maxFinite,
       margin: EdgeInsets.symmetric(horizontal: 6.w),

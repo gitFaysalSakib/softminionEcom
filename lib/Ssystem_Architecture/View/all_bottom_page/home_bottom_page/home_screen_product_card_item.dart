@@ -1,69 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:softminion/Core/utils/size_utils.dart';
-// import 'package:softminion/widgets/custom_image_view.dart';
-// import 'package:softminion/Ssystem_Architecture/Model/home_page_productItemmodel.dart';
-
-// class ProductcardItemWidget extends StatelessWidget {
-//   ProductcardItemWidget(this.homeProductModel, {Key? key}) : super(key: key);
-
-//   final HomePageProductItemModel homeProductModel;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: 266.h,
-//       width: 150.h,
-//       child: Stack(
-//         alignment: Alignment.bottomCenter,
-//         children: [
-//           Align(
-//             alignment: Alignment.topCenter,
-//             child: Container(
-//               height: 184.h,
-//               child: Stack(
-//                 alignment: Alignment.center,
-//                 children: [
-//                   Obx(
-//                     () => CustomImageView(
-//                       imagePath: homeProductModel.image.value,
-//                       height: 184.h,
-//                       width: double.maxFinite,
-//                       radius: BorderRadius.circular(4.h),
-//                     ),
-//                   ),
-//                   Positioned(
-//                     top: 8.h,
-//                     left: 8.h,
-//                     child: Container(
-//                       padding:
-//                           EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-//                       decoration: BoxDecoration(
-//                         color: Colors.black,
-//                         borderRadius: BorderRadius.circular(4.h),
-//                       ),
-//                       child: Text(
-//                         'NEW',
-//                         maxLines: 2,
-//                         style: TextStyle(
-//                           fontSize: 10.w,
-//                           fontWeight: FontWeight.bold,
-//                           fontStyle: FontStyle.normal,
-//                           color: Colors.white,
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 //new..
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -72,7 +6,10 @@ import 'package:softminion/widgets/custom_image_view.dart';
 import 'package:softminion/Ssystem_Architecture/Model/home_page_productItemmodel.dart';
 
 class ProductcardItemWidget extends StatelessWidget {
-  ProductcardItemWidget(this.homeProductModel, {Key? key}) : super(key: key);
+  ProductcardItemWidget(
+    this.homeProductModel, {
+    Key? key,
+  }) : super(key: key);
   final HomePageProductItemModel homeProductModel;
 
   @override

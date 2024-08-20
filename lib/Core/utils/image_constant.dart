@@ -8,7 +8,13 @@ class ImageConstant {
 
   static String homePage3 = '$imagepath/dd.jpg';
   static String homePageRed = '$imagepath/red.jpg';
-  static String card = '$imagepath/a.jpg';
+  static String card = '$imagepath/cybe.jpg';
   static String card2 = '$imagepath/aa.jpg';
   static String card3 = '$imagepath/aaa.jpg';
+  static String caregoryCar = '$imagepath/car.png';
+  static String SubcaregoryPhone = '$imagepath/phone.png';
+  static String SubcaregoryCar = '$imagepath/carSub.png';
+  static String SubcaregoryHelmat = '$imagepath/helmat.png';
+  static String SubcaregoryPhoneColor = '$imagepath/phoneColor.png';
+  static String displayN6 = '$imagepath/n6.png';
 }

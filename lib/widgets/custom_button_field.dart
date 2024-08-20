@@ -61,7 +61,7 @@ class CustomButton extends StatelessWidget {
               )
             : Row(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: _getAlignment(),
+                //   mainAxisAlignment: _getAlignment(),
                 children: [
                   if (icon != null) icon!,
                   if (icon != null) SizedBox(width: 8.0),
@@ -74,21 +74,21 @@ class CustomButton extends StatelessWidget {
     );
   }
 
-  MainAxisAlignment _getAlignment() {
-    switch (alignment) {
-      case Alignment.topLeft:
-      case Alignment.centerLeft:
-      case Alignment.bottomLeft:
-        return MainAxisAlignment.start;
-      case Alignment.topRight:
-      case Alignment.centerRight:
-      case Alignment.bottomRight:
-        return MainAxisAlignment.end;
-      case Alignment.topCenter:
-      case Alignment.bottomCenter:
-      case Alignment.center:
-      default:
-        return MainAxisAlignment.center;
-    }
-  }
+  // MainAxisAlignment _getAlignment() {
+  //   switch (alignment) {
+  //     case Alignment.topLeft:
+  //     case Alignment.centerLeft:
+  //     case Alignment.bottomLeft:
+  //       return MainAxisAlignment.start;
+  //     case Alignment.topRight:
+  //     case Alignment.centerRight:
+  //     case Alignment.bottomRight:
+  //       return MainAxisAlignment.end;
+  //     case Alignment.topCenter:
+  //     case Alignment.bottomCenter:
+  //     case Alignment.center:
+  //     default:
+  //       return MainAxisAlignment.center;
+  //   }
+  // }
 }

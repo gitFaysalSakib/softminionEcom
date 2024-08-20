@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Core/utils/image_constant.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/home_page_scren_controller.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/RND%20Page/home_product_item_show_screen.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/home_screen_product_card_item.dart';
-import 'package:softminion/widgets/custom_banner.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_bottom_screen_page.dart';
 import 'package:softminion/widgets/custom_image_view.dart';
 import 'package:softminion/widgets/custom_button_field.dart';
 import 'package:softminion/Ssystem_Architecture/Model/home_page_productItemmodel.dart';
@@ -35,30 +36,40 @@ class HomeBottomScreenTWO extends StatelessWidget {
                       child: Stack(
                         alignment: Alignment.topCenter,
                         children: [
-                          _buildImageView(context),
+                          _buildimageView(context),
                           SizedBox(
                             width: double.infinity,
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
                                 Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 16.w,
-                                        top: 80.h,
-                                        bottom: 26.h,
-                                      ),
-
-                                      // SizedBox(height: 200.h),
-
-                                      child: Text('Fashion Sale',
-                                          style: TextStyle(
-                                            fontSize: 30.w,
-                                            fontWeight: FontWeight.bold,
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white,
-                                          ))),
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.only(
+                                      left: 10.h,
+                                      top: 30.h,
+                                      // bottom: 10.h,
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        // SizedBox(height: 200.h),
+                                        Padding(
+                                            padding: EdgeInsets.only(left: 4.h),
+                                            child: Text('Fashion Sale',
+                                                maxLines: 2,
+                                                style: TextStyle(
+                                                  fontSize: 30.w,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontStyle: FontStyle.normal,
+                                                  color: Colors.white,
+                                                ))),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -67,8 +78,8 @@ class HomeBottomScreenTWO extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20.h),
-                    _buildSubtitleWithProductVieww(),
-                    _buildSubtitleWithProductVieww(),
+                    _buildSaletitleWithProductVieww(),
+                    _buildNewtitleWithProductVieww(), //_buildSubtitleWithProductVieww(),
                   ],
                 ),
               ),
@@ -79,147 +90,123 @@ class HomeBottomScreenTWO extends StatelessWidget {
     );
   }
 
-  // Widget _buildSubtitleWithProductView() {
-  //   return Container(
-  //     width: double.infinity,
-  //     margin: EdgeInsets.only(
-  //       left: 14.h,
-  //       right: 6.h,
-  //     ),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         SizedBox(
-  //           width: double.infinity,
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //             children: [
-  //               SizedBox(
-  //                 width: double.infinity,
-  //                 child: Row(
-  //                   mainAxisAlignment: MainAxisAlignment.center,
-  //                   children: [
-  //                     Expanded(
-  //                       child: Column(
-  //                         crossAxisAlignment: CrossAxisAlignment.start,
-  //                         children: [
-  //                           Text(
-  //                             "New",
-  //                             style: TextStyle(
-  //                                 color: Colors.black,
-  //                                 fontWeight: FontWeight.bold,
-  //                                 fontSize: 40),
-  //                           ),
-  //                           SizedBox(height: 2.h),
-  //                           Text(
-  //                             "You've never seen it before!",
-  //                             style: TextStyle(
-  //                                 color: Color.fromARGB(255, 88, 87, 87),
-  //                                 fontSize: 12),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //               // SizedBox(height: 22.h),
-  //               CustomProductListView(
-  //                 itemBuilder: (context, model) {
-  //                   return ProductcardItemWidget(model);
-  //                 },
-  //               ),
+  Widget _builtSaleTitle() {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Sale",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40),
+                ),
+                SizedBox(height: 2.h),
+                Text(
+                  "Super Summer sale",
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 88, 87, 87), fontSize: 12),
+                ),
+                SizedBox(height: 6.h),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Get.to(() => HomeBottomScreenTWO());
+                  },
+                  child: Text(
+                    "View All",
+                    style: TextStyle(
+                        color: const Color.fromARGB(255, 79, 78, 78),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 15),
+                  ),
+                ),
+                SizedBox(height: 2.h),
+                // Add any other text or widgets if needed
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-  //               // Obx(
-  //               //   () => SizedBox(
-  //               //     height: 266.h,
-  //               //     width: double
-  //               //         .infinity, // Adjust the height according to your need
-  //               //     child: ListView.separated(
-  //               //       scrollDirection: Axis.horizontal,
-  //               //       separatorBuilder: (context, index) {
-  //               //         return SizedBox(
-  //               //           width: 16.h,
-  //               //         );
-  //               //       },
-  //               //       itemCount: homePageScrenController
-  //               //           .homePageScreenModel.value.productCardItemList.length,
-  //               //       itemBuilder: (context, index) {
-  //               //         HomePageProductItemModel model = homePageScrenController
-  //               //             .homePageScreenModel
-  //               //             .value
-  //               //             .productCardItemList[index];
-  //               //         return ProductcardItemWidget(model);
-  //               //       },
-  //               //     ),
-  //               //   ),
-  //               // ),
-  //             ],
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  Widget _builtNewTitle() {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "New",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40),
+                ),
+                SizedBox(height: 2.h),
+                Text(
+                  "You've never seen it before!",
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 88, 87, 87), fontSize: 12),
+                ),
+                SizedBox(height: 6.h),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Get.to(() => HomeBottomScreenTWO());
+                  },
+                  child: Text(
+                    "View All",
+                    style: TextStyle(
+                        color: const Color.fromARGB(255, 79, 78, 78),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 15),
+                  ),
+                ),
+                SizedBox(height: 2.h),
+                // Add any other text or widgets if needed
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-  Widget _buildSubtitleWithProductVieww() {
+  Widget _buildSaletitleWithProductVieww() {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(
-        left: 14.h,
+        left: 10.h,
         right: 6.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "New",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 40),
-                      ),
-                      SizedBox(height: 2.h),
-                      Text(
-                        "You've never seen it before!",
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 88, 87, 87),
-                            fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        "View All",
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 79, 78, 78),
-                            fontWeight: FontWeight.normal,
-                            fontSize: 15),
-                      ),
-                      SizedBox(height: 2.h),
-                      // Add any other text or widgets if needed
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 4.h,
-          ),
+          _builtSaleTitle(),
           CustomProductListView(
             itemBuilder: (context, model) {
               return ProductcardItemWidget(model);
@@ -230,23 +217,33 @@ class HomeBottomScreenTWO extends StatelessWidget {
     );
   }
 
-  Widget _buildImageView(BuildContext context) {
-    return CustomImageView(
-      imagePath: ImageConstant.homePageImageTest2,
+  Widget _buildNewtitleWithProductVieww() {
+    return Container(
       width: double.infinity,
-      alignment: Alignment.topCenter,
-      height: 150.h,
+      margin: EdgeInsets.only(
+        left: 10.h,
+        right: 6.h,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _builtNewTitle(),
+          CustomProductListView(
+            itemBuilder: (context, model) {
+              return ProductcardItemWidget(model);
+            },
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildBannerImage(BuildContext context) {
-    return CustomImageBanner(
-      imageUrl: 'https://example.com/your-image-url.jpg',
-      title: 'Welcome to SoftMinion!',
-      subtitle: 'The best place for your needs.',
-      height: 150.0,
-      overlayColor: Colors.black,
-      overlayOpacity: 0.6,
+  Widget _buildimageView(BuildContext context) {
+    return CustomImageView(
+      imagePath: ImageConstant.homePageImage,
+      width: double.infinity,
+      height: 150.h,
+      alignment: Alignment.topCenter,
     );
   }
 
