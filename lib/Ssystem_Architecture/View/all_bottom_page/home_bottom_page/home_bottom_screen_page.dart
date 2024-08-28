@@ -9,11 +9,12 @@ import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/home_screen_product_card_item.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_bottom_screen_page.dart';
 import 'package:softminion/Ssystem_Architecture/View/product_details_card/product_details_card.dart';
+import 'package:softminion/all_test_class.dart';
 import 'package:softminion/widgets/custom_image_view.dart';
 import 'package:softminion/widgets/custom_button_field.dart';
 import 'package:softminion/Ssystem_Architecture/Model/home_page_productItemmodel.dart';
 import 'package:softminion/widgets/custom_list_view_seperate_widget.dart';
-import 'package:softminion/widgets/demo_custom_list_view_builder.dart';
+import 'package:softminion/widgets/main_custom_list_view_builder.dart';
 
 class HomeBottomScreen extends StatelessWidget {
   HomeBottomScreen({
@@ -240,20 +241,14 @@ class HomeBottomScreen extends StatelessWidget {
               ],
             ),
           ),
-          // CustomProductListView(
-          //   itemBuilder: (context, model) {
-          //     return ProductcardItemWidget(model);
-          //   },
-          // ),
-
           CustomProductListViewNew<HomePageProductItemModel>(
             items: homePageScrenController
                 .homePageScreenModel.value.productCardItemList,
             itemBuilder: (context, model) {
               return DEMOProductcardItemWidget(
-                  showORnotShowWidgets: true,
-                  //  showProductDetailsPageDeliverySection: false,
-                  model); // Custom widget to display product
+                model,
+                showORnotShowWidgets: true,
+              );
             },
             onItemTap: (homeProductModel) {
               Get.to(() => DEMOProductcardItemWidget(
@@ -262,7 +257,7 @@ class HomeBottomScreen extends StatelessWidget {
                     showORnotShowWidgets: false,
                   ));
             },
-          )
+          ),
         ],
       ),
     );

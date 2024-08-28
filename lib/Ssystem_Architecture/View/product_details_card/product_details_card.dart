@@ -112,10 +112,10 @@ class ProductDetailsPage extends StatelessWidget {
             const Spacer(),
             BuyandAddtoCartBottomButtonBar(
               onBuyNow: () {
-                // Handle Buy Now
+                // Handle Buy Now action
               },
               onAddToCart: () {
-                // Handle Add to Cart
+                // Handle Add to Cart action
               },
             ),
           ],

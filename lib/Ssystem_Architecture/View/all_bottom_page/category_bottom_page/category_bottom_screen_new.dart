@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/category_controller_new.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/all_bottom_screen_add.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/home_bottom_screen_page.dart';
+import 'package:softminion/Ssystem_Architecture/View/sign_up/signup_screen.dart';
 import 'package:softminion/widgets/custom_image_view.dart';
 
 class CategoriesBottomScreen extends StatefulWidget {
@@ -30,7 +32,9 @@ class _CategoryScreenState extends State<CategoriesBottomScreen> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Get.offAll(() => AllBottomScreenAdd());
+            Get.to(() => AllBottomScreenAdd());
+            //Get.back();
+
             print("category screen back button");
           },
         ),

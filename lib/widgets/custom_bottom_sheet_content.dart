@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
+import 'package:softminion/buy_add_button_test.dart';
 import 'package:softminion/widgets/custom_bottom_button_navigator.dart';
 
 class CustomLargeBottomSheetContent extends StatefulWidget {
+  final bool showOnlyBuyButton;
+  final bool showOnlyAddToCartButton;
+  final String? lastClickedButton;
+
+  CustomLargeBottomSheetContent({
+    this.showOnlyBuyButton = false,
+    this.showOnlyAddToCartButton = false,
+    this.lastClickedButton = "",
+  });
+
   @override
   _CustomLargeBottomSheetContentState createState() =>
       _CustomLargeBottomSheetContentState();
@@ -11,22 +23,23 @@ class CustomLargeBottomSheetContent extends StatefulWidget {
 class _CustomLargeBottomSheetContentState
     extends State<CustomLargeBottomSheetContent> {
   final List<Map<String, String>> colorItems = [
-    {'image': 'assets/images/s1.jpg', 'name': 'Red'},
-    {'image': 'assets/images/s2.jpg', 'name': 'Yellow'},
-    {'image': 'assets/images/s3.jpg', 'name': 'Blue'},
-    {'image': 'assets/images/s4.jpg', 'name': 'Pink'},
-    {'image': 'assets/images/s5.jpg', 'name': 'Green'},
-    {'image': 'assets/images/s6.jpg', 'name': 'Black'},
-    {'image': 'assets/images/s7.jpg', 'name': 'Orange'},
-    {'image': 'assets/images/s8.jpg', 'name': 'Purple'},
+    {'image': 'assets/images/r.jpg', 'name': 'Red'},
+    {'image': 'assets/images/y.jpg', 'name': 'Yellow'},
+    {'image': 'assets/images/b.jpg', 'name': 'Blue'},
+    {'image': 'assets/images/p.jpg', 'name': 'Pink'},
+    {'image': 'assets/images/g.jpg', 'name': 'Green'},
+    {'image': 'assets/images/bl.jpg', 'name': 'Black'},
+    {'image': 'assets/images/o.jpg', 'name': 'Orange'},
+    {'image': 'assets/images/pu.jpg', 'name': 'Purple'},
   ];
 
   final List<String> sizes = ['S', 'M', 'L', 'XL', 'XXL'];
 
   String selectedColor = 'Red';
-  String selectedSize = 'M'; // Initialize with a default size
-  int quantity = 1; // Initialize with a default quantity
-  String selectedImage = 'assets/images/s1.jpg'; // Default image
+  String selectedSize = 'M';
+  int quantity = 1;
+  String selectedImage = 'assets/images/r.jpg';
+  String productPrice = '\$29.99'; // Define the price of the product
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +55,6 @@ class _CustomLargeBottomSheetContentState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Top Row for Image, Selected Size, and Selected Color Text
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -51,13 +63,11 @@ class _CustomLargeBottomSheetContentState
                 child: Row(
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsets.all(8.h), // Set padding around the image
+                      padding: EdgeInsets.all(8.h),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(
-                            20)), // Adjust the radius for a slight curve
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
                         child: Image.asset(
-                          selectedImage, // Use the selected image here
+                          selectedImage,
                           height: 80.h,
                           width: 80.h,
                         ),
@@ -67,6 +77,15 @@ class _CustomLargeBottomSheetContentState
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          productPrice, // Display the product price
+                          style: TextStyle(
+                            fontSize: 18.h, // Adjust font size as needed
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red, // Adjust color as needed
+                          ),
+                        ),
+                        SizedBox(height: 4.h),
                         Text(
                           "Color: $selectedColor",
                           style: TextStyle(
@@ -99,13 +118,11 @@ class _CustomLargeBottomSheetContentState
             ],
           ),
           SizedBox(height: 20.h),
-
           Text(
             "Color Family",
             style: TextStyle(fontSize: 15.h, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 10.h),
-          // Color Family Images with Color Names
           Container(
             height: 200.h,
             child: GridView.builder(
@@ -122,8 +139,7 @@ class _CustomLargeBottomSheetContentState
                   onTap: () {
                     setState(() {
                       selectedColor = colorItems[index]['name']!;
-                      selectedImage = colorItems[index]
-                          ['image']!; // Update the selected image
+                      selectedImage = colorItems[index]['image']!;
                     });
                   },
                   child: Container(
@@ -167,7 +183,6 @@ class _CustomLargeBottomSheetContentState
             style: TextStyle(fontSize: 15.h, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 10.h),
-          // Size Selection Row
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -183,13 +198,11 @@ class _CustomLargeBottomSheetContentState
                     margin: EdgeInsets.symmetric(horizontal: 4.h),
                     padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                     decoration: BoxDecoration(
-                      color: isSelected
-                          ? Colors.blue[100]
-                          : Colors.grey[200], // Highlight selected size
+                      color: isSelected ? Colors.blue[100] : Colors.grey[200],
                       borderRadius: BorderRadius.circular(8.h),
                       border: isSelected
                           ? Border.all(color: Colors.blue, width: 2.h)
-                          : null, // Border for selected size
+                          : null,
                     ),
                     child: Text(
                       size,
@@ -205,7 +218,6 @@ class _CustomLargeBottomSheetContentState
             ),
           ),
           SizedBox(height: 20.h),
-          // Quantity Selection Row
           Row(
             children: [
               Text(
@@ -237,26 +249,64 @@ class _CustomLargeBottomSheetContentState
               ),
             ],
           ),
-          Spacer(), // Pushes the buttons to the bottom
-          BuyandAddtoCartBottomButtonBar(
-            onBuyNow: () {
-              // Handle Buy Now action
-            },
-            onAddToCart: () {
-              // Handle Add to Cart action
-            },
-          ),
+          Spacer(),
+          if (widget.lastClickedButton == "")
+            BuyandAddtoCartBottomButtonBar(
+              onBuyNow: () {},
+              onAddToCart: () {
+                Navigator.pop(context);
+              },
+              showBuyNow: true,
+              showAddToCart: true,
+            )
+          else if (widget.showOnlyBuyButton)
+            BuyandAddtoCartBottomButtonBar(
+              onBuyNow: () => print("Buy now"),
+              onAddToCart: () {},
+              showBuyNow: true,
+              showAddToCart: false,
+            )
+          else if (widget.showOnlyAddToCartButton)
+            BuyandAddtoCartBottomButtonBar(
+              onBuyNow: () {},
+              onAddToCart: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Added to cart successfully!'),
+                  ),
+                );
+              },
+              showBuyNow: false,
+              showAddToCart: true,
+            )
         ],
       ),
     );
   }
 }
 
-// Usage
-void showCustomLargeBottomSheet(BuildContext context) {
+// void showCustomLargeBottomSheet(
+//     BuildContext context, bool buy, bool add, String name) {
+//   showModalBottomSheet(
+//     context: context,
+//     isScrollControlled: true,
+//     builder: (context) => CustomLargeBottomSheetContent(
+//       showOnlyBuyButton: buy,
+//       showOnlyAddToCartButton: add,
+//       lastClickedButton: name,
+//     ),
+//   );
+// }
+
+void showCustomLargeBottomSheet(BuildContext context, bool buy, bool add,
+    String name, VoidCallback onClose) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    builder: (context) => CustomLargeBottomSheetContent(),
-  );
+    builder: (context) => CustomLargeBottomSheetContent(
+      showOnlyBuyButton: buy,
+      showOnlyAddToCartButton: add,
+      lastClickedButton: name,
+    ),
+  ).whenComplete(onClose);
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Core/utils/sizer.dart';
+import 'package:softminion/Ssystem_Architecture/View/add%20to%20cart/my_cart_page_view.dart';
 import 'package:softminion/Ssystem_Architecture/View/login/login_screen.dart';
 import 'package:softminion/widgets/app_bar/custom_app_bar.dart';
 import 'package:softminion/widgets/custom_button_field.dart';

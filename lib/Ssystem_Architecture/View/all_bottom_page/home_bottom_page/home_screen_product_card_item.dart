@@ -101,6 +101,7 @@ class ProductcardItemWidget extends StatelessWidget {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.red))),
+
                   // Obx(() => Text(homeProductModel.ratingNumber!.value,
                   //     style: TextStyle(fontSize: 12.w, color: Colors.grey))),
                 ],

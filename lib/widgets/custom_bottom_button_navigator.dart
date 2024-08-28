@@ -3,14 +3,14 @@ import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/widgets/custom_button_field.dart';
 
 class BuyandAddtoCartBottomButtonBar extends StatelessWidget {
-  final Function onBuyNow;
-  final Function onAddToCart;
+  final Function? onBuyNow;
+  final Function? onAddToCart;
   final bool showBuyNow;
   final bool showAddToCart;
 
   BuyandAddtoCartBottomButtonBar({
-    required this.onBuyNow,
-    required this.onAddToCart,
+    this.onBuyNow,
+    this.onAddToCart,
     this.showBuyNow = true,
     this.showAddToCart = true,
   });
@@ -43,19 +43,26 @@ class BuyandAddtoCartBottomButtonBar extends StatelessWidget {
               child: CustomButton(
                 text: 'Buy Now',
                 backgroundColor: Colors.orange,
-                onPressed: () => onBuyNow(),
+                onPressed: () {
+                  if (onBuyNow != null) {
+                    onBuyNow!(); // Call the function only if it's provided
+                  }
+                },
               ),
             ),
 
-          if (showAddToCart && showBuyNow)
-            if (showAddToCart)
-              Expanded(
-                child: CustomButton(
-                  text: 'Add to Cart',
-                  backgroundColor: Colors.red,
-                  onPressed: () => onAddToCart(),
-                ),
+          if (showAddToCart)
+            Expanded(
+              child: CustomButton(
+                text: 'Add to Cart',
+                backgroundColor: Colors.red,
+                onPressed: () {
+                  if (onAddToCart != null) {
+                    onAddToCart!(); // Call the function only if it's provided
+                  }
+                },
               ),
+            ),
           SizedBox(width: 16.w), // Adjusts the spacing based on screen width
         ],
       ),
