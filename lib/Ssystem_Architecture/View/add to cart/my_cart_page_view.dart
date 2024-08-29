@@ -127,7 +127,10 @@ class _MyCartPageState extends State<MyCartPage> {
             Navigator.of(context).pop();
           },
         ),
-        title: Text('My Cart'),
+        title: Text(
+          'My Cart',
+          style: TextStyle(fontStyle: FontStyle.italic),
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.delete),
