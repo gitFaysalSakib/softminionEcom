@@ -8,7 +8,7 @@ import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/favorites_b
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/home_bottom_screen_page.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/homepage_test.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/profile_bottom_page/profile_bottom_screen.dart';
-import 'package:softminion/widgets/custom_bottom_navigationbar.dart';
+import 'package:softminion/widgets/custom_bottom_main_page_navigationbar.dart';
 
 class AllBottomScreenAdd extends StatelessWidget {
   final NavigationController navigationController =

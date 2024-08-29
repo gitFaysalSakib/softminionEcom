@@ -73,22 +73,4 @@ class CustomButton extends StatelessWidget {
       ),
     );
   }
-
-  // MainAxisAlignment _getAlignment() {
-  //   switch (alignment) {
-  //     case Alignment.topLeft:
-  //     case Alignment.centerLeft:
-  //     case Alignment.bottomLeft:
-  //       return MainAxisAlignment.start;
-  //     case Alignment.topRight:
-  //     case Alignment.centerRight:
-  //     case Alignment.bottomRight:
-  //       return MainAxisAlignment.end;
-  //     case Alignment.topCenter:
-  //     case Alignment.bottomCenter:
-  //     case Alignment.center:
-  //     default:
-  //       return MainAxisAlignment.center;
-  //   }
-  // }
 }
