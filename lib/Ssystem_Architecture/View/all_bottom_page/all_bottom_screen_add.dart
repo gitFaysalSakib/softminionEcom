@@ -26,11 +26,10 @@ class AllBottomScreenAdd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("allBottom Screen");
-    return Obx(() {
-      return Scaffold(
-        body: pages[navigationController.selectedIndex.value],
-        bottomNavigationBar: CustomBottomNavigationBar(),
-      );
-    });
+
+    return Scaffold(
+      body: Obx(() => pages[navigationController.selectedIndex.value]),
+      bottomNavigationBar: CustomBottomNavigationBar(),
+    );
   }
 }

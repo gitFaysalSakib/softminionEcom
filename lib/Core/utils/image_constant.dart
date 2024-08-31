@@ -17,4 +17,5 @@ class ImageConstant {
   static String SubcaregoryHelmat = '$imagepath/helmat.png';
   static String SubcaregoryPhoneColor = '$imagepath/phoneColor.png';
   static String displayN6 = '$imagepath/n6.png';
+  static String deleteCartPage = '$imagepath/delete.png';
 }

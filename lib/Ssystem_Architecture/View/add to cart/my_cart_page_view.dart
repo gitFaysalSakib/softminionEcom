@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:softminion/Ssystem_Architecture/View/check_out_page/check_out_page.dart';
+import 'package:softminion/all_test_class.dart';
 import 'package:softminion/Ssystem_Architecture/Model/add%20to%20cart/cart_item_model.dart';
-import 'package:softminion/widgets/add_subtotal_test.dart';
-import 'package:softminion/widgets/custom_button_field.dart'; // Import your custom button widget
+import 'package:softminion/Ssystem_Architecture/View/add%20to%20cart/add_to_cart_item_design_widget_main.dart';
+import 'package:softminion/widgets/customBottomNavigation_Similler_AddCart_Placeorder_Type_widget.dart';
 
 class MyCartPage extends StatefulWidget {
   @override
@@ -19,13 +21,13 @@ class _MyCartPageState extends State<MyCartPage> {
       quantity: 1,
     ),
     CartItem(
-      title: 'Product 2',
-      imageUrl: 'assets/images/aaa.jpg',
-      color: 'Blue',
-      size: 'L',
-      price: 79.99,
-      quantity: 1,
-    ),
+        title: 'Product 2',
+        imageUrl: 'assets/images/aaa.jpg',
+        color: 'Blue',
+        size: 'L',
+        price: 79.99,
+        quantity: 1),
+
     CartItem(
       title: 'Product 2',
       imageUrl: 'assets/images/aaa.jpg',
@@ -74,22 +76,8 @@ class _MyCartPageState extends State<MyCartPage> {
       price: 79.99,
       quantity: 1,
     ),
-    CartItem(
-      title: 'Product 2',
-      imageUrl: 'assets/images/aaa.jpg',
-      color: 'Blue',
-      size: 'L',
-      price: 79.99,
-      quantity: 1,
-    ),
-    CartItem(
-      title: 'Product 3',
-      imageUrl: 'assets/images/aaa.jpg',
-      color: 'Green',
-      size: 'S',
-      price: 59.99,
-      quantity: 1,
-    ),
+
+    // More items...
   ];
 
   double _totalAmount = 0.0;
@@ -111,12 +99,6 @@ class _MyCartPageState extends State<MyCartPage> {
     });
   }
 
-  // void _calculateTotalAmount() {
-
-  //   _totalAmount = cartItems
-  //       .where((item) => item.isSelected)
-  //       .fold(0.0, (sum, item) => sum + (item.price * item.quantity));
-  // }
   void _calculateTotalAmount() {
     _totalAmount = 0.0;
     _totalQuantity = 0;
@@ -141,6 +123,7 @@ class _MyCartPageState extends State<MyCartPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(cartItems.length);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -149,8 +132,9 @@ class _MyCartPageState extends State<MyCartPage> {
             Navigator.of(context).pop();
           },
         ),
-        title: Text('My Cart', style: TextStyle(fontStyle: FontStyle.italic)),
+        title: Text('My Cart', style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
+          // CustomImageView(imagePath: ImageConstant.deleteCartPage, height: 30.h)
           IconButton(
             icon: Icon(Icons.delete),
             onPressed: () {
@@ -167,57 +151,142 @@ class _MyCartPageState extends State<MyCartPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: cartItems.map((item) {
-              return CartItemWidget(
-                item: item,
-                onSelected: (isSelected) => _toggleSelection(item, isSelected),
-                onQuantityChanged: (quantity) =>
-                    _changeQuantity(item, quantity),
-              );
+              try {
+                return CartItemWidget(
+                  item: item,
+                  onSelected: (isSelected) =>
+                      _toggleSelection(item, isSelected),
+                  onQuantityChanged: (quantity) =>
+                      _changeQuantity(item, quantity),
+                );
+              } catch (e) {
+                print('Error creating CartItemWidget: $e');
+                return SizedBox.shrink(); // Return an empty widget on error
+              }
             }).toList(),
           ),
+
+          // child: Column(
+          //   children: cartItems.map((item) {
+          //     return CartItemWidget(
+          //       item: item,
+          //       onSelected: (isSelected) => _toggleSelection(item, isSelected),
+          //       onQuantityChanged: (quantity) =>
+          //           _changeQuantity(item, quantity),
+          //     );
+          //   }).toList(),
+          // ),
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-        color: Colors.white,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end, // Align to the right
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Checkbox(
-                      value: _selectAll,
-                      onChanged: _toggleSelectAll,
-                    ),
-                    Text('All'),
-                  ],
+      bottomNavigationBar: CustomBottomNavigationBar(
+        selectAll: _selectAll,
+        totalAmount: _totalAmount,
+        totalQuantity: _totalQuantity,
+        onToggleSelectAll: _toggleSelectAll,
+        onCheckoutPressed: () {
+          List<CartItem> selectedItems =
+              cartItems.where((item) => item.isSelected).toList();
+
+          if (selectedItems.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Please select an item',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white),
                 ),
-                Text(
-                  'Subtotal: \$${_totalAmount.toStringAsFixed(2)}',
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                backgroundColor: Colors.black,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
-              ],
-            ),
-            SizedBox(height: 4.0), // Add some spacing
-            Text(
-              'Shipping fee: \$5.00', // Set your shipping fee amount here
-              style: TextStyle(fontSize: 14.0),
-            ),
-            SizedBox(height: 10.0), // Add some spacing before the button
-            CustomButton(
-              text: 'Check Out (${_totalQuantity})',
-              width: 150.0,
-              onPressed: () {
-                // Add your checkout logic here
-              },
-            ),
-          ],
-        ),
+                margin: EdgeInsets.symmetric(horizontal: 50.0, vertical: 10.0),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CheckoutPage(products: selectedItems),
+              ),
+            );
+          }
+        },
       ),
+
+      // Container(
+      //   padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+      //   color: Colors.white,
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: [
+      //       Row(
+      //         children: [
+      //           Checkbox(
+      //             value: _selectAll,
+      //             onChanged: _toggleSelectAll,
+      //           ),
+      //           Text('All'),
+      //         ],
+      //       ),
+      //       Column(
+      //         crossAxisAlignment: CrossAxisAlignment.end,
+      //         mainAxisSize: MainAxisSize.min,
+      //         children: [
+      //           Text(
+      //             'Subtotal: \$${_totalAmount.toStringAsFixed(2)}',
+      //             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+      //           ),
+      //           SizedBox(height: 4.0), // Add some spacing
+      //           Text(
+      //             'Shipping fee: \$5.00',
+      //             style: TextStyle(fontSize: 14.0),
+      //           ),
+      //         ],
+      //       ),
+      //       CustomButton(
+      //         text: 'Check Out(${_totalQuantity})',
+      //         textStyle: TextStyle(fontSize: 12, color: Colors.white),
+      //         width: 120.0,
+      //         onPressed: () {
+      //           List<CartItem> selectedItems =
+      //               cartItems.where((item) => item.isSelected).toList();
+
+      //           if (selectedItems.isEmpty) {
+      //             // Show a popup message if no items are selected
+      //             ScaffoldMessenger.of(context).showSnackBar(
+      //               SnackBar(
+      //                 content: Text(
+      //                   'Please select an item',
+      //                   textAlign: TextAlign.center,
+      //                   style: TextStyle(color: Colors.white),
+      //                 ),
+      //                 backgroundColor: Colors.black,
+      //                 behavior: SnackBarBehavior.floating,
+      //                 shape: RoundedRectangleBorder(
+      //                   borderRadius: BorderRadius.circular(10.0),
+      //                 ),
+      //                 margin: EdgeInsets.symmetric(
+      //                     horizontal: 50.0, vertical: 10.0),
+      //                 duration: Duration(seconds: 2),
+      //               ),
+      //             );
+      //           } else {
+      //             // Navigate to CheckoutPage if items are selected
+      //             Navigator.push(
+      //               context,
+      //               MaterialPageRoute(
+      //                 builder: (context) =>
+      //                     CheckoutPage(products: selectedItems),
+      //               ),
+      //             );
+      //           }
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

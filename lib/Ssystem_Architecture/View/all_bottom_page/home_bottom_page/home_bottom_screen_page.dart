@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:softminion/Core/utils/image_constant.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/home_page_scren_controller.dart';
-import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/RND%20Page/home_product_item_show_screen.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/demo_product_card_details.dart';
-import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/home_screen_product_card_item.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_bottom_screen_page.dart';
-import 'package:softminion/Ssystem_Architecture/View/product_details_card/product_details_card.dart';
 import 'package:softminion/all_test_class.dart';
 import 'package:softminion/widgets/custom_image_view.dart';
 import 'package:softminion/widgets/custom_button_field.dart';
 import 'package:softminion/Ssystem_Architecture/Model/home_page_productItemmodel.dart';
-import 'package:softminion/widgets/custom_list_view_seperate_widget.dart';
 import 'package:softminion/widgets/main_custom_list_view_builder.dart';
 
 class HomeBottomScreen extends StatelessWidget {

@@ -416,13 +416,9 @@ import 'package:get/get.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/home_page_scren_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Model/home_page_productItemmodel.dart';
-import 'package:softminion/buy_add_button_test.dart';
 import 'package:softminion/widgets/custom_bottom_button_navigator.dart';
 import 'package:softminion/widgets/custom_bottom_sheet_content.dart';
-import 'package:softminion/widgets/custom_icon.dart';
 import 'package:softminion/widgets/custom_image_view.dart';
-import 'package:softminion/widgets/custom_list_view_grid.dart';
-import 'package:softminion/widgets/main_custom_list_view_builder.dart';
 
 class DEMOProductcardItemWidget extends StatefulWidget {
   final HomePageProductItemModel homeProductModel;
@@ -496,6 +492,16 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
               ),
               body: SingleChildScrollView(
                 child: _buildAllContentSeparateFromScaffold(context),
+              ),
+              bottomNavigationBar: BuyandAddtoCartBottomButtonBar(
+                onBuyNow: () {
+                  showCustomLargeBottomSheet(
+                      context, true, false, "1", _forTestingBuyButton);
+                },
+                onAddToCart: () {
+                  showCustomLargeBottomSheet(
+                      context, false, true, "2", _showPopupMessage);
+                },
               ),
             ),
           )
@@ -726,17 +732,17 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
             ],
           ),
         ),
-        if (widget.isSingleProductView)
-          BuyandAddtoCartBottomButtonBar(
-            onBuyNow: () {
-              showCustomLargeBottomSheet(
-                  context, true, false, "1", _forTestingBuyButton);
-            },
-            onAddToCart: () {
-              showCustomLargeBottomSheet(
-                  context, false, true, "2", _showPopupMessage);
-            },
-          ),
+        // if (widget.isSingleProductView)
+        //   BuyandAddtoCartBottomButtonBar(
+        //     onBuyNow: () {
+        //       showCustomLargeBottomSheet(
+        //           context, true, false, "1", _forTestingBuyButton);
+        //     },
+        //     onAddToCart: () {
+        //       showCustomLargeBottomSheet(
+        //           context, false, true, "2", _showPopupMessage);
+        //     },
+        //   ),
       ],
     );
   }
