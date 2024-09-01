@@ -1,123 +1,87 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:softminion/Ssystem_Architecture/View/user_address_screens/add_shipping_address_form.dart';
 
-class SelectPaymentMethod extends StatelessWidget {
+class UserProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(context),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 1,
+        title: Text(
+          'Profile',
+          style: TextStyle(color: Colors.black),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings, color: Colors.black),
+            onPressed: () {
+              // Navigate to settings page
+            },
+          ),
+        ],
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
+        padding: EdgeInsets.all(16.0),
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSectionTitle('Recommended Methods'),
-            SizedBox(height: 16.0),
-            _buildPaymentOption(
-              imagePath:
-                  'assets/images/mastercard.png', // Replace with your image path
-              label: 'Credit/Debit Card',
+            Stack(
+              children: [
+                CircleAvatar(
+                  radius: 40.0,
+                  backgroundImage: AssetImage(
+                      'assets/images/p.jpg'), // Replace with user's image
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: CircleAvatar(
+                    radius: 15.0,
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon:
+                          Icon(Icons.camera_alt, color: Colors.black, size: 15),
+                      onPressed: () {
+                        // Handle image change
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 32.0),
-            _buildSectionTitle('Payment Methods'),
-            SizedBox(height: 16.0),
-            _buildPaymentOption(
-              imagePath:
-                  'assets/images/bkash.png', // Replace with your image path
-              label: 'Save Bkash Account',
+            SizedBox(width: 16.0), // Space between image and user details
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'User Name', // Replace with user's name
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+
+                    SizedBox(
+                        height: 8.0), // Space between user name and subtexts
+                    Row(
+                      children: [
+                        Text('1 Wishlist',
+                            style: TextStyle(color: Colors.grey)),
+                        SizedBox(width: 16.0),
+                        Text('1 Followed Store',
+                            style: TextStyle(color: Colors.grey)),
+                        SizedBox(width: 16.0),
+                        Text('1 Vouchers',
+                            style: TextStyle(color: Colors.grey)),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ),
-            SizedBox(height: 16.0),
-            _buildPaymentOption(
-              imagePath:
-                  'assets/images/nagod.png', // Replace with your image path
-              label: 'Nagad',
-            ),
-            SizedBox(height: 16.0),
-            _buildPaymentOption(
-              imagePath:
-                  'assets/images/rocket.png', // Replace with your image path
-              label: 'Rocket',
-            ),
-            SizedBox(height: 16.0),
-            _buildPaymentOption(
-              imagePath:
-                  'assets/images/nagod.png', // Replace with your image path
-              label: 'Cash On Delivery',
-            ),
-            SizedBox(height: 16.0),
-            _buildPaymentOption(
-              imagePath:
-                  'assets/images/nagod.png', // Replace with your image path
-              label: 'Installment',
-            ),
-            // Add more payment options as needed
           ],
         ),
-      ),
-    );
-  }
-
-  // Method to build the AppBar
-  AppBar _buildAppBar(BuildContext context) {
-    return AppBar(
-      title: Text('Select Payment Method'),
-      leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Get.to(AddShippingAddressForm())),
-    );
-  }
-
-  // Method to build section titles
-  Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: TextStyle(
-        fontSize: 18.0,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
-
-  // Method to build individual payment options with image
-  Widget _buildPaymentOption({
-    required String imagePath,
-    required String label,
-  }) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
-        border: Border.all(
-          color: Colors.grey.shade300,
-          width: 1.0,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Image.asset(
-            imagePath,
-            width: 30.0,
-            height: 30.0,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(width: 16.0),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 16.0,
-            ),
-          ),
-        ],
       ),
     );
   }

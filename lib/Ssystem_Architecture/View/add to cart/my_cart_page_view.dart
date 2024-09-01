@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/all_bottom_screen_add.dart';
 import 'package:softminion/Ssystem_Architecture/View/check_out_page/check_out_page.dart';
 import 'package:softminion/all_test_class.dart';
 import 'package:softminion/Ssystem_Architecture/Model/add%20to%20cart/cart_item_model.dart';
@@ -126,12 +128,6 @@ class _MyCartPageState extends State<MyCartPage> {
     print(cartItems.length);
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
         title: Text('My Cart', style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           // CustomImageView(imagePath: ImageConstant.deleteCartPage, height: 30.h)
@@ -178,9 +174,9 @@ class _MyCartPageState extends State<MyCartPage> {
           // ),
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
+      bottomNavigationBar: CustomBottomNavigationBarForSubtotalSection(
         selectAll: _selectAll,
-        totalAmount: _totalAmount,
+        amount: _totalAmount,
         totalQuantity: _totalQuantity,
         onToggleSelectAll: _toggleSelectAll,
         onCheckoutPressed: () {
@@ -215,6 +211,8 @@ class _MyCartPageState extends State<MyCartPage> {
         },
       ),
 
+/////////////////////////////////////////////////
+//old code.....
       // Container(
       //   padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
       //   color: Colors.white,

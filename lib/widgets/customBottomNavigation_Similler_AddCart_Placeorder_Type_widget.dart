@@ -60,24 +60,27 @@
 //     );
 //   }
 // }
-
 import 'package:flutter/material.dart';
 import 'package:softminion/widgets/custom_button_field.dart';
 
-class CustomBottomNavigationBar extends StatelessWidget {
+class CustomBottomNavigationBarForSubtotalSection extends StatelessWidget {
   final bool selectAll;
-  final double totalAmount;
+  final double amount;
   final int totalQuantity;
   final ValueChanged<bool?> onToggleSelectAll;
   final VoidCallback onCheckoutPressed;
+  final String amountLabel; // Dynamic label for "Subtotal" or "Total"
+  final String buttonText; // Dynamic button text
 
-  const CustomBottomNavigationBar({
+  const CustomBottomNavigationBarForSubtotalSection({
     Key? key,
     required this.selectAll,
-    required this.totalAmount,
+    required this.amount,
     required this.totalQuantity,
     required this.onToggleSelectAll,
     required this.onCheckoutPressed,
+    this.amountLabel = 'Subtotal', // Default to "Subtotal"
+    this.buttonText = 'Check Out', // Default button text
   }) : super(key: key);
 
   @override
@@ -102,7 +105,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Subtotal: \$${totalAmount.toStringAsFixed(2)}',
+                '$amountLabel: \$${amount.toStringAsFixed(2)}',
                 style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 4.0), // Add some spacing
@@ -113,7 +116,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             ],
           ),
           CustomButton(
-            text: 'Check Out($totalQuantity)',
+            text: '$buttonText($totalQuantity)',
             textStyle: TextStyle(fontSize: 12, color: Colors.white),
             width: 120.0,
             onPressed: onCheckoutPressed,

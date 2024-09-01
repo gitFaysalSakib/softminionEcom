@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/bottom_navigation_controller.dart';
 import 'package:softminion/widgets/custom_icon.dart';
@@ -39,35 +40,40 @@ class CustomBottomNavigationBar extends StatelessWidget {
           items: [
             BottomNavigationBarItem(
               icon: CustomIcon(
-                icon: Icons.home,
+                icon: Iconsax.home,
+                unselectedColor: Colors.black,
                 isSelected: navigationController.selectedIndex.value == 0,
               ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: CustomIcon(
-                icon: Icons.category,
+                unselectedColor: Colors.black,
+                icon: Iconsax.category,
                 isSelected: navigationController.selectedIndex.value == 1,
               ),
               label: 'Category',
             ),
             BottomNavigationBarItem(
               icon: CustomIcon(
-                icon: Icons.card_giftcard,
+                icon: Iconsax.shopping_cart,
+                unselectedColor: Colors.black,
                 isSelected: navigationController.selectedIndex.value == 2,
               ),
               label: 'Bag',
             ),
             BottomNavigationBarItem(
               icon: CustomIcon(
-                icon: Icons.favorite,
+                unselectedColor: Colors.black,
+                icon: Iconsax.lovely,
                 isSelected: navigationController.selectedIndex.value == 3,
               ),
               label: 'Favorites',
             ),
             BottomNavigationBarItem(
               icon: CustomIcon(
-                icon: Icons.manage_accounts,
+                unselectedColor: Colors.black,
+                icon: Iconsax.profile_add,
                 isSelected: navigationController.selectedIndex.value == 4,
               ),
               label: 'Profile',

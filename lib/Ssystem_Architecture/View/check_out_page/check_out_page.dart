@@ -37,9 +37,11 @@ class CheckoutPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // "Add Address" section with proper padding
+          SizedBox(height: 20.0), // Added space above the "Add Address" section
+          // "Add Address" section with increased padding
           Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+            padding: EdgeInsets.symmetric(
+                vertical: 30.0, horizontal: 16.0), // Increased vertical padding
             alignment: Alignment.center,
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -55,13 +57,13 @@ class CheckoutPage extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue),
+                        color: Colors.red),
                   ),
                 ),
               ],
             ),
           ),
-          Divider(thickness: 2.0), // Divider to separate sections
+          Divider(thickness: 1.0), // Divider to separate sections
 
           // Product details section with padding, border, and margin
           Expanded(
@@ -158,9 +160,9 @@ class CheckoutPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
+      bottomNavigationBar: CustomBottomNavigationBarForSubtotalSection(
         selectAll: false, // In the Checkout page, selectAll is likely false.
-        totalAmount: totalAmount,
+        amount: totalAmount, // Pass the total amount
         totalQuantity: totalQuantity,
         onToggleSelectAll: (bool? value) {}, // No action needed here
         onCheckoutPressed: () {
@@ -168,7 +170,7 @@ class CheckoutPage extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                'Order Placed Successfully!',
+                'Please add an address!',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white),
               ),
@@ -182,6 +184,8 @@ class CheckoutPage extends StatelessWidget {
             ),
           );
         },
+        amountLabel: 'Total', // Change label to "Total"
+        buttonText: 'Place Order', // Change button text as needed
       ),
     );
   }

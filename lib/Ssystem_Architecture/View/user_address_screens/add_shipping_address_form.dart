@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:softminion/Ssystem_Architecture/View/payment_method_screen/select_payment_methods.dart';
 import 'package:softminion/Ssystem_Architecture/View/user_address_screens/add_shipping_address_category_controller.dart';
 import 'package:softminion/Ssystem_Architecture/View/user_address_screens/select_shipping_address_page.dart';
 import 'package:softminion/all_test_class.dart';

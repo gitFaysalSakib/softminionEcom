@@ -416,9 +416,13 @@ import 'package:get/get.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/home_page_scren_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Model/home_page_productItemmodel.dart';
+import 'package:softminion/Ssystem_Architecture/View/add%20to%20cart/my_cart_page_view.dart';
+import 'package:softminion/Ssystem_Architecture/View/check_out_page/check_out_page.dart';
+import 'package:softminion/all_test_class.dart';
 import 'package:softminion/widgets/custom_bottom_button_navigator.dart';
 import 'package:softminion/widgets/custom_bottom_sheet_content.dart';
 import 'package:softminion/widgets/custom_image_view.dart';
+import 'package:softminion/widgets/custom_search_bar_with_icon_use_appbar.dart';
 
 class DEMOProductcardItemWidget extends StatefulWidget {
   final HomePageProductItemModel homeProductModel;
@@ -468,7 +472,8 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
   }
 
   void _forTestingBuyButton() {
-    print("buyy");
+    //Navigator.pop(context);
+    //Get.to(MyCartPage());
   }
 
   @override
@@ -482,14 +487,7 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
     return widget.isSingleProductView
         ? SafeArea(
             child: Scaffold(
-              appBar: AppBar(
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Get.back();
-                  },
-                ),
-              ),
+              appBar: CustomAppBarForSearchBarAndCartIcon(),
               body: SingleChildScrollView(
                 child: _buildAllContentSeparateFromScaffold(context),
               ),
@@ -500,7 +498,7 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
                 },
                 onAddToCart: () {
                   showCustomLargeBottomSheet(
-                      context, false, true, "2", _showPopupMessage);
+                      context, false, true, "2", _forTestingBuyButton);
                 },
               ),
             ),
@@ -759,7 +757,7 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
           tabs: [
             Tab(text: 'Description'),
             Tab(text: 'Seller'),
-            Tab(text: 'Specifications'),
+            Tab(text: 'Reviews'),
           ],
         ),
         // Tab Bar View
