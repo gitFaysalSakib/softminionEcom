@@ -42,7 +42,7 @@ import 'package:softminion/Ssystem_Architecture/View/add%20to%20cart/my_cart_pag
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/all_bottom_screen_add.dart';
 import 'package:softminion/Ssystem_Architecture/View/sign_up/signup_screen.dart';
 import 'package:softminion/all_test_class.dart';
-import 'package:softminion/widgets/add_shipping_address_form.dart';
+import 'package:softminion/Ssystem_Architecture/View/user_address_screens/add_shipping_address_form.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Sizer(
         builder: (context, orientation, deviceType) {
-          return AddShippingAddressForm();
+          return AllBottomScreenAdd();
         },
       ),
     );
