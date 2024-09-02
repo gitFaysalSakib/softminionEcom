@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Sizer(
         builder: (context, orientation, deviceType) {
-          return UserProfilePage();
+          return UserFirstProfilePage();
         },
       ),
     );

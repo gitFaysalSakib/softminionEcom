@@ -1,6 +1,70 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class UserProfilePage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:iconsax/iconsax.dart';
+
+class UserFirstProfilePage extends StatefulWidget {
+  @override
+  _UserFirstProfilePageState createState() => _UserFirstProfilePageState();
+}
+
+class _UserFirstProfilePageState extends State<UserFirstProfilePage> {
+  final ImagePicker _picker = ImagePicker();
+  XFile? _imageFile;
+
+  Future<void> _showImageSourceActionSheet(BuildContext context) async {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(Icons.camera_alt),
+                title: Text('Take Photo'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  final pickedFile = await _picker.pickImage(
+                    source: ImageSource.camera,
+                  );
+                  if (pickedFile != null) {
+                    setState(() {
+                      _imageFile = pickedFile;
+                    });
+                  }
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_library),
+                title: Text('Select from Album'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  final pickedFile = await _picker.pickImage(
+                    source: ImageSource.gallery,
+                  );
+                  if (pickedFile != null) {
+                    setState(() {
+                      _imageFile = pickedFile;
+                    });
+                  }
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.cancel),
+                title: Text('Cancel'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +77,7 @@ class UserProfilePage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.settings, color: Colors.black),
+            icon: Icon(Iconsax.setting1, color: Colors.grey[800]),
             onPressed: () {
               // Navigate to settings page
             },
@@ -29,8 +93,9 @@ class UserProfilePage extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 40.0,
-                  backgroundImage: AssetImage(
-                      'assets/images/p.jpg'), // Replace with user's image
+                  backgroundImage: _imageFile != null
+                      ? FileImage(File(_imageFile!.path))
+                      : AssetImage('assets/images/p.jpg') as ImageProvider,
                 ),
                 Positioned(
                   bottom: 0,
@@ -43,42 +108,54 @@ class UserProfilePage extends StatelessWidget {
                       icon:
                           Icon(Icons.camera_alt, color: Colors.black, size: 15),
                       onPressed: () {
-                        // Handle image change
+                        _showImageSourceActionSheet(context);
                       },
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(width: 16.0), // Space between image and user details
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'User Name', // Replace with user's name
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-
-                    SizedBox(
-                        height: 8.0), // Space between user name and subtexts
-                    Row(
-                      children: [
-                        Text('1 Wishlist',
-                            style: TextStyle(color: Colors.grey)),
-                        SizedBox(width: 16.0),
-                        Text('1 Followed Store',
-                            style: TextStyle(color: Colors.grey)),
-                        SizedBox(width: 16.0),
-                        Text('1 Vouchers',
-                            style: TextStyle(color: Colors.grey)),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+            SizedBox(width: 16.0),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'User Name',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 8.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '1 Wishlist',
+                          style: TextStyle(color: Colors.grey),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      SizedBox(width: 8.0),
+                      Expanded(
+                        child: Text(
+                          '1 Followed Store',
+                          style: TextStyle(color: Colors.grey),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      SizedBox(width: 8.0),
+                      Expanded(
+                        child: Text(
+                          '1 Vouchers',
+                          style: TextStyle(color: Colors.grey),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
