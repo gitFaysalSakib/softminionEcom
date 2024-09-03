@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Ssystem_Architecture/View/payment_method_screen/select_payment_methods.dart';
-import 'package:softminion/Ssystem_Architecture/View/user_address_screens/add_shipping_address_category_controller.dart';
-import 'package:softminion/Ssystem_Architecture/View/user_address_screens/select_shipping_address_page.dart';
+import 'package:softminion/Ssystem_Architecture/View/user_all_data_pages/user_shipping_address_screen/add_shipping_address_category_controller.dart';
+import 'package:softminion/Ssystem_Architecture/View/user_all_data_pages/user_shipping_address_screen/select_shipping_address_page.dart';
 import 'package:softminion/all_test_class.dart';
 import 'package:softminion/widgets/custom_floating_text_field.dart';
 

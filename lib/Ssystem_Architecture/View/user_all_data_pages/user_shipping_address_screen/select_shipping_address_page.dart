@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:softminion/Ssystem_Architecture/View/user_address_screens/add_shipping_address_form.dart';
+import 'package:softminion/Ssystem_Architecture/View/user_all_data_pages/user_shipping_address_screen/add_shipping_address_form.dart';
 
 class SelectShippingAddressPage extends StatelessWidget {
   @override

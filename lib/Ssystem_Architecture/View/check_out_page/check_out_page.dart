@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Ssystem_Architecture/Model/add%20to%20cart/cart_item_model.dart';
-import 'package:softminion/Ssystem_Architecture/View/user_address_screens/select_shipping_address_page.dart';
+import 'package:softminion/Ssystem_Architecture/View/user_all_data_pages/user_shipping_address_screen/select_shipping_address_page.dart';
 import 'package:softminion/widgets/customBottomNavigation_Similler_AddCart_Placeorder_Type_widget.dart';
 
 class CheckoutPage extends StatelessWidget {

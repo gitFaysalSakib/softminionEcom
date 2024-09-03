@@ -17,13 +17,14 @@ class ProductcardItemWidget extends StatelessWidget {
     return SizedBox(
       height: double.infinity,
       width: 150.h,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        // alignment: Alignment.topLeft,
         children: [
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              height: 160.h,
+              height: 180.h,
               child: Stack(
                 alignment: Alignment.center,
                 children: [
@@ -80,34 +81,68 @@ class ProductcardItemWidget extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              width: 150.h,
-              padding: EdgeInsets.all(8.h),
-              // color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Obx(() => Text(homeProductModel.brandName!.value,
-                      style: TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.normal))),
 
-                  Obx(() => Text(homeProductModel.item!.value,
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold))),
-                  Obx(() => Text(homeProductModel.newPrice!.value,
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red))),
+          //   image text placement code..... first Postitioned widget comment for try new code....
+          // Positioned(
+          //   //bottom: 0,
+          //   child: Container(
+          //     width: 150.h,
+          //     padding: EdgeInsets.all(8.h),
+          //     // color: Colors.white,
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         Obx(() => Text(homeProductModel.brandName!.value,
+          //             style: TextStyle(
+          //                 fontSize: 10, fontWeight: FontWeight.normal))),
+          //         Obx(() => Text(homeProductModel.item!.value,
+          //             style: TextStyle(
+          //                 fontSize: 16, fontWeight: FontWeight.bold))),
+          //         Obx(() => Text(homeProductModel.newPrice!.value,
+          //             style: TextStyle(
+          //                 fontSize: 14,
+          //                 fontWeight: FontWeight.bold,
+          //                 color: Colors.red))),
+          //         Obx(() => Text(homeProductModel.newPrice!.value,
+          //             style: TextStyle(
+          //                 fontSize: 14,
+          //                 fontWeight: FontWeight.bold,
+          //                 color: Colors.red))),
+          //         Obx(() => Text(homeProductModel.newPrice!.value,
+          //             style: TextStyle(
+          //                 fontSize: 14,
+          //                 fontWeight: FontWeight.bold,
+          //                 color: Colors.red))),
+          //       ],
+          //     ),
+          //   ),
+          // ),
 
-                  // Obx(() => Text(homeProductModel.ratingNumber!.value,
-                  //     style: TextStyle(fontSize: 12.w, color: Colors.grey))),
-                ],
-              ),
-            ),
+          /// new code for Positioned ......
+
+          //top: 190.h, // Position the text under the image
+          SizedBox(
+            height: 10.h,
           ),
+          Obx(() => Text(homeProductModel.brandName!.value,
+              style: TextStyle(fontSize: 10, fontWeight: FontWeight.normal))),
+          Obx(() => Text(homeProductModel.item!.value,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+          Obx(() => Text(homeProductModel.newPrice!.value,
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red))),
+          Obx(() => Text(homeProductModel.newPrice!.value,
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red))),
+          Obx(() => Text(homeProductModel.newPrice!.value,
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red))),
         ],
       ),
     );

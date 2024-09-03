@@ -7,7 +7,9 @@ import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/category_bo
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/favorites_bottom_page/favorites_bottom_screen.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/home_bottom_screen_page.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/homepage_test.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_bottom_screen_page.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/profile_bottom_page/profile_bottom_screen.dart';
+import 'package:softminion/Ssystem_Architecture/View/user_all_data_pages/user_profile_screen/user_first_profile_page.dart';
 import 'package:softminion/widgets/custom_bottom_main_page_navigationbar.dart';
 
 class AllBottomScreenAdd extends StatelessWidget {
@@ -15,12 +17,14 @@ class AllBottomScreenAdd extends StatelessWidget {
       Get.put(NavigationController());
 
   final List<Widget> pages = [
-    HomeBottomScreen(),
+    // HomeBottomScreen(),
+    HomeBottomScreenTWO(),
     CategoriesBottomScreen(),
     //CardBottomScreen(),
     MyCartPage(),
     FavoritesBottomScreen(),
-    ProfileBottomScreen(),
+    UserFirstProfilePage()
+    //ProfileBottomScreen(),
   ];
 
   @override

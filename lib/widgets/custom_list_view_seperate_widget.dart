@@ -84,7 +84,7 @@ class CustomProductListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => SizedBox(
-        height: 266.h,
+        height: 300.h,
         width: double.infinity, // Adjust the height according to your need
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 0.h),

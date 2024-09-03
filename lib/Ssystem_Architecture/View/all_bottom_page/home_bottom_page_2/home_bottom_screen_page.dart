@@ -23,6 +23,17 @@ class HomeBottomScreenTWO extends StatelessWidget {
     print("home bottom screen");
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Row(
+            children: [
+              Expanded(
+                  child:
+                      _buildSearchBar()), // Search bar widget aligned to the left
+            ],
+          ),
+          backgroundColor: Colors.white, // AppBar background color
+          automaticallyImplyLeading: false, // Remove default back button
+        ),
         resizeToAvoidBottomInset: false,
         body: Column(
           children: [
@@ -79,12 +90,42 @@ class HomeBottomScreenTWO extends StatelessWidget {
                     ),
                     SizedBox(height: 20.h),
                     _buildSaletitleWithProductVieww(),
-                    _buildNewtitleWithProductVieww(), //_buildSubtitleWithProductVieww(),
+                    _buildNewtitleWithProductVieww(),
+                    _buildSubtitleWithProductVieww1(),
+                    _buildSubtitleWithProductVieww2(),
                   ],
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSearchBar() {
+    return Padding(
+      padding:
+          EdgeInsets.only(left: 0, right: 50), // Padding for the search bar
+      child: Container(
+        height: 48.0, // Fixed height to make it square-shaped
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0), // Rounded corners
+          border: Border.all(
+            color: Colors.red, // Red border color
+            width: 3.0, // Increase the width to make the border bold
+          ),
+        ),
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: "Search...",
+            hintStyle: TextStyle(color: Colors.grey),
+            border: InputBorder.none, // No default border
+            contentPadding:
+                EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            prefixIcon: Icon(Icons.search, color: Colors.grey), // Search icon
+          ),
         ),
       ),
     );
@@ -190,6 +231,48 @@ class HomeBottomScreenTWO extends StatelessWidget {
                 // Add any other text or widgets if needed
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSubtitleWithProductVieww1() {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(
+        left: 10.h,
+        right: 6.h,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _builtSaleTitle(),
+          CustomProductListView(
+            itemBuilder: (context, model) {
+              return ProductcardItemWidget(model);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSubtitleWithProductVieww2() {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(
+        left: 10.h,
+        right: 6.h,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _builtSaleTitle(),
+          CustomProductListView(
+            itemBuilder: (context, model) {
+              return ProductcardItemWidget(model);
+            },
           ),
         ],
       ),
