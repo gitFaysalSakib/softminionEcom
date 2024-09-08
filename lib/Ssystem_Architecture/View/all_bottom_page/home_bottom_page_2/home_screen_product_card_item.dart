@@ -133,16 +133,20 @@ class ProductcardItemWidget extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: Colors.red))),
-          Obx(() => Text(homeProductModel.newPrice!.value,
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red))),
-          Obx(() => Text(homeProductModel.newPrice!.value,
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red))),
+          Obx(() => Text(homeProductModel.brandName!.value,
+              style: TextStyle(fontSize: 10, fontWeight: FontWeight.normal))),
+          Obx(() => Text(homeProductModel.demoText!.value,
+              style: TextStyle(fontSize: 10, fontWeight: FontWeight.normal))),
+          // Obx(() => Text(homeProductModel.newPrice!.value,
+          //     style: TextStyle(
+          //         fontSize: 14,
+          //         fontWeight: FontWeight.bold,
+          //         color: Colors.red))),
+          // Obx(() => Text(homeProductModel.newPrice!.value,
+          //     style: TextStyle(
+          //         fontSize: 14,
+          //         fontWeight: FontWeight.bold,
+          //         color: Colors.red))),
         ],
       ),
     );

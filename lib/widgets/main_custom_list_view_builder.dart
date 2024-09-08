@@ -65,7 +65,7 @@ class CustomProductListViewNew<T> extends StatelessWidget {
   CustomProductListViewNew({
     required this.items,
     required this.itemBuilder,
-    this.height = 266.0,
+    this.height = 300.0,
     this.scrollDirection = Axis.horizontal,
     required this.onItemTap, // Initialize callback
   });

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:softminion/API%20Service/shopesmama_api.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Core/utils/sizer.dart';
+import 'package:softminion/Ssystem_Architecture/Controller/shopes_mama/shopes_mama_controller.dart';
 import 'package:softminion/Ssystem_Architecture/View/add%20to%20cart/my_cart_page_view.dart';
 import 'package:softminion/Ssystem_Architecture/View/login/login_screen.dart';
 import 'package:softminion/widgets/app_bar/custom_app_bar.dart';
@@ -160,12 +162,15 @@ Widget _buildNavigationbar(BuildContext context) {
   );
 }
 
+final ApiService apiService = ApiService();
+final DataController dataController = Get.put(DataController());
+
 Widget _signUpButton(BuildContext context) {
   return CustomButton(
     isLoading: false,
     text: "SIGN UP",
     onPressed: () {
-      Get.to(() => LoginScreen());
+      dataController; // Just call the function here
     },
   );
 }

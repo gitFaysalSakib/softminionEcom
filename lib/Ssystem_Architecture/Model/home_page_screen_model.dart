@@ -40,6 +40,8 @@ import 'package:softminion/Core/utils/image_constant.dart';
 import 'home_page_productItemmodel.dart';
 
 class HomePageScreenModel {
+  late final RxList<HomePageProductItemModel> productCardItemList;
+
   HomePageScreenModel() {
     productCardItemList = [
       HomePageProductItemModel(
@@ -53,7 +55,7 @@ class HomePageScreenModel {
         demoText: "3.4 (756)  | 13.9K sold".obs,
       ),
       HomePageProductItemModel(
-        image: ImageConstant.card2.obs,
+        image: ImageConstant.nike.obs,
         ratingNumber: "(0)".obs,
         brandName: "OVS".obs,
         item: "Blouse".obs,
@@ -114,6 +116,4 @@ class HomePageScreenModel {
       ),
     ].obs;
   }
-
-  late final RxList<HomePageProductItemModel> productCardItemList;
 }

@@ -78,7 +78,7 @@ class _UserFirstProfilePageState extends State<UserFirstProfilePage> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Iconsax.setting1, color: Colors.grey[800]),
+            icon: Icon(Iconsax.setting, color: Colors.grey[800]),
             onPressed: () {
               Get.to(ProfileSettingContentView());
               // Navigate to settings page

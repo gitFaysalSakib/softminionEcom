@@ -846,6 +846,34 @@ Widget _buildReviewsTab() {
   );
 }
 
+Widget _buildSearchBar() {
+  return Padding(
+    padding:
+        EdgeInsets.symmetric(horizontal: 16.h), // Padding for the search bar
+    child: Container(
+      height: 48.0, // Fixed height to make it square-shaped
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.0), // Rounded corners
+        border: Border.all(
+          color: Colors.red, // Red border color
+          width: 3.0, // Increase the width to make the border bold
+        ),
+      ),
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: "Search...",
+          hintStyle: TextStyle(color: Colors.grey),
+          border: InputBorder.none, // No default border
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          prefixIcon: Icon(Icons.search, color: Colors.grey), // Search icon
+        ),
+      ),
+    ),
+  );
+}
+
 Widget _buildSpecificationsTab() {
   return Padding(
     padding: EdgeInsets.all(16.0),

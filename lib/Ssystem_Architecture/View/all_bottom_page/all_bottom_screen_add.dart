@@ -17,7 +17,7 @@ class AllBottomScreenAdd extends StatelessWidget {
       Get.put(NavigationController());
 
   final List<Widget> pages = [
-    // HomeBottomScreen(),
+    //HomeBottomScreen(),
     HomeBottomScreenTWO(),
     CategoriesBottomScreen(),
     //CardBottomScreen(),

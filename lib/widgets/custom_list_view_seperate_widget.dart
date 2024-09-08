@@ -95,10 +95,6 @@ class CustomProductListView extends StatelessWidget {
               separatorBuilder: (context, index) {
                 return SizedBox(
                   width: 16.h,
-                  // child: Divider(
-                  //   color: Colors.grey,
-                  //   thickness: 5,
-                  // ),
                 );
               },
               itemCount: homePageScrenController

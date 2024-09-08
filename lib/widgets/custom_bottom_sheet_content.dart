@@ -25,7 +25,7 @@ class _CustomLargeBottomSheetContentState
   final List<Map<String, String>> colorItems = [
     {'image': 'assets/images/r.jpg', 'name': 'Red'},
     {'image': 'assets/images/y.jpg', 'name': 'Yellow'},
-    {'image': 'assets/images/b.jpg', 'name': 'Blue'},
+    {'image': 'assets/images/bluepng.png', 'name': 'Blue'},
     {'image': 'assets/images/p.jpg', 'name': 'Pink'},
     {'image': 'assets/images/g.jpg', 'name': 'Green'},
     {'image': 'assets/images/bl.jpg', 'name': 'Black'},
