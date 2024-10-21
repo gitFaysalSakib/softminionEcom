@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:softminion/Core/import_file_all.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Core/utils/sizer.dart';
-import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/all_bottom_screen_add.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/connect_all_bottom_page/all_bottom_screen_add.dart';
 import 'package:softminion/theme/custom_text_style.dart';
 import 'package:softminion/theme/theme_helper.dart';
 import 'package:softminion/widgets/app_bar/app_bar_leading_image.dart';
@@ -105,22 +105,22 @@ Widget _buildNavigationbar(BuildContext context) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomAppBar(
-          leadingWidth: 50,
-          action: [
-            IconButton(
-              icon: Icon(Icons.more_vert),
-              onPressed: () {},
-            ),
-          ],
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Get.back();
-              // Handle back button press
-            },
-          ),
-        ),
+        // CustomAppBar(
+        //   leadingWidth: 50,
+        //   action: [
+        //     IconButton(
+        //       icon: Icon(Icons.more_vert),
+        //       onPressed: () {},
+        //     ),
+        //   ],
+        //   leading: IconButton(
+        //     icon: Icon(Icons.arrow_back),
+        //     onPressed: () {
+        //       Get.back();
+        //       // Handle back button press
+        //     },
+        //   ),
+        // ),
         SizedBox(height: 30.h),
         Padding(
           padding: EdgeInsets.only(
@@ -138,23 +138,6 @@ Widget _buildNavigationbar(BuildContext context) {
     ),
   );
 }
-
-// Widget _signUpButton(BuildContext context) {
-//     CustomButton customButton = CustomButton(text: '',);
-
-//   return CustomButton(
-//     backgroundColor: customButton.backgroundColor,
-//     //textStyle: TextStyle(color: Colors.white),
-//     borderRadius: BorderRadius.circular(8.0),
-//     icon: Icon(Icons.login, color: Colors.white),
-//     isLoading: false,
-//     text: "SEND",
-//     onPressed: () {
-
-//     },
-
-//   );
-// }
 
 Widget _sendButton(BuildContext context) {
   //  CustomButton customButton = CustomButton(text: "",);

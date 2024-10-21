@@ -1,148 +1,182 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:softminion/Ssystem_Architecture/View/payment_method_screen/select_payment_methods.dart';
-import 'package:softminion/Ssystem_Architecture/View/user_all_data_pages/user_shipping_address_screen/add_shipping_address_category_controller.dart';
-import 'package:softminion/Ssystem_Architecture/View/user_all_data_pages/user_shipping_address_screen/select_shipping_address_page.dart';
-import 'package:softminion/all_test_class.dart';
+import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/user_address_controller.dart';
+import 'package:softminion/Ssystem_Architecture/Model/all_class_model/customer_sign_up_and_address_model.dart';
 import 'package:softminion/widgets/custom_floating_text_field.dart';
 
 class AddShippingAddressForm extends StatelessWidget {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController regionCityController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  // TextEditingControllers for each field in the Shipping model
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController address1Controller = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
 
-  final AddressCategoryController controller =
-      Get.put(AddressCategoryController()); // Initialize the controller
+  AddShippingAddressForm({Key? key}) : super(key: key) {
+    // Fetch address on widget initialization
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    await userAddressController.fetchCustomerDetailsControlleer();
+    if (userAddressController.customer.value != null &&
+        userAddressController.customer.value.shipping != null) {
+      final shipping = userAddressController.customer.value.shipping;
+
+      // Explicitly cast or use toString() for null safety
+      firstNameController.text =
+          (userAddressController.customer.value.firstName ?? "").toString();
+      address1Controller.text = (shipping.value?.address ?? '').toString();
+      phoneController.text = (shipping.value?.phone ?? '').toString();
+    }
+  }
+
+  // TextEditingControllers for Billing fields
+  final TextEditingController billingFirstNameController =
+      TextEditingController();
+  final TextEditingController billingAddressController =
+      TextEditingController();
+  final TextEditingController billingPhoneController = TextEditingController();
+
+  final UserAddressController userAddressController =
+      Get.put(UserAddressController());
+  // State to manage the checkbox
+  final RxBool isBillingSameAsShipping = false.obs;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Shipping Address',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+        title: Text(
+          'Add Shipping Address',
+          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => Get.to(SelectShippingAddressPage()),
+          onPressed: () => Get.back(),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  // Name field
-                  CustomFloatingTextField(
-                    controller: nameController,
-                    labelText: 'Recipients Name *',
-                    hintText: 'Input the real name',
-                    textLevel: Colors.red,
-                  ),
-                  SizedBox(height: 16.0),
+      body: Obx(() {
+        if (userAddressController.isLoading.value) {
+          return Center(child: CircularProgressIndicator());
+        }
 
-                  // Phone number field
-                  CustomFloatingTextField(
-                    controller: phoneNumberController,
-                    labelText: 'Phone Number *',
-                    textLevel: Colors.red,
-                    hintText: 'Enter your phone number',
-                  ),
-                  SizedBox(height: 16.0),
+        // Check if customer data is available
+        if (userAddressController.customer.value.shipping == null) {
+          // Handle case where there is no shipping data
+          return Center(child: Text("No customer shipping data found."));
+        }
 
-                  // Region/City field
-                  CustomFloatingTextField(
-                    controller: regionCityController,
-                    labelText: 'Region/City/District *',
-                    hintText: 'Enter your Region or City or District',
-                    textLevel: Colors.red,
-                  ),
-                  SizedBox(height: 16.0),
+        // The rest of your widget code
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: FocusScope(
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: [
+                      CustomFloatingTextField(
+                        controller: firstNameController,
+                        labelText: 'First Name *',
+                        hintText: 'Enter first name',
+                        textLevel: Colors.red,
+                      ),
+                      SizedBox(height: 16.0),
+                      CustomFloatingTextField(
+                        controller: address1Controller,
+                        labelText: 'Address *',
+                        hintText: 'Enter address line',
+                        textLevel: Colors.red,
+                      ),
+                      SizedBox(height: 16.0),
+                      CustomFloatingTextField(
+                        controller: phoneController,
+                        labelText: 'Phone Number *',
+                        hintText: 'Enter phone number',
+                        textLevel: Colors.red,
+                      ),
+                      SizedBox(height: 16.0),
 
-                  // Address field
-                  CustomFloatingTextField(
-                    controller: addressController,
-                    labelText: 'Address *',
-                    hintText: 'House no./building/street/area',
-                    textLevel: Colors.red,
-                  ),
-                  SizedBox(height: 16.0),
+                      // Checkbox for billing address
+                      Obx(() {
+                        return CheckboxListTile(
+                          title: Text(
+                              "Billing address is the same as shipping address"),
+                          value: isBillingSameAsShipping.value,
+                          onChanged: (bool? value) {
+                            isBillingSameAsShipping.value = value ?? false;
 
-                  // Address Category with Radio Buttons
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Address Category *',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.red),
-                        ),
-                        SizedBox(
-                            width:
-                                16.0), // Space between text and radio buttons
-                        Expanded(
-                          child: Obx(
-                            () => Row(
-                              children: [
-                                Radio<String>(
-                                  activeColor: Colors.red,
-                                  value: 'Home',
-                                  groupValue: controller.selectedCategory.value,
-                                  onChanged: (value) {
-                                    controller.updateCategory(value!);
-                                  },
-                                ),
-                                Text('Home'),
-                                SizedBox(width: 16.0),
-                                Radio<String>(
-                                  activeColor: Colors.red,
-                                  value: 'Office',
-                                  groupValue: controller.selectedCategory.value,
-                                  onChanged: (value) {
-                                    controller.updateCategory(value!);
-                                  },
-                                ),
-                                Text('Office'),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                            if (isBillingSameAsShipping.value) {
+                              // Autofill billing fields if checkbox is checked
+                              billingFirstNameController.text =
+                                  firstNameController.text;
+                              billingAddressController.text =
+                                  address1Controller.text;
+                              billingPhoneController.text =
+                                  phoneController.text;
+                            } else {
+                              // Clear billing fields if checkbox is unchecked
+                              billingFirstNameController.clear();
+                              billingAddressController.clear();
+                              billingPhoneController.clear();
+                            }
+                          },
+                        );
+                      }),
+
+                      // Billing fields
+                      CustomFloatingTextField(
+                        controller: billingFirstNameController,
+                        labelText: 'Billing First Name *',
+                        hintText: 'Enter billing first name',
+                        textLevel: Colors.red,
+                      ),
+                      SizedBox(height: 16.0),
+                      CustomFloatingTextField(
+                        controller: billingAddressController,
+                        labelText: 'Billing Address *',
+                        hintText: 'Enter billing address line',
+                        textLevel: Colors.red,
+                      ),
+                      SizedBox(height: 16.0),
+                      CustomFloatingTextField(
+                        controller: billingPhoneController,
+                        labelText: 'Billing Phone Number *',
+                        hintText: 'Enter billing phone number',
+                        textLevel: Colors.red,
+                      ),
+
+                      SizedBox(height: 16.0),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Shipping updatedShipping = Shipping(
+                        firstName: firstNameController.text,
+                        address: address1Controller.text,
+                        phone: phoneController.text,
+                      );
+                      Billing updateBilling = Billing(
+                        firstName: billingFirstNameController.text,
+                        address: billingAddressController.text,
+                        phone: billingPhoneController.text,
+                      );
+                      //  Call the update method in the controller
+                      userAddressController.updateCustomerDetails(
+                          updatedShipping, updateBilling);
+
+                      //Get.toNamed('/select-shipping-address');
+                    },
+                    child: Text('Submit Address'),
+                  ),
+                ),
+              ],
             ),
           ),
-          // Outlined Button at the bottom
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              width: double.infinity, // Full width of the screen
-              child: OutlinedButton(
-                onPressed: () {
-                  Get.to(SelectPaymentMethod());
-                },
-                child: Text(
-                  'Save',
-                  style: TextStyle(fontSize: 20.0, color: Colors.white),
-                ),
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  side: BorderSide(color: Colors.red, width: 2.0),
-                  padding: EdgeInsets.symmetric(
-                      vertical: 16.0), // Increase the height
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+        );
+      }),
     );
   }
 }

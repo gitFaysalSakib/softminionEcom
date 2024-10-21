@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/customer_login_controller.dart';
 import 'package:softminion/Ssystem_Architecture/View/user_all_data_pages/user_profile_screen/user_profile_information_view_edit.dart';
+import 'package:softminion/card_all/local_storage_card_data.dart';
 
 class ProfileSettingContentView extends StatelessWidget {
+  final LoginController loginController = Get.find();
+  final LocalStorageServiceCartItem storage =
+      Get.put(LocalStorageServiceCartItem());
+  void logProcess() {
+    storage.clearCart();
+    loginController.logout();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +78,11 @@ class ProfileSettingContentView extends StatelessWidget {
               // Navigate to messages page
             },
           ),
+          ElevatedButton(
+              onPressed: () {
+                logProcess();
+              },
+              child: Text("out"))
         ],
       ),
     );

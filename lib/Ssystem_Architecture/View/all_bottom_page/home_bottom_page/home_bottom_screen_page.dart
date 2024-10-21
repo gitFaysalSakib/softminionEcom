@@ -3,15 +3,9 @@ import 'package:get/get.dart';
 import 'package:softminion/Core/utils/image_constant.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/home_page_scren_controller.dart';
-import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/demo_product_card_details.dart';
-import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_bottom_screen_page.dart';
-import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_screen_product_card_item.dart';
-import 'package:softminion/all_test_class.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_screen/home_bottom_screen_page.dart';
 import 'package:softminion/widgets/custom_image_view.dart';
 import 'package:softminion/widgets/custom_button_field.dart';
-import 'package:softminion/Ssystem_Architecture/Model/home_page_productItemmodel.dart';
-import 'package:softminion/widgets/custom_list_view_seperate_widget.dart';
-import 'package:softminion/widgets/main_custom_list_view_builder.dart';
 
 class HomeBottomScreen extends StatelessWidget {
   HomeBottomScreen({
@@ -23,7 +17,6 @@ class HomeBottomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("home bottom screen");
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -94,89 +87,6 @@ class HomeBottomScreen extends StatelessWidget {
     );
   }
 
-  // Widget _buildSubtitleWithProductView() {
-  //   return Container(
-  //     width: double.infinity,
-  //     margin: EdgeInsets.only(
-  //       left: 14.h,
-  //       right: 6.h,
-  //     ),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         SizedBox(
-  //           width: double.infinity,
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //             children: [
-  //               SizedBox(
-  //                 width: double.infinity,
-  //                 child: Row(
-  //                   mainAxisAlignment: MainAxisAlignment.center,
-  //                   children: [
-  //                     Expanded(
-  //                       child: Column(
-  //                         crossAxisAlignment: CrossAxisAlignment.start,
-  //                         children: [
-  //                           Text(
-  //                             "New",
-  //                             style: TextStyle(
-  //                                 color: Colors.black,
-  //                                 fontWeight: FontWeight.bold,
-  //                                 fontSize: 40),
-  //                           ),
-  //                           SizedBox(height: 2.h),
-  //                           Text(
-  //                             "You've never seen it before!",
-  //                             style: TextStyle(
-  //                                 color: Color.fromARGB(255, 88, 87, 87),
-  //                                 fontSize: 12),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //               // SizedBox(height: 22.h),
-  //               CustomProductListView(
-  //                 itemBuilder: (context, model) {
-  //                   return ProductcardItemWidget(model);
-  //                 },
-  //               ),
-
-  //               // Obx(
-  //               //   () => SizedBox(
-  //               //     height: 266.h,
-  //               //     width: double
-  //               //         .infinity, // Adjust the height according to your need
-  //               //     child: ListView.separated(
-  //               //       scrollDirection: Axis.horizontal,
-  //               //       separatorBuilder: (context, index) {
-  //               //         return SizedBox(
-  //               //           width: 16.h,
-  //               //         );
-  //               //       },
-  //               //       itemCount: homePageScrenController
-  //               //           .homePageScreenModel.value.productCardItemList.length,
-  //               //       itemBuilder: (context, index) {
-  //               //         HomePageProductItemModel model = homePageScrenController
-  //               //             .homePageScreenModel
-  //               //             .value
-  //               //             .productCardItemList[index];
-  //               //         return ProductcardItemWidget(model);
-  //               //       },
-  //               //     ),
-  //               //   ),
-  //               // ),
-  //             ],
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   Widget _buildSubtitleWithProductVieww() {
     return Container(
       width: double.infinity,
@@ -237,23 +147,6 @@ class HomeBottomScreen extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          CustomProductListViewNew<HomePageProductItemModel>(
-            items: homePageScrenController
-                .homePageScreenModel.value.productCardItemList,
-            itemBuilder: (context, model) {
-              return DEMOProductcardItemWidget(
-                model,
-                showORnotShowWidgets: true,
-              );
-            },
-            onItemTap: (homeProductModel) {
-              Get.to(() => DEMOProductcardItemWidget(
-                    homeProductModel,
-                    isSingleProductView: true,
-                    showORnotShowWidgets: false,
-                  ));
-            },
           ),
         ],
       ),

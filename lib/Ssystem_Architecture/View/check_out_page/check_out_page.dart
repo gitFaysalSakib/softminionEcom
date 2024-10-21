@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:softminion/Ssystem_Architecture/Model/add%20to%20cart/cart_item_model.dart';
+import 'package:softminion/Ssystem_Architecture/View/payment_method_screen/select_payment_methods.dart';
 import 'package:softminion/Ssystem_Architecture/View/user_all_data_pages/user_shipping_address_screen/select_shipping_address_page.dart';
+import 'package:softminion/Token_Manage/token_check_auth_middleware.dart';
+import 'package:softminion/card_all/add_to_cart_model.dart';
 import 'package:softminion/widgets/customBottomNavigation_Similler_AddCart_Placeorder_Type_widget.dart';
 
 class CheckoutPage extends StatelessWidget {
-  final List<CartItem> products;
+  final List<CartItemLocalStorageModel> cardItemsCheckout;
 
-  const CheckoutPage({
+  CheckoutPage({
     Key? key,
-    required this.products,
+    required this.cardItemsCheckout,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double totalAmount = products.fold(
+    double totalAmount = cardItemsCheckout.fold(
       0.0,
-      (sum, item) => sum + (item.price * item.quantity),
+      (sum, item) => sum + (item.total * item.quantity),
     );
-    int totalQuantity = products.fold(0, (sum, item) => sum + item.quantity);
+    int totalQuantity =
+        cardItemsCheckout.fold(0, (sum, item) => sum + item.quantity);
 
     return Scaffold(
       appBar: AppBar(
@@ -70,9 +73,10 @@ class CheckoutPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: ListView.builder(
-                itemCount: products.length,
+                itemCount: cardItemsCheckout.length,
                 itemBuilder: (context, index) {
-                  final product = products[index];
+                  final cartItemController = cardItemsCheckout[index];
+
                   return Container(
                     margin:
                         EdgeInsets.only(bottom: 16.0), // Margin between items
@@ -101,8 +105,8 @@ class CheckoutPage extends StatelessWidget {
                             // Product Image
                             ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                product.imageUrl,
+                              child: Image.network(
+                                cartItemController.imageUrls[0],
                                 width: 80.0,
                                 height: 80.0,
                                 fit: BoxFit.cover,
@@ -115,7 +119,7 @@ class CheckoutPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    product.title,
+                                    cartItemController.title,
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold,
@@ -123,7 +127,7 @@ class CheckoutPage extends StatelessWidget {
                                   ),
                                   SizedBox(height: 8.0),
                                   Text(
-                                    '\$${product.price.toStringAsFixed(2)}',
+                                    '\$${cartItemController.total.toStringAsFixed(2)}',
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold,
@@ -135,7 +139,7 @@ class CheckoutPage extends StatelessWidget {
                             ),
                             // Quantity
                             Text(
-                              'Qty: ${product.quantity}',
+                              'Qty: ${cartItemController.quantity}',
                               style: TextStyle(
                                 fontSize: 14.0,
                                 color: Colors.grey[700],
@@ -144,13 +148,6 @@ class CheckoutPage extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 8.0),
-                        Text(
-                          'Color: ${product.color}, Size: ${product.size}',
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.grey[600],
-                          ),
-                        ),
                       ],
                     ),
                   );
@@ -166,23 +163,7 @@ class CheckoutPage extends StatelessWidget {
         totalQuantity: totalQuantity,
         onToggleSelectAll: (bool? value) {}, // No action needed here
         onCheckoutPressed: () {
-          // Define your checkout action here, such as confirming the order
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Please add an address!',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: Colors.green,
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              margin: EdgeInsets.symmetric(horizontal: 50.0, vertical: 10.0),
-              duration: Duration(seconds: 2),
-            ),
-          );
+          Get.to(SelectPaymentMethodPage());
         },
         amountLabel: 'Total', // Change label to "Total"
         buttonText: 'Place Order', // Change button text as needed

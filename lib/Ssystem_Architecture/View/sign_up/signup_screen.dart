@@ -1,176 +1,204 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:softminion/API%20Service/shopesmama_api.dart';
-import 'package:softminion/Core/utils/size_utils.dart';
-import 'package:softminion/Core/utils/sizer.dart';
-import 'package:softminion/Ssystem_Architecture/Controller/shopes_mama/shopes_mama_controller.dart';
-import 'package:softminion/Ssystem_Architecture/View/add%20to%20cart/my_cart_page_view.dart';
+import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/customer_sign_up_controller.dart';
 import 'package:softminion/Ssystem_Architecture/View/login/login_screen.dart';
-import 'package:softminion/widgets/app_bar/custom_app_bar.dart';
 import 'package:softminion/widgets/custom_button_field.dart';
 import 'package:softminion/widgets/custom_floating_text_field.dart';
 
 class SignupScreen extends StatelessWidget {
   SignupScreen({Key? key}) : super(key: key);
 
-  CustomFloatingText customFloatingText = CustomFloatingText();
+  final SignupController signupController = Get.put(SignupController());
 
-  GlobalKey<FormState> _fromState = GlobalKey<FormState>();
-
-  // @override
-  TextEditingController nameController = TextEditingController();
-  TextEditingController editingController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  // Controllers for the form fields
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (context, orientation, deviceType) {
-        return SafeArea(
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SingleChildScrollView(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-              child: Form(
-                key: _fromState,
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min, // Use MainAxisSize.min
-                    children: [
-                      _buildNavigationbar(context),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.w, vertical: 12.h),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 58.h),
-                            _nameTextFieldWidget(context),
-                            SizedBox(height: 20.h),
-                            _emailTextFieldWidget(context),
-                            SizedBox(height: 20.h),
-                            _passwordTextFieldWidget(context),
-                            SizedBox(height: 20.h),
-                            _buildAllReadyAccountText(context),
-                            SizedBox(height: 20.h),
-                            _signUpButton(context),
-                            SizedBox(height: 20.h),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildAllReadyAccountText(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      margin: EdgeInsets.symmetric(horizontal: 6.w),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Text(
-            "Already have an account?",
-          )
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sign Up'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Get.back(),
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _nameTextField(),
+            SizedBox(height: 10.0),
+            _usernameTextField(),
+            SizedBox(height: 10.0),
+            _emailTextField(),
+            SizedBox(height: 10.0),
+            _passwordTextField(),
+            SizedBox(height: 20.0),
+            _signUpButton(),
+            SizedBox(height: 20.0),
+            _buildAlreadyAccountText(),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _nameTextFieldWidget(BuildContext context) {
-    return CustomFloatingTextField(
-      controller: nameController,
-      labelText: "Name",
-      labelStyle: customFloatingText.labelStyle,
-      hintText: "Name",
-      hintStyle: customFloatingText.hintStyle,
-      prefixIcon: Icon(Icons.person),
-    );
-  }
-
-  Widget _emailTextFieldWidget(BuildContext context) {
-    return CustomFloatingTextField(
-      controller: editingController,
-      labelText: "Email",
-      labelStyle: customFloatingText.labelStyle,
-      hintText: "Email",
-      hintStyle: customFloatingText.hintStyle,
-      prefixIcon: Icon(Icons.email),
-    );
-  }
-
-  Widget _passwordTextFieldWidget(BuildContext context) {
-    return CustomFloatingTextField(
-      controller: passwordController,
-      labelText: "Password",
-      labelStyle: customFloatingText.labelStyle,
-      hintText: "Password",
-      hintStyle: customFloatingText.hintStyle,
-      prefixIcon: Icon(Icons.password),
-    );
-  }
-}
-
-Widget _buildNavigationbar(BuildContext context) {
-  print("app bar");
-  return Container(
-    width: double.maxFinite,
-    margin: EdgeInsets.symmetric(horizontal: 8.w),
-    child: Column(
+  Widget _nameTextField() {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomAppBar(
-          leadingWidth: 50,
-          action: [
-            IconButton(
-              icon: Icon(Icons.more_vert),
-              onPressed: () {},
-            ),
-          ],
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Get.back();
-            },
-          ),
+        CustomFloatingTextField(
+          controller: nameController,
+          labelText: "Name",
+          hintText: "Enter your name",
+          prefixIcon: const Icon(Icons.person),
+          onChanged: (value) {
+            // Clear error when user starts typing
+            signupController.nameError.value = '';
+          },
         ),
-        SizedBox(height: 30.h),
-        Padding(
-            padding: EdgeInsets.only(
-                left:
-                    6.w), // Ensure 'w' is defined in your responsive extension
-            child: Text(
-              "Sign up",
-              style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.normal),
-            ))
+        Obx(() {
+          // Display error if name is invalid
+          return signupController.nameError.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Text(
+                    signupController.nameError.value,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                )
+              : const SizedBox.shrink();
+        }),
       ],
-    ),
-  );
-}
+    );
+  }
 
-final ApiService apiService = ApiService();
-final DataController dataController = Get.put(DataController());
+  Widget _usernameTextField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CustomFloatingTextField(
+          controller: usernameController,
+          labelText: "Username",
+          hintText: "Enter your username",
+          prefixIcon: const Icon(Icons.person),
+          onChanged: (value) {
+            // Clear error when user starts typing
+            signupController.usernameError.value = '';
+          },
+        ),
+        Obx(() {
+          // Display error if username is invalid
+          return signupController.usernameError.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Text(
+                    signupController.usernameError.value,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                )
+              : const SizedBox.shrink();
+        }),
+      ],
+    );
+  }
 
-Widget _signUpButton(BuildContext context) {
-  return CustomButton(
-    isLoading: false,
-    text: "SIGN UP",
-    onPressed: () {
-      dataController; // Just call the function here
-    },
-  );
+  Widget _emailTextField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CustomFloatingTextField(
+          controller: emailController,
+          labelText: "Email",
+          hintText: "Enter your email",
+          prefixIcon: const Icon(Icons.email),
+          onChanged: (value) {
+            // Clear error when user starts typing
+            signupController.emailError.value = '';
+          },
+        ),
+        Obx(() {
+          // Display error if email is invalid
+          return signupController.emailError.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Text(
+                    signupController.emailError.value,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                )
+              : const SizedBox.shrink();
+        }),
+      ],
+    );
+  }
+
+  Widget _passwordTextField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CustomFloatingTextField(
+          controller: passwordController,
+          labelText: "Password",
+          hintText: "Enter your password",
+          prefixIcon: const Icon(Icons.lock),
+          obscureText: true, // To hide the password input
+          onChanged: (value) {
+            // Clear error when user starts typing
+            signupController.passwordError.value = '';
+          },
+        ),
+        Obx(() {
+          // Display error if password is invalid
+          return signupController.passwordError.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Text(
+                    signupController.passwordError.value,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                )
+              : const SizedBox.shrink();
+        }),
+      ],
+    );
+  }
+
+  Widget _signUpButton() {
+    return Obx(() {
+      return signupController.isLoading.value
+          ? const CircularProgressIndicator() // Show loader while signing up
+          : CustomButton(
+              text: "SIGN UP",
+              onPressed: () {
+                signupController.signUp(
+                  emailController.text,
+                  nameController.text,
+                  usernameController.text,
+                  passwordController.text,
+                );
+              },
+            );
+    });
+  }
+
+  Widget _buildAlreadyAccountText() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        const Text("Already have an account?"),
+        TextButton(
+          onPressed: () {
+            Get.to(LoginScreen()); // Navigate to the login screen
+          },
+          child: const Text("Login"),
+        ),
+      ],
+    );
+  }
 }

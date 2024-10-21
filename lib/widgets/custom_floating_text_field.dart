@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+
 class CustomFloatingTextField extends StatelessWidget {
-  CustomFloatingTextField(
-      {Key? key,
-      this.controller,
-      this.hintText,
-      this.hintStyle,
-      this.labelText,
-      this.labelStyle,
-      this.prefixIcon,
-      this.suffixIcon,
-      this.isDense = true,
-      this.obscureText = false,
-      this.prefixIconConstraints,
-      this.suffixIconConstraints,
-      this.autofocus = false,
-      this.textInputAction,
-      this.fillColor,
-      this.contentPadding,
-      this.textHint = Colors.black,
-      this.textLevel = Colors.black})
-      : super(key: key);
+  CustomFloatingTextField({
+    Key? key,
+    this.controller,
+    this.hintText,
+    this.hintStyle,
+    this.labelText,
+    this.labelStyle,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.isDense = true,
+    this.obscureText = false,
+    this.prefixIconConstraints,
+    this.suffixIconConstraints,
+    this.autofocus = false,
+    this.textInputAction,
+    this.fillColor,
+    this.contentPadding,
+    this.textHint = Colors.black,
+    this.textLevel = Colors.black,
+    this.onChanged, // Add the onChanged parameter here
+  }) : super(key: key);
 
   final TextEditingController? controller;
   final String? hintText;
@@ -38,6 +41,7 @@ class CustomFloatingTextField extends StatelessWidget {
   final Color? fillColor;
   final Color textHint;
   final Color textLevel;
+  final ValueChanged<String>? onChanged; // Declare the onChanged callback
 
   final EdgeInsets? contentPadding;
 
@@ -48,6 +52,7 @@ class CustomFloatingTextField extends StatelessWidget {
       obscureText: obscureText,
       autofocus: autofocus,
       textInputAction: textInputAction,
+      onChanged: onChanged, // Pass the onChanged callback to the TextFormField
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: hintStyle ?? TextStyle(color: textHint),
@@ -59,7 +64,7 @@ class CustomFloatingTextField extends StatelessWidget {
         suffixIconConstraints: suffixIconConstraints,
         isDense: isDense,
         contentPadding: contentPadding ??
-            EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
+            const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
         fillColor: fillColor ?? Colors.white,
         filled: true,
         border: OutlineInputBorder(

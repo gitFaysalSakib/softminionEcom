@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:softminion/Core/import_file_all.dart';
-import 'package:softminion/Ssystem_Architecture/View/add%20to%20cart/my_cart_page_view.dart';
+import 'package:softminion/card_all/add_to_cart_controller.dart';
+import 'package:softminion/card_all/add_to_cart_item_view_build.dart';
 
 class CustomAppBarForSearchBarAndCartIcon extends StatelessWidget
     implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(60.0);
+  final CartController cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +19,13 @@ class CustomAppBarForSearchBarAndCartIcon extends StatelessWidget
       title: Row(
         children: [
           IconButton(
-            icon: Icon(Iconsax.backward, color: Colors.red),
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.red,
+              size: 40,
+            ),
             onPressed: () {
-              Get.back();
+              Get.offAllNamed('/');
             },
           ),
           Expanded(
@@ -49,12 +54,44 @@ class CustomAppBarForSearchBarAndCartIcon extends StatelessWidget
               ),
             ),
           ),
-          IconButton(
-            icon: Icon(Iconsax.shopping_cart, color: Colors.red),
-            onPressed: () {
-              Get.to(MyCartPage());
-            },
-          ),
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(Iconsax.shopping_cart, color: Colors.red),
+                onPressed: () {
+                  Get.to(CartView());
+                },
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: Obx(() {
+                  return cartController.cartItemCount > 0
+                      ? Container(
+                          padding: EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: 16,
+                            minHeight: 16,
+                          ),
+                          child: Text(
+                            '${cartController.cartItemCount}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      : SizedBox.shrink();
+                }),
+              ),
+            ],
+          )
         ],
       ),
     );

@@ -6,11 +6,13 @@ import 'package:softminion/Ssystem_Architecture/Controller/bottom_navigation_con
 import 'package:softminion/widgets/custom_icon.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
+  // Get the existing instance of NavigationController
   final NavigationController navigationController =
-      Get.put(NavigationController());
+      Get.find<NavigationController>();
 
   @override
   Widget build(BuildContext context) {
+    navigationController.getCurrentPage();
     return Obx(() {
       return Container(
         height: 60.h,
@@ -35,7 +37,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
           currentIndex: navigationController.selectedIndex.value,
           onTap: (index) {
             navigationController.changeIndex(index);
-            print(navigationController.selectedIndex.value);
+            //navigationController.getCurrentPage();
+            // Log the selected index for debugging
+            // print(
+            //     "Selected Index: ${navigationController.selectedIndex.value}");
           },
           items: [
             BottomNavigationBarItem(
