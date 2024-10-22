@@ -8,6 +8,8 @@ class ApiEndpoints {
   static const String createOrder = 'wp-json/wc/v3/orders';
   static const String categoriesEndPoint = 'wp-json/wc/v3/products/categories';
   static const String singleProductVariation = 'wp-json/wc/v3/products';
+  static const String productAttributes = 'wp-json/wc/v3/products/attributes';
+
   // Method to generate product variation URL dynamically
   static String getSingleProductVariation(int productId) {
     return '$singleProductVariation/$productId/variations';

@@ -20,7 +20,6 @@ class PaymentMethodController extends GetxController {
       var data = await apiService.fetchData();
       if (data.isNotEmpty) {
         dataList.assignAll(data.cast<PaymentMethodModel>());
-        // Set the first method as default or set a default ID
         selectedMethodId.value = dataList.first.id ?? '';
       } else {
         print("No data found.");

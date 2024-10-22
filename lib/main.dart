@@ -50,11 +50,6 @@ class MyApp extends StatelessWidget {
         ),
 
         GetPage(
-          name: '/grid_view_product',
-          page: () => AllProductScreen(),
-        ),
-
-        GetPage(
           name: '/product_details',
           page: () {
             final productId = Get.arguments['productId'];

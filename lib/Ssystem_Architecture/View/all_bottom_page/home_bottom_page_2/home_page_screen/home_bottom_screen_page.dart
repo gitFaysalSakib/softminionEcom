@@ -10,6 +10,7 @@ import 'package:softminion/Ssystem_Architecture/Controller/bottom_navigation_con
 import 'package:softminion/Ssystem_Architecture/Controller/home_page_scren_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Model/all_class_model/all_products_list_model.dart';
 import 'package:softminion/Ssystem_Architecture/View/All%20Product%20View%20Page/all_product_screen.dart';
+import 'package:softminion/Ssystem_Architecture/View/All%20Product%20View%20Page/product_display.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_widget/home_page_category_widget.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_widget/home_page_cloth_item_show_widget.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_widget/home_page_featured_item_show_widget.dart';
@@ -88,9 +89,10 @@ class HomeBottomScreenTWO extends StatelessWidget {
                       onTap: () {
                         // Get.to(AllProductScreen());
                         // Add your navigation logic here
-                        final NavigationController navigationController =
-                            Get.put(NavigationController());
-                        navigationController.selectedIndex.value = 5;
+                        // final NavigationController navigationController =
+                        //     Get.put(NavigationController());
+                        // navigationController.selectedIndex.value = 5;
+                        Get.to(ProductDisplay());
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment

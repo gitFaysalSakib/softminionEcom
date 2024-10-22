@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:softminion/API%20Service/api_services/all_products_list_api.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/categories_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Model/all_class_model/all_products_list_model.dart';
-import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_widget/home_page_cloth_item_show_widget.dart';
 
 class AllProductListController extends GetxController {
   var isLoading = true.obs;
@@ -18,6 +17,7 @@ class AllProductListController extends GetxController {
   RxBool isEvenForTwoRowDisplay = false.obs;
   RxBool isEvenForOneRowDisplay = false.obs;
   var isLoadingMore = false.obs;
+  var searchText = ''.obs; // Add search text as observable
 
   var page = 1; // Current page
   var perPage = 12; // Items per page
@@ -63,8 +63,16 @@ class AllProductListController extends GetxController {
         isLoadingMore(true);
       } else {
         isLoading(true);
+        page = 1;
       }
-      var data = await apiService.fetchData(page: page, perPage: perPage);
+      // var data = await apiService.fetchData(page: page, perPage: perPage);
+      // Pass the search query to the API service
+      var data = await apiService.fetchData(
+        page: page,
+        perPage: perPage,
+        searchQuery: searchText.value, // Pass search query to the API
+      );
+
       if (data.isNotEmpty) {
         if (loadMore) {
           dataList.addAll(data); // Append new data for pagination

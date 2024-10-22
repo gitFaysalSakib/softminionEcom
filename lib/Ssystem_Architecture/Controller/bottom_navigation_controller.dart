@@ -23,7 +23,9 @@ class NavigationController extends GetxController {
     CartView(),
     FavoritesBottomScreen(),
     UserFirstProfilePage(),
-    AllProductScreen()
+    //ProductDisplay()
+
+    //AllProductScreen()
   ];
 
   // Method to change the index and navigate

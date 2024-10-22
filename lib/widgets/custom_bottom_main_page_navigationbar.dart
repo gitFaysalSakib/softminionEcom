@@ -12,9 +12,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    navigationController.getCurrentPage();
-    return Obx(() {
-      return Container(
+    // navigationController.getCurrentPage();
+
+    return Container(
         height: 60.h,
         decoration: BoxDecoration(
           color: Colors.transparent,
@@ -47,7 +47,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
               icon: CustomIcon(
                 icon: Iconsax.home,
                 unselectedColor: Colors.black,
-                isSelected: navigationController.selectedIndex.value == 0,
+                isSelected:
+                    navigationController.selectedIndex.value > 4 ? false : true,
               ),
               label: 'Home',
             ),
@@ -84,8 +85,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
               label: 'Profile',
             ),
           ],
-        ),
-      );
-    });
+        ));
   }
 }
