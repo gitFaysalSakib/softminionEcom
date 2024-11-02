@@ -53,20 +53,48 @@ class ApiServiceAllProductsList {
     int? page,
     int? perPage,
     String? searchQuery, // Optional search query
+    int? categoryId, // Optional category ID for filtering
+    List<String>? attributes, // Optional list of selected attribute values
   }) async {
-    // Build the URI with search query if provided
-    Uri uri = Uri.parse('$baseUrl?page=$page&per_page=$perPage');
+    // Build the query parameters
+    Map<String, String> queryParams = {
+      'page': page.toString(),
+      'per_page': perPage.toString(),
+    };
+
+    // Add the search query if provided
     if (searchQuery != null && searchQuery.isNotEmpty) {
-      uri = uri.replace(queryParameters: {
-        ...uri.queryParameters,
-        'search': searchQuery, // Add search query to parameters
-      });
+      queryParams['search'] = searchQuery;
     }
 
+    // Add the category ID if provided
+    if (categoryId != null) {
+      queryParams['category'] = categoryId.toString();
+    }
+
+    // Add the attributes as a comma-separated string if provided
+    if (attributes != null && attributes.isNotEmpty) {
+      queryParams['attributes'] = attributes.join(',');
+    }
+
+    // Build the final URI with the query parameters
+    Uri uri = Uri.parse(baseUrl).replace(queryParameters: queryParams);
+    // Build the URI with search query if provided
     final response = await http.get(
       uri,
       headers: AppEnvironment.headers,
     );
+    // if (searchQuery != null && searchQuery.isNotEmpty) {
+    //   uri = uri.replace(queryParameters: {
+    //     ...uri.queryParameters,
+    //     'search': searchQuery, // Add search query to parameters
+    //   });
+    // }
+
+    // final response = await http.get(
+    //   uri,
+    //   headers: AppEnvironment.headers,
+    // );
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);

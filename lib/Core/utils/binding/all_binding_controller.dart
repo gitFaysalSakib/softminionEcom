@@ -4,6 +4,7 @@ import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/all_pr
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/categories_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/customer_login_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/customer_sign_up_controller.dart';
+import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/product_attributes_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/product_variation_controller.dart';
 import 'package:softminion/Token_Manage/token_check_auth_middleware.dart';
 import 'package:softminion/Token_Manage/token_store.dart';
@@ -21,8 +22,9 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => LoginController());
     Get.lazyPut(() => SignupController());
 
-    Get.lazyPut(() => AuthMiddleware());
+    Get.lazyPut<AuthMiddleware>(() => AuthMiddleware());
     Get.lazyPut(() => TokenService());
     Get.lazyPut(() => CategoriesController());
+    Get.lazyPut(() => ProductAttributesController());
   }
 }

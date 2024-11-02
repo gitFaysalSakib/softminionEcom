@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:softminion/API%20Service/api_services/all_products_list_api.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/categories_controller.dart';
+import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/product_attributes_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Model/all_class_model/all_products_list_model.dart';
 
 class AllProductListController extends GetxController {
@@ -12,6 +13,8 @@ class AllProductListController extends GetxController {
   var filterGamesProduct = <AllProductsListModel>[].obs;
 
   final ApiServiceAllProductsList apiService = ApiServiceAllProductsList();
+  final ProductAttributesController productAttributesController =
+      Get.put(ProductAttributesController());
   final CategoriesController categoryController =
       Get.put(CategoriesController()); // Get CategoriesController
   RxBool isEvenForTwoRowDisplay = false.obs;
@@ -21,6 +24,12 @@ class AllProductListController extends GetxController {
 
   var page = 1; // Current page
   var perPage = 12; // Items per page
+
+  // New variables to store the selected category and attributes
+  var selectedCategoryId = Rxn<int>();
+  var selectedCategoryaName = Rxn<String>();
+
+  var selectedAttributes = <String>[].obs;
 
   @override
   void onInit() async {
@@ -55,6 +64,59 @@ class AllProductListController extends GetxController {
   //     isLoading(false);
   //   }
   // }
+  // Set selected category from UI
+  void setSelectedCategory(int categoryId) {
+    selectedCategoryId.value = categoryId;
+  }
+
+  void setSelectedCategoryName(String categoryName) {
+    selectedCategoryaName.value = categoryName;
+  }
+
+  // Set selected attributes from UI
+  void setSelectedAttributes(List<String> attributes) {
+    selectedAttributes.assignAll(attributes);
+  }
+
+  //attributtes, category all filter search .....
+
+  Future<void> fetchDataFromApiServiceWithAttributesAndOthers(
+      {bool loadMore = false}) async {
+    try {
+      if (loadMore) {
+        isLoadingMore(true);
+      } else {
+        isLoading(true);
+        page = 1;
+      }
+      // var data = await apiService.fetchData(page: page, perPage: perPage);
+      // Pass the search query to the API service
+      var data = await apiService.fetchData(
+        searchQuery: searchText.value,
+        page: page,
+        perPage: perPage,
+        categoryId: selectedCategoryId.value,
+        attributes: productAttributesController.selectedCheckBoxAttributeValues
+            .toList(),
+      );
+
+      if (data.isNotEmpty) {
+        if (loadMore) {
+          dataList.addAll(data); // Append new data for pagination
+        } else {
+          dataList.assignAll(data); // First-time fetch
+        }
+        page++; // Increment page for next load
+      } else {
+        print("No more products.");
+      }
+    } catch (e) {
+      print("Error fetching data: $e");
+    } finally {
+      isLoading(false);
+      isLoadingMore(false);
+    }
+  }
 
   Future<void> fetchDataFromApiServicePageSetDynamically(
       {bool loadMore = false}) async {
@@ -78,7 +140,6 @@ class AllProductListController extends GetxController {
           dataList.addAll(data); // Append new data for pagination
         } else {
           dataList.assignAll(data); // First-time fetch
-          print(page);
         }
         page++; // Increment page for next load
       } else {
@@ -104,6 +165,9 @@ class AllProductListController extends GetxController {
           return product.type.any(
               (category) => category.id.value == featuredCategoryId.toString());
         }).toList());
+
+        print(
+            "frreeeeeeeeeeeeeeeeeeeeeeeeeeee: ${filteredProductsForFeatured.length}");
 
         if (filteredProductsForFeatured.isNotEmpty) {
           bool isEven = filteredProductsForFeatured.length % 2 == 0;

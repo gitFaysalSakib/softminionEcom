@@ -6,10 +6,7 @@ import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/all_pr
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/categories_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/customer_sign_up_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/payment_method_controller.dart';
-import 'package:softminion/Ssystem_Architecture/Controller/bottom_navigation_controller.dart';
-import 'package:softminion/Ssystem_Architecture/Controller/home_page_scren_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Model/all_class_model/all_products_list_model.dart';
-import 'package:softminion/Ssystem_Architecture/View/All%20Product%20View%20Page/all_product_screen.dart';
 import 'package:softminion/Ssystem_Architecture/View/All%20Product%20View%20Page/product_display.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_widget/home_page_category_widget.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_widget/home_page_cloth_item_show_widget.dart';
@@ -18,14 +15,15 @@ import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_widget/home_screen_product_card_item.dart';
 import 'package:softminion/Token_Manage/token_store.dart';
 import 'package:softminion/widgets/app_bar/custom_app_bar.dart';
+import 'package:softminion/widgets/custom_carousol_banner/carousol_banner.dart';
 import 'package:softminion/widgets/custom_image_view.dart';
 import 'package:softminion/widgets/List_builder_horizontal/custom_list_view_horizontal_home_page2.dart';
 
 class HomeBottomScreenTWO extends StatelessWidget {
   HomeBottomScreenTWO({Key? key}) : super(key: key);
 
-  final HomePageScrenController homePageScrenController =
-      Get.put(HomePageScrenController());
+  // final HomePageScrenController homePageScrenController =
+  //     Get.put(HomePageScrenController());
 
   final AllProductListController allProductadataController =
       Get.put(AllProductListController());
@@ -41,95 +39,87 @@ class HomeBottomScreenTWO extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Row(
-            children: [
-              Expanded(child: CustomAppBar()),
-              //_buildSearchBar()), // Search bar widget aligned to the left
-            ],
-          ),
-          backgroundColor: Colors.white, // AppBar background color
-          automaticallyImplyLeading: false, // Remove default back button
-        ),
-        resizeToAvoidBottomInset: false,
-        body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: Stack(
-                        alignment: Alignment.topCenter,
-                        children: [
-                          _buildimageView(context),
-                          // CustomAppBar()
-                        ],
-                      ),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0), // Set app bar height
+        child: CustomAppBar(), // Use the custom app bar here
+      ),
+      resizeToAvoidBottomInset: false,
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        _buildimageView(context),
+                        // CustomAppBar()
+                      ],
                     ),
-                    SizedBox(height: 20.h),
-                    // Add your category buttons here
-                    HomePageCategoryWidget(),
-                    SizedBox(height: 20.h),
+                  ),
+                  SizedBox(height: 20.h),
+                  // Add your category buttons here
+                  HomePageCategoryWidget(),
+                  SizedBox(height: 20.h),
 
-                    FeaturedCategoriesProductItemShow(),
-                    SizedBox(height: 20.h),
+                  FeaturedCategoriesProductItemShow(),
+                  SizedBox(height: 20.h),
 
-                    ClothCategoriesProductItemShow(),
-                    SizedBox(height: 20.h),
-                    GamesCategoriesProductItemShow(),
-                    SizedBox(height: 20.h),
+                  ClothCategoriesProductItemShow(),
+                  SizedBox(height: 20.h),
+                  GamesCategoriesProductItemShow(),
+                  SizedBox(height: 20.h),
 
-                    GestureDetector(
-                      onTap: () {
-                        // Get.to(AllProductScreen());
-                        // Add your navigation logic here
-                        // final NavigationController navigationController =
-                        //     Get.put(NavigationController());
-                        // navigationController.selectedIndex.value = 5;
-                        Get.to(ProductDisplay());
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment
-                            .center, // Center the "View More" text
-                        children: [
-                          Text(
-                            "View All",
-                            style: TextStyle(
-                              fontSize: 18, // Slightly larger font for emphasis
-                              color: Colors.red
-                                  .shade700, // Darker shade for more subtlety
-                              fontWeight: FontWeight.bold, // Make it stand out
-                              letterSpacing:
-                                  0.5, // Add a little spacing between letters for readability
-                            ),
+                  GestureDetector(
+                    onTap: () {
+                      // Get.to(AllProductScreen());
+                      // Add your navigation logic here
+                      // final NavigationController navigationController =
+                      //     Get.put(NavigationController());
+                      // navigationController.selectedIndex.value = 5;
+                      Get.to(ProductDisplay());
+                      allProductadataController
+                          .fetchDataFromApiServicePageSetDynamically();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment
+                          .center, // Center the "View More" text
+                      children: [
+                        Text(
+                          "View All",
+                          style: TextStyle(
+                            fontSize: 18, // Slightly larger font for emphasis
+                            color: Colors
+                                .red.shade700, // Darker shade for more subtlety
+                            fontWeight: FontWeight.bold, // Make it stand out
+                            letterSpacing:
+                                0.5, // Add a little spacing between letters for readability
                           ),
-                          SizedBox(
-                              width: 5), // Space between the text and the icon
-                          Icon(
-                            Icons.arrow_forward_ios, // Use a forward arrow icon
-                            size:
-                                16, // Smaller icon size to complement the text
-                            color: Colors.red, // Match the color of the text
-                          ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                            width: 5), // Space between the text and the icon
+                        Icon(
+                          Icons.arrow_forward_ios, // Use a forward arrow icon
+                          size: 16, // Smaller icon size to complement the text
+                          color: Colors.red, // Match the color of the text
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 20.h),
+                  ),
+                  SizedBox(height: 20.h),
 
-                    // _buildSubtitleWithProductVieww1(),
-                    // _buildSubtitleWithProductVieww2(),
-                  ],
-                ),
+                  // _buildSubtitleWithProductVieww1(),
+                  // _buildSubtitleWithProductVieww2(),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -452,11 +442,16 @@ class HomeBottomScreenTWO extends StatelessWidget {
   // }
 
   Widget _buildimageView(BuildContext context) {
-    return CustomImageView(
-      imagePath: ImageConstant.homePageImage,
-      width: double.infinity,
-      height: 150.h,
-      alignment: Alignment.topCenter,
+    return CustomCarouselSlider(
+      images: [
+        'assets/images/banner1.png',
+        'assets/images/banner2.png',
+        'assets/images/banner3.png',
+        'assets/images/banner4.png',
+        'assets/images/banner6.png',
+      ],
+      height: 150.0,
+      autoPlay: true,
     );
   }
 }

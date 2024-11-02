@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/all_product_list_controller.dart';
+import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/product_attributes_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/product_variation_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Model/all_class_model/all_products_list_model.dart';
 import 'package:softminion/widgets/attributes_bottom_sheet/customLargeBottomSheet_Update_Widget_FromAPi.dart';
+import 'package:softminion/widgets/attributes_bottom_sheet/selectedOption_Updated.controller.dart';
 import 'package:softminion/widgets/custom_bottom_button_navigator.dart';
 import 'package:softminion/widgets/custom_image_view.dart';
 import 'package:softminion/widgets/custom_search_bar_with_icon_use_appbar.dart';
@@ -43,6 +45,40 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
   AllProductsListModel? _homeProductModel;
   final ProductVariationController variationController =
       Get.put(ProductVariationController());
+  final ProductAttributesController attributesController =
+      Get.find<ProductAttributesController>();
+  final SelectedoptionUpdatedController selectedoptionUpdatedController =
+      Get.put(SelectedoptionUpdatedController());
+
+  var firstOptionsIndexValue = <String>[].obs;
+  var secondOptionsIndexValue = <String>[].obs;
+
+  // After fetching _homeProductModel data, assign values to firstOptionsIndexValue
+  void fetchFirstOptions() {
+    firstOptionsIndexValue.value = _homeProductModel!.attributes
+        .map((attribute) =>
+            attribute.options.isNotEmpty ? attribute.options.first : null)
+        .where((option) => option != null)
+        .cast<String>() // Ensures type consistency
+        .toList();
+    print("ffffff");
+    // print(firstOptionsIndexValue);
+  }
+
+// Fetch the second option value from each attribute's options list, if available
+  void fetchSecondOptions() {
+    secondOptionsIndexValue.value = _homeProductModel!.attributes
+        .map((attribute) => attribute.options.length > 1
+            ? attribute.options[1]
+            : null) // Access second item if it exists
+        .where((option) => option != null)
+        .cast<
+            String>() // Filter out null values, in case some lists are too short
+        .toList();
+    print("ssssssssss");
+
+    //print(secondOptionsIndexValue);
+  }
 
   int getProductIndex() {
     return allProductadataController.dataList.indexOf(_homeProductModel);
@@ -67,9 +103,28 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
     );
   }
 
+  // void updateSelectedOptions() {
+  //   print("noooooooooooooooooooooooooooooooooooooooooo");
+  //   if (_homeProductModel != null) {
+  //     var convert = _homeProductModel!.id.value.toString();
+  //     print(convert);
+  //   }
+
+  //   // await variationController
+  //   //     .fetchProductVariations(int.parse(_homeProductModel!.id.value));
+
+  //   // if (variationController.variationList.isEmpty) {
+  //   //   selectedoptionUpdatedController.selectedOptions.value =
+  //   //       List.filled(_homeProductModel!.attributes.length, 0);
+
+  //   //   print(selectedoptionUpdatedController.selectedOptions);
+  //   // }
+  // }
+
   @override
   void initState() {
     super.initState();
+
     _tabController = TabController(length: 3, vsync: this);
     _fetchProductById(widget.productId);
     variationController.fetchProductVariations(int.parse(widget.productId));
@@ -77,6 +132,9 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
     // if (allProductadataController.dataList.isNotEmpty) {
     //   print(allProductadataController.dataList.length);
     // }
+
+    fetchFirstOptions();
+    fetchSecondOptions();
   }
 
   @override
@@ -254,14 +312,35 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
                             ),
                             SizedBox(height: 20.h),
                             Obx(() {
-                              if (variationController.variationList.isEmpty) {
-                                return Center(
-                                  child: Text(
-                                    "No variations available",
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 16), // Adjust as needed
-                                  ),
+                              if (firstOptionsIndexValue.isEmpty ||
+                                  secondOptionsIndexValue.isEmpty) {
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: firstOptionsIndexValue.map((value) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 4.0, left: 20),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 6.0, horizontal: 10.0),
+                                        decoration: BoxDecoration(
+                                          color: Colors.red[
+                                              100], // Light red background for highlighting
+                                          borderRadius: BorderRadius.circular(
+                                              8), // Rounded edges
+                                        ),
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(
+                                            color: Colors.red, // Red text color
+                                            fontSize: 16, // Adjust as needed
+                                            fontWeight: FontWeight
+                                                .bold, // Bold font for emphasis
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
                                 );
                               }
                               return GestureDetector(

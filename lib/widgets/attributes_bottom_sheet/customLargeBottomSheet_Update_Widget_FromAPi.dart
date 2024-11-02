@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/all_product_list_controller.dart';
+import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/product_attributes_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/product_variation_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Model/all_class_model/all_products_list_model.dart';
 import 'package:softminion/Token_Manage/token_check_auth_middleware.dart';
@@ -10,6 +11,8 @@ import 'package:softminion/card_all/add_to_cart_controller.dart';
 import 'package:softminion/service_controller/product_details_bottom_sheet_logic/add_to_cart_button_logic.dart';
 import 'package:softminion/service_controller/product_details_bottom_sheet_logic/attributes_change_update_price.dart';
 import 'package:softminion/service_controller/product_details_bottom_sheet_logic/fetch_pro_price_set_attributes_logic.dart';
+import 'package:softminion/widgets/attributes_bottom_sheet/first_index_value_check_controller.dart';
+import 'package:softminion/widgets/attributes_bottom_sheet/selectedOption_Updated.controller.dart';
 import 'package:softminion/widgets/custom_bottom_button_navigator.dart';
 
 class CustomLargeBottomSheetContentUpdateWithApi extends StatefulWidget {
@@ -35,21 +38,23 @@ class _CustomLargeBottomSheetContentUpdateWithApiState
   final AllProductListController productController = Get.find();
   final ProductVariationController variationController = Get.find();
   final CartController cartController = Get.find();
-  final AuthMiddleware authMiddleware = Get.find();
+  final AuthMiddleware authMiddleware = Get.put(AuthMiddleware());
   final TokenService tokenService = Get.find();
   final AddToCartButtonLogic cartAttributes = AddToCartButtonLogic();
   final DefaultVariationFinder fetchPriceAttributs = DefaultVariationFinder();
   final PriceUpdater priceUpdater;
+  final SelectedoptionUpdatedController selcectController =
+      Get.put(SelectedoptionUpdatedController());
 
   _CustomLargeBottomSheetContentUpdateWithApiState()
       : priceUpdater = PriceUpdater(
             variationController: Get.find<ProductVariationController>());
 
   // Track selected options for attributes
-  var selectedOptions = <int>[].obs;
+  //var selectedOptions = <int>[].obs;
 
   // To display the updated price
-  String currentPrice = "";
+  var currentPrice = "".obs;
   // RxString currentPriceTest = "".obs;
   String currentVariationId = "";
 
@@ -61,23 +66,37 @@ class _CustomLargeBottomSheetContentUpdateWithApiState
     super.initState();
 
     var product = productController.dataList[widget.productIndex];
-    selectedOptions.value = List.filled(product.attributes.length, -1);
+
+    selcectController.selectedOptions.value =
+        List.filled(product.attributes.length, -1);
 
     // Ensure the UI is drawn first, then call the function to find the default variation
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       int productid = int.parse(product.id.value);
-      await variationController.fetchProductVariations(productid);
 
-      // Use the new DefaultVariationFinder class to find the default variation
-      await fetchPriceAttributs.findAndSetDefaultVariation(
-        defaultPrice: product.price.value.toString(),
-        product: product,
-        selectedOptions: selectedOptions,
-      );
+      await variationController.fetchProductVariations(productid);
+      // await fetchPriceAttributs.findAndSetDefaultVariation(
+      //   defaultPrice: product.price.value.toString(),
+      //   product: product,
+      //   selectedOptions: selcectController.selectedOptions,
+      // );
+
+      if (variationController.variationList.isEmpty) {
+        selcectController.selectedOptions.value =
+            List.filled(product.attributes.length, 0);
+      } else {
+        // Use the new DefaultVariationFinder class to find the default variation
+        await fetchPriceAttributs.findAndSetDefaultVariation(
+          defaultPrice: product.price.value.toString(),
+          product: product,
+          selectedOptions: selcectController.selectedOptions,
+        );
+      }
 
       // Set current price and update loading state
       setState(() {
-        currentPrice = product.price.value.toString();
+        currentPrice.value = product.price.value.toString();
+
         isLoading = false; // Stop showing the loading indicator
       });
     });
@@ -93,7 +112,20 @@ class _CustomLargeBottomSheetContentUpdateWithApiState
 
     if (isLoggedIn) {
       _addToCart(product);
-      Navigator.pop(context);
+      final secondOptionsIndexValue = product.attributes
+          .map((attribute) => attribute.options.length > 1
+              ? attribute.options[1]
+              : null) // Access second item if it exists
+          .where((option) =>
+              option !=
+              null) // Filter out null values, in case some lists are too short
+          .toList();
+      print("ddffffffffffffffffffffffffffffffff");
+      print(secondOptionsIndexValue);
+      if (secondOptionsIndexValue.isEmpty) {
+      } else {
+        Navigator.pop(context);
+      }
     } else {
       Get.snackbar(
         'Login Required',
@@ -115,29 +147,36 @@ class _CustomLargeBottomSheetContentUpdateWithApiState
   void _addToCart(AllProductsListModel product) {
     //  var product = productController.dataList[widget.productIndex];
 
+    // Check if currentPrice is empty and assign the product price if needed
+    if (currentPrice.value.isEmpty) {
+      currentPrice.value = product.price.value.toString();
+    }
     cartAttributes.addToCart(
         product: product,
-        selectedOptions: selectedOptions,
-        currentPrice: currentPrice,
+        selectedOptions: selcectController.selectedOptions,
+        currentPrice: currentPrice.value,
         currentVariationId: currentVariationId);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Added to cart successfully!'),
-      ),
-    );
+    // Check if the widget is mounted before showing the SnackBar
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Added to cart successfully!'),
+        ),
+      );
+    }
   }
 
   void fetchUpdatedPrice() async {
     Map<String, String> result = await priceUpdater.fetchUpdatedPrice(
       productController: productController,
       productIndex: widget.productIndex,
-      selectedOptions: selectedOptions,
+      selectedOptions: selcectController.selectedOptions,
     );
 
     // Update the state with the new price and variation ID
     setState(() {
-      currentPrice = result['price'] ?? '';
+      currentPrice.value = result['price'] ?? '';
       currentVariationId = result['variationId'] ?? '';
     });
   }
@@ -169,7 +208,7 @@ class _CustomLargeBottomSheetContentUpdateWithApiState
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(currentPrice,
+                        Text(currentPrice.value,
                             style: TextStyle(
                                 fontSize: 18.h,
                                 fontWeight: FontWeight.bold,
@@ -228,14 +267,15 @@ class _CustomLargeBottomSheetContentUpdateWithApiState
                             itemBuilder: (BuildContext context, int index) {
                               var option = attribute.options[index];
 
-                              bool isSelected =
-                                  selectedOptions[attributeIndex] == index;
+                              bool isSelected = selcectController
+                                      .selectedOptions[attributeIndex] ==
+                                  index;
 
                               return GestureDetector(
                                 onTap: () {
                                   // Update the selected option reactively
-                                  selectedOptions[attributeIndex] = index;
-                                  print(selectedOptions[attributeIndex]);
+                                  selcectController
+                                      .selectedOptions[attributeIndex] = index;
 
                                   // Fetch the updated price based on the new selection
                                   fetchUpdatedPrice();
@@ -319,10 +359,56 @@ void showCustomLargeBottomSheetWithAPI(
   String name,
   int productIndex,
 ) {
-  final ProductVariationController variationController = Get.find();
+  final SelectedoptionUpdatedController selcectController =
+      Get.put(SelectedoptionUpdatedController());
+  final FirstIndexValueCheckController indexFIrst =
+      Get.put(FirstIndexValueCheckController());
 
+  final AllProductListController productController = Get.find();
+  // Fetch the first option value from each attribute's options list
+  final firstOptionsIndexValue = productController
+      .dataList[productIndex].attributes
+      .map((attribute) =>
+          attribute.options.isNotEmpty ? attribute.options.first : null)
+      .where((option) =>
+          option !=
+          null) // Filter out null values, in case some options lists are empty
+      .toList();
+
+  // Fetch the second option value from each attribute's options list, if available
+  final secondOptionsIndexValue = productController
+      .dataList[productIndex].attributes
+      .map((attribute) => attribute.options.length > 1
+          ? attribute.options[1]
+          : null) // Access second item if it exists
+      .where((option) =>
+          option !=
+          null) // Filter out null values, in case some lists are too short
+      .toList();
+  //print(secondOptionsIndexValue);
   // Check if variation list is not empty
-  if (variationController.variationList.isNotEmpty) {
+  if (secondOptionsIndexValue.isEmpty) {
+    // print(firstOptionsIndexValue);
+    // print(secondOptionsIndexValue);
+
+    // If there are no variations, proceed with adding the product to the cart
+    final product = productController.dataList[productIndex];
+    selcectController.selectedOptions.value = firstOptionsIndexValue
+        .map((value) =>
+            int.tryParse(value ?? '0') ??
+            0) // Convert each item to an int, defaulting to 0 if parsing fails
+        .toList();
+
+    final state = Get.put(_CustomLargeBottomSheetContentUpdateWithApiState());
+    state.checkUserLoginAndRedirect(context, product);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Added to cart successfully!'),
+        duration: Duration(seconds: 1), // Keep message visible for 3 seconds
+      ),
+    );
+    // Call the method to check login and redirect
+  } else {
     // Show the modal bottom sheet if variations exist
     showModalBottomSheet(
       context: context,
@@ -334,12 +420,5 @@ void showCustomLargeBottomSheetWithAPI(
         productIndex: productIndex,
       ),
     );
-  } else {
-    // If there are no variations, proceed with adding the product to the cart
-    final AllProductListController productController = Get.find();
-    final product = productController.dataList[productIndex];
-    final state = Get.put(_CustomLargeBottomSheetContentUpdateWithApiState());
-    state.checkUserLoginAndRedirect(context, product);
-    // Call the method to check login and redirect
   }
 }

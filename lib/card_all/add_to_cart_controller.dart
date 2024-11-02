@@ -11,8 +11,6 @@ class CartController extends GetxController {
       (sum, item) => sum + (item.isSelected ? item.total * item.quantity : 0));
   int get cartItemCount => cartItems.length;
 
-  void printTotalPrice() {}
-
   // Load cart data from local storage when initializing the controller
   @override
   void onInit() {
@@ -43,10 +41,10 @@ class CartController extends GetxController {
   void loadCartFromLocalStorage() async {
     var savedCart = await LocalStorageServiceCartItem().getCart();
     cartItems.assignAll(savedCart);
-    cartItems.forEach((item) {
-      print(
-          'Item: ${item.title}, Quantity: ${item.quantity}, Price: ${item.total}, oid: ${item.productID},id: ${item.categoryID}');
-    });
+    // cartItems.forEach((item) {
+    //   print(
+    //       'Item: ${item.title}, Quantity: ${item.quantity}, Price: ${item.total}, oid: ${item.productID},id: ${item.categoryID}');
+    // });
   }
 
   // Toggle select all items

@@ -30,7 +30,8 @@ class PriceUpdater {
 
     // Get main price of the product
     String mainPrice = product.price.value.toString();
-    var variationIdFromWidget = variationController.variationList[productIndex];
+
+    // var variationIdFromWidget = variationController.variationList[productIndex];
 
     // Fetch the price and variationId from the fetchPriceForVariation method
     Map<String, String> result =
@@ -38,7 +39,7 @@ class PriceUpdater {
       productId: product.id.value,
       selectedAttributes: selectedAttributeValues,
       mainProductPrice: mainPrice,
-      variationId: variationIdFromWidget.id.value.toString(),
+      // variationId: variationIdFromWidget.id.value.toString(),
     );
 
     return {

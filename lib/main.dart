@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Core/utils/binding/all_binding_controller.dart';
 import 'package:softminion/Core/utils/sizer.dart';
-import 'package:softminion/Ssystem_Architecture/View/All%20Product%20View%20Page/all_product_screen.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/category_bottom_page/category_bottom_screen_new.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/connect_all_bottom_page/all_bottom_screen_add.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/favorites_bottom_page/favorites_bottom_screen.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/demo_product_card_details.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_screen/home_bottom_screen_page.dart';
 import 'package:softminion/Ssystem_Architecture/View/login/login_screen.dart';
 import 'package:softminion/Ssystem_Architecture/View/user_all_data_pages/user_all_order_details/user_all_order_details.dart';
 import 'package:softminion/Ssystem_Architecture/View/user_all_data_pages/user_profile_screen/user_first_profile_page.dart';
@@ -35,10 +37,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/login', page: () => LoginScreen()), // Login Screen
 
         GetPage(name: '/user-profile', page: () => UserFirstProfilePage()),
-        GetPage(
-          name: '/cart_list',
-          page: () => CartView(),
-        ),
+
         GetPage(
           name: '/select-shipping-address',
           page: () => SelectShippingAddressPage(),
@@ -47,6 +46,22 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/user_order_details',
           page: () => UserOrderDetailsPage(),
+        ),
+        GetPage(
+          name: '/app_home_page',
+          page: () => HomeBottomScreenTWO(),
+        ),
+        GetPage(
+          name: '/category_page',
+          page: () => CategoriesBottomScreen(),
+        ),
+        GetPage(
+          name: '/favourit_page',
+          page: () => FavoritesBottomScreen(),
+        ),
+        GetPage(
+          name: '/cart_list',
+          page: () => CartView(),
         ),
 
         GetPage(

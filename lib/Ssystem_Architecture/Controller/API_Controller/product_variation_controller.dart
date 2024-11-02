@@ -26,11 +26,10 @@ class ProductVariationController extends GetxController {
       var data = await apiService.fetchData(productId);
       if (data.isNotEmpty) {
         variationList.assignAll(data);
-
-        print(variationList.length);
       } else {
         // print(variationList.length);
-
+        print("0000000000000000000000000000000000000: currentPrice");
+        print(variationList.length);
         print("No product variations found.");
       }
     } catch (e) {
@@ -79,7 +78,7 @@ class ProductVariationController extends GetxController {
   // Fetch updated price based on selected options
   Future<Map<String, String>> fetchPriceForVariation({
     required String productId,
-    required String variationId,
+    // required String variationId,
     required Map<String, String> selectedAttributes,
     required String
         mainProductPrice, // Pass the main product price as a parameter

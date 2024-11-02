@@ -2,6 +2,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:softminion/card_all/add_to_cart_model.dart';
 
+// local storage create method how to save data or how to retrive data from local storage...
+//also how to updated local storage data and remove also...
+// so local storage create the function and we call this function from cart controller....
 class LocalStorageServiceCartItem {
   static final LocalStorageServiceCartItem _instance =
       LocalStorageServiceCartItem._internal();

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/all_product_list_controller.dart';
+import 'package:softminion/Ssystem_Architecture/View/All%20Product%20View%20Page/product_display.dart';
 import 'package:softminion/widgets/app_bar/app_bar_search_controller.dart/app_bar_search_controller.dart';
 
 class CustomAppBar extends StatelessWidget {
   final TextEditingController _searchController = TextEditingController();
   final AllProductListController allProductadataController =
       Get.find(); // Access the controller
+  final FocusNode _focusNode = FocusNode(); // Add a FocusNode
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class CustomAppBar extends StatelessWidget {
         Get.put(SearchControllerIconOfIconOn());
 
     return Container(
-      height: 56.0,
+      height: 110.0,
       color: Colors.white,
       child: AppBar(
         elevation: 0,
@@ -24,9 +26,11 @@ class CustomAppBar extends StatelessWidget {
         automaticallyImplyLeading: false,
         titleSpacing: 0,
         title: Obx(() {
+          bool isSearching = searchController.isSearching.value;
+
           return Row(
             children: [
-              searchController.isSearching.value
+              isSearching
                   ? Padding(
                       padding: const EdgeInsets.only(left: 4.0, right: 4.0),
                       child: IconButton(
@@ -34,23 +38,26 @@ class CustomAppBar extends StatelessWidget {
                         onPressed: () {
                           searchController.isSearching.value = false;
                           _searchController.clear();
+                          _focusNode
+                              .unfocus(); // Unfocus when back button is clicked
+
                           allProductadataController.searchText.value =
                               ''; // Clear search in controller
-                          allProductadataController
-                              .fetchDataFromApiServicePageSetDynamically(); // Refetch without search
+                          // allProductadataController
+                          //     .fetchDataFromApiServicePageSetDynamically(); // Refetch without search
                         },
                       ),
                     )
                   : Padding(
                       padding: const EdgeInsets.only(left: 16.0),
                       child: Image.asset(
-                        'assets/images/soft_remove_background.png',
-                        height: 60,
+                        'assets/images/Soft-Minion-Logo.png',
+                        height: 20,
                         fit: BoxFit.contain,
                       ),
                     ),
               Expanded(
-                child: searchController.isSearching.value
+                child: isSearching
                     ? Container(
                         margin: EdgeInsets.only(right: 8.0),
                         decoration: BoxDecoration(
@@ -87,8 +94,6 @@ class CustomAppBar extends StatelessWidget {
                                 onChanged: (text) {
                                   allProductadataController.searchText.value =
                                       text; // Update controller's searchText
-                                  print(allProductadataController
-                                      .searchText.value);
                                   allProductadataController
                                       .fetchDataFromApiServicePageSetDynamically(); // Fetch filtered data
                                 },
@@ -105,9 +110,12 @@ class CustomAppBar extends StatelessWidget {
                                 color: Colors.black, size: 28.0),
                             onPressed: () {
                               searchController.isSearching.value = true;
+                              _focusNode.requestFocus(); // Focus the TextField
+
+                              Get.to(() =>
+                                  ProductDisplay()); // Navigate to ProductDisplay page
                             },
                           ),
-                          const SizedBox(width: 8.0),
                           IconButton(
                             icon: Icon(Iconsax.notification,
                                 color: Colors.black, size: 28.0),

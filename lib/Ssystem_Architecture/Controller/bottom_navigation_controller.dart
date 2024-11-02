@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:softminion/Ssystem_Architecture/View/All%20Product%20View%20Page/all_product_screen.dart';
-import 'package:softminion/Ssystem_Architecture/View/All%20Product%20View%20Page/product_display.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/category_bottom_page/category_bottom_screen_new.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/favorites_bottom_page/favorites_bottom_screen.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_screen/home_bottom_screen_page.dart';
@@ -23,12 +21,15 @@ class NavigationController extends GetxController {
     CartView(),
     FavoritesBottomScreen(),
     UserFirstProfilePage(),
-    //ProductDisplay()
-
-    //AllProductScreen()
   ];
-
-  // Method to change the index and navigate
+  final List<String> routes = [
+    '/app_home_page',
+    '/category_page',
+    '/cart_list',
+    '/favourit_page',
+    '/user-profile',
+  ];
+  // // Method to change the index and navigate
   void changeIndex(int index) {
     selectedIndex.value = index;
   }

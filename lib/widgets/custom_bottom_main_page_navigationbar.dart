@@ -37,10 +37,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
           currentIndex: navigationController.selectedIndex.value,
           onTap: (index) {
             navigationController.changeIndex(index);
-            //navigationController.getCurrentPage();
-            // Log the selected index for debugging
-            // print(
-            //     "Selected Index: ${navigationController.selectedIndex.value}");
           },
           items: [
             BottomNavigationBarItem(

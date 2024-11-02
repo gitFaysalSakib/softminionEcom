@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
+import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/all_product_list_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/categories_controller.dart';
+import 'package:softminion/Ssystem_Architecture/View/All%20Product%20View%20Page/product_display.dart';
 
 class HomePageCategoryWidget extends StatelessWidget {
   final CategoriesController categoriesController = Get.find();
+  final AllProductListController allProductListController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +30,24 @@ class HomePageCategoryWidget extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.w),
               child: InkWell(
-                onTap: () {},
+                onTap: () async {
+                  Get.to(ProductDisplay());
+                  allProductListController
+                      .setSelectedCategory(category.id.value);
+                  allProductListController
+                      .setSelectedCategoryName(category.name.value);
+                  await allProductListController
+                      .fetchDataFromApiServiceWithAttributesAndOthers();
+
+                  print(category.id);
+                },
                 child: Container(
                   width: 120.w, // Longer width for horizontal rectangle
                   height: 50.h, // Shorter height for rectangular look
                   decoration: BoxDecoration(
-                    color: Colors.white, // Customize background color
+                    color: Colors.teal[100], // Customize background color
                     borderRadius: BorderRadius.circular(8), // Rounded corners
-                    border: Border.all(color: Colors.grey.shade300, width: 1),
+                    // border: Border.all(color: Colors.grey.shade300, width: 1),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.shade400,

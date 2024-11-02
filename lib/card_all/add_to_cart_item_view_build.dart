@@ -54,7 +54,7 @@ class CartView extends StatelessWidget {
             var selectedItems = cartController.cartItems
                 .where((item) => item.isSelected)
                 .toList();
-            cartController.printTotalPrice();
+            // cartController.printTotalPrice();
             //  print(selectedItems.length);
             if (selectedItems.isEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(

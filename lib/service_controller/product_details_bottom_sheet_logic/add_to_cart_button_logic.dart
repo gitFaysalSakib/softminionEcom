@@ -16,20 +16,30 @@ class AddToCartButtonLogic {
     Map<String, String> selectedAttributes = {};
     Map<String, String> selectedAttributesID = {};
 
-    for (int i = 0; i < product.attributes.length; i++) {
-      var attribute = product.attributes[i];
-      selectedAttributes[attribute.name.value] =
-          attribute.options[selectedOptions[i]];
-
-      selectedAttributesID[attribute.id.value] =
-          attribute.options[selectedOptions[i]];
+    // Check if the product has attributes
+    if (product.attributes != null && product.attributes.isNotEmpty) {
+      // Map attributes only if they exist
+      for (int i = 0; i < product.attributes.length; i++) {
+        var attribute = product.attributes[i];
+        selectedAttributes[attribute.name.value] =
+            attribute.options[selectedOptions[i]];
+        selectedAttributesID[attribute.id.value] =
+            attribute.options[selectedOptions[i]];
+      }
     }
+    // double parsedPrice;
+    // try {
+    //   parsedPrice = double.parse(currentPrice);
+    // } catch (e) {
+    //   parsedPrice = 0.0; // Default to 0 if parsing fails
+    //   print("Error parsing price: $e"); // Log the error for debugging
+    // }
+
     double parsedPrice;
-    try {
+    if (double.tryParse(currentPrice) != null) {
       parsedPrice = double.parse(currentPrice);
-    } catch (e) {
+    } else {
       parsedPrice = 0.0; // Default to 0 if parsing fails
-      print("Error parsing price: $e"); // Log the error for debugging
     }
 
     // Create an instance of CartItemLocalStorageModel
@@ -39,7 +49,7 @@ class AddToCartButtonLogic {
       categoryName: product.type[0].categoryType.value,
       title: product.name.value,
       imageUrls: product.images.map((img) => img.imageLink.value).toList(),
-      total: double.parse(currentPrice),
+      total: parsedPrice,
       isSelected: true,
       quantity: 1,
       selectedAttributes: selectedAttributes,

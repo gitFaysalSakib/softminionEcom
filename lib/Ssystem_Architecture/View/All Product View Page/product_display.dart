@@ -3,15 +3,13 @@ import 'package:get/get.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/all_product_list_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/categories_controller.dart';
+import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/product_attributes_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Model/all_class_model/all_products_list_model.dart';
 import 'package:softminion/Ssystem_Architecture/View/All%20Product%20View%20Page/filter_drawer.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_widget/home_screen_product_card_item.dart';
 import 'package:softminion/widgets/Grid_builder/custom_grid_builder.dart';
 import 'package:softminion/widgets/app_bar/custom_app_bar.dart';
-
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'filter_drawer.dart'; // Import your FilterDrawer
+import 'package:softminion/widgets/custom_carousol_banner/carousol_banner.dart';
 
 class ProductDisplay extends StatefulWidget {
   @override
@@ -23,6 +21,9 @@ class _ProductDisplayState extends State<ProductDisplay> {
   late ScrollController _scrollController;
   final CategoriesController categoriesController =
       Get.put(CategoriesController()); // Initialize controller
+  final ProductAttributesController productAttributesController =
+      Get.put(ProductAttributesController()); // Initialize controller
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -48,27 +49,40 @@ class _ProductDisplayState extends State<ProductDisplay> {
     super.dispose();
   }
 
-  void _openFilterDrawer(BuildContext context) {
-    Scaffold.of(context).openEndDrawer(); // Opens the end drawer
+  void _openDrawer() {
+    _scaffoldKey.currentState?.openEndDrawer();
+  }
+
+  Widget _buildimageView(BuildContext context) {
+    return CustomCarouselSlider(
+      images: [
+        'assets/images/banner1.png',
+        'assets/images/banner2.png',
+        'assets/images/banner3.png',
+        'assets/images/banner4.png',
+        'assets/images/banner6.png',
+      ],
+      height: 150.0,
+      autoPlay: true,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            Expanded(child: CustomAppBar()), // Your custom AppBar
-          ],
-        ),
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
+      key: _scaffoldKey,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0), // Set app bar height
+        child: CustomAppBar(), // Use the custom app bar here
       ),
       resizeToAvoidBottomInset: false,
+
+      endDrawerEnableOpenDragGesture:
+          false, // Disables the default end-drawer gesture and icon
       endDrawer: FilterDrawer(
         categoriesController: categoriesController,
-      ), // Use your FilterDrawer here
-
+        productAttributesController: productAttributesController,
+      ),
       body: Builder(
         builder: (context) => Container(
           width: double.infinity,
@@ -80,29 +94,75 @@ class _ProductDisplayState extends State<ProductDisplay> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  _buildimageView(context),
                   // Filter icon row
                   Padding(
-                    padding: EdgeInsets.only(bottom: 10.0),
+                    padding: const EdgeInsets.only(bottom: 10.0),
                     child: Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.end, // Align to the right
+                      mainAxisAlignment: MainAxisAlignment
+                          .spaceBetween, // Space between elements
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            // Handle filter logic here
-                          },
-                          child: Icon(Icons.filter_list, size: 28.0),
+                        // Back arrow icon and Text widget aligned to the left
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                // Check if a category name exists
+                                if (allProductadataController
+                                        .selectedCategoryaName
+                                        .value
+                                        ?.isNotEmpty ==
+                                    true) {
+                                  // If a category name is found, fetch data
+                                  allProductadataController
+                                      .fetchDataFromApiServicePageSetDynamically();
+                                  allProductadataController
+                                      .selectedCategoryaName.value = "";
+                                } else {
+                                  // If no category name is found, navigate back
+                                  Get.back();
+                                }
+                              },
+                              child: const Icon(Icons.arrow_back,
+                                  size: 24.0), // Back arrow icon
+                            ),
+                            const SizedBox(
+                                width: 12), // Spacing between arrow and text
+                            Obx(() {
+                              return Text(
+                                allProductadataController.selectedCategoryaName
+                                            .value?.isNotEmpty ==
+                                        true
+                                    ? allProductadataController
+                                        .selectedCategoryaName.value!
+                                    : "All", // Show "All" if the category name is null or empty
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
+                            }),
+                          ],
                         ),
-                        SizedBox(width: 20), // Space between icons
-                        GestureDetector(
-                          onTap: () {
-                            _openFilterDrawer(context); // Pass context
-                          },
-                          child: Icon(Icons.menu, size: 28.0),
+
+                        // Row for the filter and menu icons aligned to the right
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: _openDrawer, // Open the FilterDrawer
+                              child: const Icon(Icons.filter_list, size: 28.0),
+                            ),
+                            const SizedBox(width: 12), // Spacing between icons
+                            GestureDetector(
+                              onTap: _openDrawer, // Open the FilterDrawer
+                              child: const Icon(Icons.menu, size: 28.0),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
+
                   Expanded(
                     child: CustomProductGridView<AllProductsListModel>(
                       items: allProductadataController.dataList,
@@ -133,7 +193,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                 ],
               );
             } else {
-              return Center(child: Text('No products.'));
+              return const Center(child: Text('No products.'));
             }
           }),
         ),
