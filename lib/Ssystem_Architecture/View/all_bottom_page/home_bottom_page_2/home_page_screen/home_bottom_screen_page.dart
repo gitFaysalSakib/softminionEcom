@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:softminion/Core/utils/image_constant.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/all_product_list_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/categories_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/customer_sign_up_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/payment_method_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Model/all_class_model/all_products_list_model.dart';
-import 'package:softminion/Ssystem_Architecture/View/All%20Product%20View%20Page/product_display.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_widget/home_page_category_widget.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_widget/home_page_cloth_item_show_widget.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page_2/home_page_widget/home_page_featured_item_show_widget.dart';
@@ -16,7 +14,6 @@ import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom
 import 'package:softminion/Token_Manage/token_store.dart';
 import 'package:softminion/widgets/app_bar/custom_app_bar.dart';
 import 'package:softminion/widgets/custom_carousol_banner/carousol_banner.dart';
-import 'package:softminion/widgets/custom_image_view.dart';
 import 'package:softminion/widgets/List_builder_horizontal/custom_list_view_horizontal_home_page2.dart';
 
 class HomeBottomScreenTWO extends StatelessWidget {
@@ -82,7 +79,7 @@ class HomeBottomScreenTWO extends StatelessWidget {
                       // final NavigationController navigationController =
                       //     Get.put(NavigationController());
                       // navigationController.selectedIndex.value = 5;
-                      Get.to(ProductDisplay());
+                      Get.toNamed('/product_display');
                       allProductadataController
                           .fetchDataFromApiServicePageSetDynamically();
                     },
@@ -418,28 +415,6 @@ class HomeBottomScreenTWO extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _buildProductImages(BuildContext context) {
-  //   // Check if productList is empty
-  //   if (allProductadataController.dataList.isEmpty) {
-  //     return Center(child: CircularProgressIndicator());
-  //   }
-
-  //   // Map through the products and get images
-  //   return Obx(() {
-  //     return Column(
-  //       children: allProductadataController.dataList.map((product) {
-  //         return ProductImageGalleryORSingleImage(
-  //           imageUrls:
-  //               product.images.map((image) => image.imageLink.value).toList(),
-  //           width: double.infinity,
-  //           height: 150.h,
-  //           alignment: Alignment.topCenter,
-  //         );
-  //       }).toList(),
-  //     );
-  //   });
-  // }
 
   Widget _buildimageView(BuildContext context) {
     return CustomCarouselSlider(

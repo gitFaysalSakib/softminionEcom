@@ -14,23 +14,37 @@ class ProductVariationController extends GetxController {
   void onInit() {
     if (productId != null) {
       // Only fetch variations if productId is provided
-      fetchProductVariations(productId!);
+      fetchAllVariations(productId!);
     }
     super.onInit();
   }
 
   // Fetch product variations
-  Future<void> fetchProductVariations(int productId) async {
+  // Fetch all product variations across all pages
+  Future<void> fetchAllVariations(int productId) async {
+    int currentPage = 1;
+    bool hasMoreData = true;
+    isLoading(true);
+
     try {
-      isLoading(true);
-      var data = await apiService.fetchData(productId);
-      if (data.isNotEmpty) {
-        variationList.assignAll(data);
-      } else {
-        // print(variationList.length);
-        print("0000000000000000000000000000000000000: currentPrice");
-        print(variationList.length);
+      while (hasMoreData) {
+        var data = await apiService.fetchData(productId, page: currentPage);
+
+        if (data.isNotEmpty) {
+          variationList.addAll(data); // Add new variations to the list
+          // print("Fetched ${variationList.length} variations.");
+
+          currentPage++; // Go to the next page
+          // print("Fetched ${variationList.length} variations.");
+        } else {
+          hasMoreData = false; // No more pages to fetch
+        }
+      }
+
+      if (variationList.isEmpty) {
         print("No product variations found.");
+      } else {
+        // print("Fetched ${variationList.length} variations.");
       }
     } catch (e) {
       print("Error fetching product variations: $e");

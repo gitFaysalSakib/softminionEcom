@@ -38,14 +38,12 @@ class HomePageCategoryWidget extends StatelessWidget {
                       .setSelectedCategoryName(category.name.value);
                   await allProductListController
                       .fetchDataFromApiServiceWithAttributesAndOthers();
-
-                  print(category.id);
                 },
                 child: Container(
                   width: 120.w, // Longer width for horizontal rectangle
                   height: 50.h, // Shorter height for rectangular look
                   decoration: BoxDecoration(
-                    color: Colors.teal[100], // Customize background color
+                    color: Colors.grey[200], // Customize background color
                     borderRadius: BorderRadius.circular(8), // Rounded corners
                     // border: Border.all(color: Colors.grey.shade300, width: 1),
                     boxShadow: [

@@ -5,12 +5,10 @@ import 'package:softminion/Ssystem_Architecture/Model/all_class_model/product_va
 import 'dart:convert';
 
 class ApiProductVaritation {
-  // final String baseUrl =
-  //     AppEnvironment.baseApiUrl + ApiEndpoints.getSingleProductVariation();
-
-  Future<List<ProductVariationModel>> fetchData(int productId) async {
+  Future<List<ProductVariationModel>> fetchData(int productId,
+      {int page = 1}) async {
     final String baseUrl =
-        '${AppEnvironment.baseApiUrl}${ApiEndpoints.getSingleProductVariation(productId)}';
+        '${AppEnvironment.baseApiUrl}${ApiEndpoints.getSingleProductVariation(productId)}?page=$page';
     final response = await http.get(
       Uri.parse(baseUrl),
       headers: {

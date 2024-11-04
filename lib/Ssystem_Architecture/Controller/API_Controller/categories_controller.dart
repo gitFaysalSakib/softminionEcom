@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:softminion/API%20Service/api_services/categories_api.dart';
 import 'package:softminion/Ssystem_Architecture/Model/all_class_model/categories_model.dart';
 
@@ -7,7 +6,7 @@ class CategoriesController extends GetxController {
   var isLoading = true.obs;
   var categoryList = <CategoriesModelData>[].obs;
   final ApiServiceCategories apiService = ApiServiceCategories();
-  var selectedCategories = Rx<CategoriesController?>(null);
+  var selectedCategories = Rx<CategoriesModelData?>(null);
   var selectedCategoryId = RxnInt(); // Use RxnInt to handle nullable int
 
   var selectedCategoryIndex = 0;
@@ -20,7 +19,7 @@ class CategoriesController extends GetxController {
     super.onInit();
   }
 
-  void selectCategoriesMethod(CategoriesController category) {
+  void selectCategoriesMethod(CategoriesModelData category) {
     selectedCategories.value = category;
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Ssystem_Architecture/Model/home_page_productItemmodel.dart';
-import 'package:softminion/widgets/custom_bottom_button_navigator.dart';
+import 'package:softminion/widgets/bottom_buy_add_button_navigator/custom_bottom_button_navigator.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final HomePageProductItemModel product;

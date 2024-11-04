@@ -5,9 +5,11 @@ import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/all_pr
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/product_attributes_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/product_variation_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Model/all_class_model/all_products_list_model.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/home_page_widget_controller.dart/check_attributes_single_or_multiple_controller.dart';
+import 'package:softminion/widgets/app_bar/custom_app_bar.dart';
 import 'package:softminion/widgets/attributes_bottom_sheet/customLargeBottomSheet_Update_Widget_FromAPi.dart';
 import 'package:softminion/widgets/attributes_bottom_sheet/selectedOption_Updated.controller.dart';
-import 'package:softminion/widgets/custom_bottom_button_navigator.dart';
+import 'package:softminion/widgets/bottom_buy_add_button_navigator/custom_bottom_button_navigator.dart';
 import 'package:softminion/widgets/custom_image_view.dart';
 import 'package:softminion/widgets/custom_search_bar_with_icon_use_appbar.dart';
 
@@ -49,36 +51,9 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
       Get.find<ProductAttributesController>();
   final SelectedoptionUpdatedController selectedoptionUpdatedController =
       Get.put(SelectedoptionUpdatedController());
-
-  var firstOptionsIndexValue = <String>[].obs;
-  var secondOptionsIndexValue = <String>[].obs;
-
-  // After fetching _homeProductModel data, assign values to firstOptionsIndexValue
-  void fetchFirstOptions() {
-    firstOptionsIndexValue.value = _homeProductModel!.attributes
-        .map((attribute) =>
-            attribute.options.isNotEmpty ? attribute.options.first : null)
-        .where((option) => option != null)
-        .cast<String>() // Ensures type consistency
-        .toList();
-    print("ffffff");
-    // print(firstOptionsIndexValue);
-  }
-
-// Fetch the second option value from each attribute's options list, if available
-  void fetchSecondOptions() {
-    secondOptionsIndexValue.value = _homeProductModel!.attributes
-        .map((attribute) => attribute.options.length > 1
-            ? attribute.options[1]
-            : null) // Access second item if it exists
-        .where((option) => option != null)
-        .cast<
-            String>() // Filter out null values, in case some lists are too short
-        .toList();
-    print("ssssssssss");
-
-    //print(secondOptionsIndexValue);
-  }
+  final SingleOrMultipleAttributesCheckForDirectAddToCartOrNot
+      singleOrMultipleController =
+      Get.put(SingleOrMultipleAttributesCheckForDirectAddToCartOrNot());
 
   int getProductIndex() {
     return allProductadataController.dataList.indexOf(_homeProductModel);
@@ -87,7 +62,7 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
   void _fetchProductById(String productId) {
     // Find the product in the data list by matching the ID
     _homeProductModel = allProductadataController.dataList.firstWhere(
-      (product) => product.id == productId,
+      (product) => product.id.value == productId,
       // Return null if not found
     );
 
@@ -103,38 +78,20 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
     );
   }
 
-  // void updateSelectedOptions() {
-  //   print("noooooooooooooooooooooooooooooooooooooooooo");
-  //   if (_homeProductModel != null) {
-  //     var convert = _homeProductModel!.id.value.toString();
-  //     print(convert);
-  //   }
-
-  //   // await variationController
-  //   //     .fetchProductVariations(int.parse(_homeProductModel!.id.value));
-
-  //   // if (variationController.variationList.isEmpty) {
-  //   //   selectedoptionUpdatedController.selectedOptions.value =
-  //   //       List.filled(_homeProductModel!.attributes.length, 0);
-
-  //   //   print(selectedoptionUpdatedController.selectedOptions);
-  //   // }
-  // }
-
   @override
   void initState() {
     super.initState();
 
     _tabController = TabController(length: 3, vsync: this);
     _fetchProductById(widget.productId);
-    variationController.fetchProductVariations(int.parse(widget.productId));
-    // allProductadataController.fetchTEstttttttttttttttttttttttt();
-    // if (allProductadataController.dataList.isNotEmpty) {
-    //   print(allProductadataController.dataList.length);
-    // }
-
-    fetchFirstOptions();
-    fetchSecondOptions();
+    variationController.fetchAllVariations(int.parse(widget.productId));
+    // Ensure that data is initialized once the model is set
+    if (_homeProductModel != null) {
+      // Schedule the initialization on the next frame to avoid state updates during build
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        singleOrMultipleController.initializeOptions(_homeProductModel!);
+      });
+    }
   }
 
   @override
@@ -142,22 +99,30 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
     // Check the loading state and show a loading indicator
 
     return widget.isSingleProductView
-        ? SafeArea(
-            child: Scaffold(
-              appBar: CustomAppBarForSearchBarAndCartIcon(),
-              body: SingleChildScrollView(
-                child: _buildAllContentSeparateFromScaffold(context),
-              ),
-              bottomNavigationBar: BuyandAddtoCartBottomButtonBar(
-                onBuyNow: () {
-                  showCustomLargeBottomSheetWithAPI(
-                      context, true, false, "1", getProductIndex());
-                },
-                onAddToCart: () {
-                  showCustomLargeBottomSheetWithAPI(
-                      context, false, true, "2", getProductIndex());
-                },
-              ),
+        ? Scaffold(
+            //  appBar: CustomAppBarForSearchBarAndCartIcon(),
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(100.0), // Set app bar height
+              child: CustomAppBar(
+                showCartIcon: true,
+                showBackButton: true,
+                showSearchBar: false,
+              ), // Use the custom app bar here
+            ),
+            resizeToAvoidBottomInset: false,
+
+            body: SingleChildScrollView(
+              child: _buildAllContentSeparateFromScaffold(context),
+            ),
+            bottomNavigationBar: BuyandAddtoCartBottomButtonBar(
+              onBuyNow: () {
+                showCustomLargeBottomSheetWithAPI(
+                    context, true, false, "1", getProductIndex());
+              },
+              onAddToCart: () {
+                showCustomLargeBottomSheetWithAPI(
+                    context, false, true, "2", getProductIndex());
+              },
             ),
           )
         : SingleChildScrollView(
@@ -166,254 +131,250 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
   }
 
   Widget _buildAllContentSeparateFromScaffold(BuildContext context) {
-    return Obx(() {
-      if (variationController.isLoading.value) {
-        return Center(
-          child: SizedBox(
-            height: 50.h, // Adjust size as needed
-            width: 50.h,
-            child: CircularProgressIndicator(),
-          ),
-        );
-      }
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Main Content
-          Container(
-            height: widget.isSingleProductView ? null : 266.h,
-            width: widget.isSingleProductView ? double.infinity : 150.h,
-            color: widget.isSingleProductView ? Colors.white : null,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Image Section
-                Container(
-                  padding: widget.isSingleProductView
-                      ? EdgeInsets.only(
-                          top: 0.0,
-                        )
-                      : EdgeInsets.zero,
-                  height: widget.isSingleProductView ? 400.h : 160.h,
-                  width: double.infinity,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Obx(
-                        () => ProductImageGalleryORSingleImage(
-                          imageUrls: _homeProductModel!.images.isNotEmpty
-                              ? _homeProductModel!.images
-                                  .map((image) => image.imageLink.value)
-                                  .toList()
-                              : [
-                                  'assets/images/1n1.png'
-                                ], // Default image if no images available
-                          height: double.infinity,
-                          width: double.infinity,
-                          radius: BorderRadius.circular(4.h),
-                          isNetwork: _homeProductModel!.images
-                              .isNotEmpty, // If there are images, assume they are network images
-                        ),
+    // if (variationController.isLoading.value) {
+    //   return Center(
+    //     child: SizedBox(
+    //       height: 50.h, // Adjust size as needed
+    //       width: 50.h,
+    //       child: CircularProgressIndicator(),
+    //     ),
+    //   );
+    // }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Main Content
+        Container(
+          height: widget.isSingleProductView ? null : 266.h,
+          width: widget.isSingleProductView ? double.infinity : 150.h,
+          color: widget.isSingleProductView ? Colors.white : null,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image Section
+              Container(
+                padding: widget.isSingleProductView
+                    ? EdgeInsets.only(
+                        top: 0.0,
+                      )
+                    : EdgeInsets.zero,
+                height: widget.isSingleProductView ? 400.h : 160.h,
+                width: double.infinity,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Obx(
+                      () => ProductImageGalleryORSingleImage(
+                        imageUrls: _homeProductModel!.images.isNotEmpty
+                            ? _homeProductModel!.images
+                                .map((image) => image.imageLink.value)
+                                .toList()
+                            : [
+                                'assets/images/1n1.png'
+                              ], // Default image if no images available
+                        height: double.infinity,
+                        width: double.infinity,
+                        radius: BorderRadius.circular(4.h),
+                        isNetwork: _homeProductModel!.images
+                            .isNotEmpty, // If there are images, assume they are network images
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                //  Product Details Section
-                Padding(
-                  padding: widget.isSingleProductView
-                      ? EdgeInsets.only(left: 20.h, top: 10.h)
-                      : EdgeInsets.only(top: 8.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/money.png',
-                            color: Colors.red,
-                            height: widget.isSingleProductView ? 12.h : 14.h,
-                            width: widget.isSingleProductView ? 25.h : 14.h,
-                          ),
-                          SizedBox(width: 5.w),
-                          Obx(
-                            () => Text(
-                              _homeProductModel!.price.value
-                                  .toString(), // Convert RxInt value to String
-                              style: TextStyle(
-                                fontSize: widget.isSingleProductView
-                                    ? 20.h
-                                    : 14.h, // Dynamic font size based on view
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      if (widget.isSingleProductView == false)
-                        Text("ART",
-                            style: TextStyle(
-                                fontSize:
-                                    widget.isSingleProductView ? 15.h : 10,
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal)),
-                      if (widget.isSingleProductView)
-                        // SizedBox(
-                        //   height: 10.h,
-                        // ),
-                        Text(
-                            widget.isSingleProductView
-                                ? _homeProductModel!.name.value
-                                : "",
-                            style: TextStyle(
-                                fontSize:
-                                    widget.isSingleProductView ? 14.h : 16.h,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold)),
-                      if (widget.isSingleProductView)
-                        SizedBox(
-                          height: 10.h,
+              ),
+              //  Product Details Section
+              Padding(
+                padding: widget.isSingleProductView
+                    ? EdgeInsets.only(left: 20.h, top: 10.h)
+                    : EdgeInsets.only(top: 8.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/money.png',
+                          color: Colors.red,
+                          height: widget.isSingleProductView ? 12.h : 14.h,
+                          width: widget.isSingleProductView ? 25.h : 14.h,
                         ),
-                      Text(_homeProductModel!.type[0].categoryType.value,
+                        SizedBox(width: 5.w),
+                        Obx(
+                          () => Text(
+                            _homeProductModel!.price.value
+                                .toString(), // Convert RxInt value to String
+                            style: TextStyle(
+                              fontSize: widget.isSingleProductView
+                                  ? 20.h
+                                  : 14.h, // Dynamic font size based on view
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    if (widget.isSingleProductView == false)
+                      Text("ART",
+                          style: TextStyle(
+                              fontSize: widget.isSingleProductView ? 15.h : 10,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal)),
+                    if (widget.isSingleProductView)
+                      // SizedBox(
+                      //   height: 10.h,
+                      // ),
+                      Text(
+                          widget.isSingleProductView
+                              ? _homeProductModel!.name.value
+                              : "",
                           style: TextStyle(
                               fontSize:
-                                  widget.isSingleProductView ? 15.h : 10.h,
-                              color: widget.isSingleProductView
-                                  ? Colors.grey
-                                  : Colors.black,
+                                  widget.isSingleProductView ? 14.h : 16.h,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold)),
-                    ],
-                  ),
+                    if (widget.isSingleProductView)
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                    Text(_homeProductModel!.type[0].categoryType.value,
+                        style: TextStyle(
+                            fontSize: widget.isSingleProductView ? 15.h : 10.h,
+                            color: widget.isSingleProductView
+                                ? Colors.grey
+                                : Colors.black,
+                            fontWeight: FontWeight.bold)),
+                  ],
                 ),
+              ),
 
-                if (widget.isSingleProductView)
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 20.h,
-                      right: 20.h,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.h),
-                      child: Container(
-                        padding: EdgeInsets.all(10.h),
-                        color: Colors.grey[100],
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildIconWithText(
-                              icon: Icons.refresh,
-                              text: "7 Days Return",
-                            ),
-                            SizedBox(height: 20.h),
-                            _buildIconWithText(
-                              icon: Icons.local_shipping,
-                              text: "Free Shipping",
-                              subText: "On Orders Over \$50",
-                            ),
-                            SizedBox(height: 20.h),
-                            Obx(() {
-                              if (firstOptionsIndexValue.isEmpty ||
-                                  secondOptionsIndexValue.isEmpty) {
-                                return Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: firstOptionsIndexValue.map((value) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 4.0, left: 20),
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 6.0, horizontal: 10.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.red[
-                                              100], // Light red background for highlighting
-                                          borderRadius: BorderRadius.circular(
-                                              8), // Rounded edges
-                                        ),
-                                        child: Text(
-                                          value,
-                                          style: TextStyle(
-                                            color: Colors.red, // Red text color
-                                            fontSize: 16, // Adjust as needed
-                                            fontWeight: FontWeight
-                                                .bold, // Bold font for emphasis
-                                          ),
+              if (widget.isSingleProductView)
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 20.h,
+                    right: 20.h,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.h),
+                    child: Container(
+                      padding: EdgeInsets.all(10.h),
+                      color: Colors.grey[100],
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildIconWithText(
+                            icon: Icons.refresh,
+                            text: "7 Days Return",
+                          ),
+                          SizedBox(height: 20.h),
+                          _buildIconWithText(
+                            icon: Icons.local_shipping,
+                            text: "Free Shipping",
+                            subText: "On Orders Over \$50",
+                          ),
+                          SizedBox(height: 20.h),
+                          Obx(() {
+                            if (singleOrMultipleController
+                                    .zeroIndexOptionsValue.isEmpty ||
+                                singleOrMultipleController
+                                    .firstIndexOptionsValue.isEmpty) {
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: singleOrMultipleController
+                                    .zeroIndexOptionsValue
+                                    .map((value) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 4.0, left: 20),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 6.0, horizontal: 10.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red[
+                                            100], // Light red background for highlighting
+                                        borderRadius: BorderRadius.circular(
+                                            8), // Rounded edges
+                                      ),
+                                      child: Text(
+                                        value,
+                                        style: TextStyle(
+                                          color: Colors.red, // Red text color
+                                          fontSize: 16, // Adjust as needed
+                                          fontWeight: FontWeight
+                                              .bold, // Bold font for emphasis
                                         ),
                                       ),
-                                    );
-                                  }).toList(),
-                                );
-                              }
-                              return GestureDetector(
-                                onTap: () {
-                                  showCustomLargeBottomSheetWithAPI(
-                                    context,
-                                    true,
-                                    true,
-                                    "",
-                                    getProductIndex(),
+                                    ),
                                   );
-                                },
-                                child: Container(
-                                  color: Colors.transparent,
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 0.0),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.category,
-                                        size: 15.h,
-                                        color: Colors.grey[
-                                            700], // Slightly grey for a professional look
-                                      ),
-                                      SizedBox(width: 8.w),
-
-                                      // Color variation circles
-                                      Row(
-                                        children: [
-                                          _buildClickableColorCircle(
-                                              Colors.red),
-                                          SizedBox(width: 4.w),
-                                          _buildClickableColorCircle(
-                                              Colors.white,
-                                              border: Border.all(
-                                                  color: Colors.black)),
-                                          SizedBox(width: 4.w),
-                                          _buildClickableColorCircle(
-                                              Colors.blue),
-                                          SizedBox(width: 4.w),
-                                          _buildClickableColorCircle(
-                                              Colors.black),
-                                          SizedBox(width: 4.w),
-                                          _buildClickableColorCircle(
-                                              Colors.yellow),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                }).toList(),
                               );
-                            }),
-                          ],
-                        ),
+                            }
+                            return GestureDetector(
+                              onTap: () {
+                                showCustomLargeBottomSheetWithAPI(
+                                  context,
+                                  true,
+                                  true,
+                                  "",
+                                  getProductIndex(),
+                                );
+                              },
+                              child: Container(
+                                color: Colors.transparent,
+                                padding: EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.category,
+                                      size: 15.h,
+                                      color: Colors.grey[
+                                          700], // Slightly grey for a professional look
+                                    ),
+                                    SizedBox(width: 8.w),
+
+                                    // Color variation circles
+                                    Row(
+                                      children: [
+                                        _buildClickableColorCircle(Colors.red),
+                                        SizedBox(width: 4.w),
+                                        _buildClickableColorCircle(Colors.white,
+                                            border: Border.all(
+                                                color: Colors.black)),
+                                        SizedBox(width: 4.w),
+                                        _buildClickableColorCircle(Colors.blue),
+                                        SizedBox(width: 4.w),
+                                        _buildClickableColorCircle(
+                                            Colors.black),
+                                        SizedBox(width: 4.w),
+                                        _buildClickableColorCircle(
+                                            Colors.yellow),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                        ],
                       ),
                     ),
                   ),
+                ),
 
-                if (widget.isSingleProductView)
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                if (widget.isSingleProductView) _buildTabSection(),
-                if (widget.isSingleProductView)
-                  SizedBox(
-                    height: 20.h,
-                  ),
-              ],
-            ),
+              if (widget.isSingleProductView)
+                SizedBox(
+                  height: 20.h,
+                ),
+              if (widget.isSingleProductView) _buildTabSection(),
+              if (widget.isSingleProductView)
+                SizedBox(
+                  height: 20.h,
+                ),
+            ],
           ),
-        ],
-      );
-    });
+        ),
+      ],
+    );
   }
 
   Widget _buildTabSection() {
@@ -448,17 +409,6 @@ class _DEMOProductcardItemWidgetState extends State<DEMOProductcardItemWidget>
   }
 }
 
-// Widget _buildColorCircle(Color color, {Border? border}) {
-//   return Container(
-//     width: 20.h,
-//     height: 20.h,
-//     decoration: BoxDecoration(
-//       color: color,
-//       shape: BoxShape.circle,
-//       border: border,
-//     ),
-//   );
-// }
 Widget _buildClickableColorCircle(Color color, {Border? border}) {
   return Container(
     width: 30.h,

@@ -6,15 +6,13 @@ import 'package:softminion/Ssystem_Architecture/Controller/bottom_navigation_con
 import 'package:softminion/widgets/custom_icon.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
-  // Get the existing instance of NavigationController
   final NavigationController navigationController =
-      Get.find<NavigationController>();
+      Get.put(NavigationController());
 
   @override
   Widget build(BuildContext context) {
-    // navigationController.getCurrentPage();
-
-    return Container(
+    return Obx(() {
+      return Container(
         height: 60.h,
         decoration: BoxDecoration(
           color: Colors.transparent,
@@ -37,14 +35,14 @@ class CustomBottomNavigationBar extends StatelessWidget {
           currentIndex: navigationController.selectedIndex.value,
           onTap: (index) {
             navigationController.changeIndex(index);
+            print(navigationController.selectedIndex.value);
           },
           items: [
             BottomNavigationBarItem(
               icon: CustomIcon(
                 icon: Iconsax.home,
                 unselectedColor: Colors.black,
-                isSelected:
-                    navigationController.selectedIndex.value > 4 ? false : true,
+                isSelected: navigationController.selectedIndex.value == 0,
               ),
               label: 'Home',
             ),
@@ -81,6 +79,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
               label: 'Profile',
             ),
           ],
-        ));
+        ),
+      );
+    });
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 
 class CustomProductListViewTestForFinal<T> extends StatelessWidget {
@@ -21,6 +20,48 @@ class CustomProductListViewTestForFinal<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //this logic is set ListView horizontal limit 2
+    // all product show row by row.
+    //one row two product..
+    //////////......Start.........////
+    // return SizedBox(
+    //   height: height, // Set the height for the ListView
+    //   child: ListView.builder(
+    //     itemCount: (items.length / 2).ceil(), // Calculate number of rows needed
+    //     itemBuilder: (context, rowIndex) {
+    //       return Row(
+    //         mainAxisAlignment:
+    //             MainAxisAlignment.start, // Align items in the row
+    //         children: [
+    //           // Display first item of the row
+    //           if (rowIndex * 2 < items.length)
+    //             Expanded(
+    //               child: GestureDetector(
+    //                 onTap: () => onItemTap(items[rowIndex * 2]),
+    //                 child: Container(
+    //                   width: 120.w, // Width for the product card
+    //                   child: itemBuilder(context, items[rowIndex * 2]),
+    //                 ),
+    //               ),
+    //             ),
+    //           // Display second item of the row
+    //           if (rowIndex * 2 + 1 < items.length)
+    //             Expanded(
+    //               child: GestureDetector(
+    //                 onTap: () => onItemTap(items[rowIndex * 2 + 1]),
+    //                 child: Container(
+    //                   width: 120.w, // Width for the product card
+    //                   child: itemBuilder(context, items[rowIndex * 2 + 1]),
+    //                 ),
+    //               ),
+    //             ),
+    //         ],
+    //       );
+    //     },
+    //   ),
+    // );
+    //////////......End.........////
+
     if (!isEven) {
       // Show all items in a single row when isEven is false
       return SizedBox(

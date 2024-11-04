@@ -22,13 +22,7 @@ class NavigationController extends GetxController {
     FavoritesBottomScreen(),
     UserFirstProfilePage(),
   ];
-  final List<String> routes = [
-    '/app_home_page',
-    '/category_page',
-    '/cart_list',
-    '/favourit_page',
-    '/user-profile',
-  ];
+
   // // Method to change the index and navigate
   void changeIndex(int index) {
     selectedIndex.value = index;

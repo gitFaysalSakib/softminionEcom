@@ -73,7 +73,9 @@ class _ProductDisplayState extends State<ProductDisplay> {
       key: _scaffoldKey,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100.0), // Set app bar height
-        child: CustomAppBar(), // Use the custom app bar here
+        child: CustomAppBar(
+          showBackButton: true,
+        ), // Use the custom app bar here
       ),
       resizeToAvoidBottomInset: false,
 
@@ -105,29 +107,29 @@ class _ProductDisplayState extends State<ProductDisplay> {
                         // Back arrow icon and Text widget aligned to the left
                         Row(
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                // Check if a category name exists
-                                if (allProductadataController
-                                        .selectedCategoryaName
-                                        .value
-                                        ?.isNotEmpty ==
-                                    true) {
-                                  // If a category name is found, fetch data
-                                  allProductadataController
-                                      .fetchDataFromApiServicePageSetDynamically();
-                                  allProductadataController
-                                      .selectedCategoryaName.value = "";
-                                } else {
-                                  // If no category name is found, navigate back
-                                  Get.back();
-                                }
-                              },
-                              child: const Icon(Icons.arrow_back,
-                                  size: 24.0), // Back arrow icon
-                            ),
-                            const SizedBox(
-                                width: 12), // Spacing between arrow and text
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     // Check if a category name exists
+                            //     if (allProductadataController
+                            //             .selectedCategoryaName
+                            //             .value
+                            //             ?.isNotEmpty ==
+                            //         true) {
+                            //       // If a category name is found, fetch data
+                            //       allProductadataController
+                            //           .fetchDataFromApiServicePageSetDynamically();
+                            //       allProductadataController
+                            //           .selectedCategoryaName.value = "";
+                            //     } else {
+                            //       // If no category name is found, navigate back
+                            //       Get.back();
+                            //     }
+                            //   },
+                            //   child: const Icon(Icons.arrow_back,
+                            //       size: 24.0), // Back arrow icon
+                            // ),
+                            // const SizedBox(
+                            //     width: 12), // Spacing between arrow and text
                             Obx(() {
                               return Text(
                                 allProductadataController.selectedCategoryaName

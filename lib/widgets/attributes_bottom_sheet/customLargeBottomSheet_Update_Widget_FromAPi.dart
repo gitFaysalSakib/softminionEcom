@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Core/utils/size_utils.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/all_product_list_controller.dart';
-import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/product_attributes_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Controller/API_Controller/product_variation_controller.dart';
 import 'package:softminion/Ssystem_Architecture/Model/all_class_model/all_products_list_model.dart';
+import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/home_bottom_page/home_page_widget_controller.dart/check_attributes_single_or_multiple_controller.dart';
 import 'package:softminion/Token_Manage/token_check_auth_middleware.dart';
 import 'package:softminion/Token_Manage/token_store.dart';
 import 'package:softminion/card_all/add_to_cart_controller.dart';
@@ -13,7 +13,7 @@ import 'package:softminion/service_controller/product_details_bottom_sheet_logic
 import 'package:softminion/service_controller/product_details_bottom_sheet_logic/fetch_pro_price_set_attributes_logic.dart';
 import 'package:softminion/widgets/attributes_bottom_sheet/first_index_value_check_controller.dart';
 import 'package:softminion/widgets/attributes_bottom_sheet/selectedOption_Updated.controller.dart';
-import 'package:softminion/widgets/custom_bottom_button_navigator.dart';
+import 'package:softminion/widgets/bottom_buy_add_button_navigator/custom_bottom_button_navigator.dart';
 
 class CustomLargeBottomSheetContentUpdateWithApi extends StatefulWidget {
   final bool showOnlyBuyButton;
@@ -46,12 +46,13 @@ class _CustomLargeBottomSheetContentUpdateWithApiState
   final SelectedoptionUpdatedController selcectController =
       Get.put(SelectedoptionUpdatedController());
 
+  final SingleOrMultipleAttributesCheckForDirectAddToCartOrNot
+      singleOrMultipleController =
+      Get.put((SingleOrMultipleAttributesCheckForDirectAddToCartOrNot()));
+
   _CustomLargeBottomSheetContentUpdateWithApiState()
       : priceUpdater = PriceUpdater(
             variationController: Get.find<ProductVariationController>());
-
-  // Track selected options for attributes
-  //var selectedOptions = <int>[].obs;
 
   // To display the updated price
   var currentPrice = "".obs;
@@ -73,13 +74,6 @@ class _CustomLargeBottomSheetContentUpdateWithApiState
     // Ensure the UI is drawn first, then call the function to find the default variation
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       int productid = int.parse(product.id.value);
-
-      await variationController.fetchProductVariations(productid);
-      // await fetchPriceAttributs.findAndSetDefaultVariation(
-      //   defaultPrice: product.price.value.toString(),
-      //   product: product,
-      //   selectedOptions: selcectController.selectedOptions,
-      // );
 
       if (variationController.variationList.isEmpty) {
         selcectController.selectedOptions.value =
@@ -112,17 +106,8 @@ class _CustomLargeBottomSheetContentUpdateWithApiState
 
     if (isLoggedIn) {
       _addToCart(product);
-      final secondOptionsIndexValue = product.attributes
-          .map((attribute) => attribute.options.length > 1
-              ? attribute.options[1]
-              : null) // Access second item if it exists
-          .where((option) =>
-              option !=
-              null) // Filter out null values, in case some lists are too short
-          .toList();
-      print("ddffffffffffffffffffffffffffffffff");
-      print(secondOptionsIndexValue);
-      if (secondOptionsIndexValue.isEmpty) {
+
+      if (singleOrMultipleController.firstIndexOptionsValue.isEmpty) {
       } else {
         Navigator.pop(context);
       }
@@ -254,7 +239,7 @@ class _CustomLargeBottomSheetContentUpdateWithApiState
                           height: 10.h,
                         ), // Space between attribute title and its options
                         Container(
-                          height: 100.h,
+                          height: 150.h,
                           child: GridView.builder(
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
@@ -363,37 +348,18 @@ void showCustomLargeBottomSheetWithAPI(
       Get.put(SelectedoptionUpdatedController());
   final FirstIndexValueCheckController indexFIrst =
       Get.put(FirstIndexValueCheckController());
+  final SingleOrMultipleAttributesCheckForDirectAddToCartOrNot
+      singleOrMultipleController =
+      Get.put((SingleOrMultipleAttributesCheckForDirectAddToCartOrNot()));
 
   final AllProductListController productController = Get.find();
-  // Fetch the first option value from each attribute's options list
-  final firstOptionsIndexValue = productController
-      .dataList[productIndex].attributes
-      .map((attribute) =>
-          attribute.options.isNotEmpty ? attribute.options.first : null)
-      .where((option) =>
-          option !=
-          null) // Filter out null values, in case some options lists are empty
-      .toList();
 
-  // Fetch the second option value from each attribute's options list, if available
-  final secondOptionsIndexValue = productController
-      .dataList[productIndex].attributes
-      .map((attribute) => attribute.options.length > 1
-          ? attribute.options[1]
-          : null) // Access second item if it exists
-      .where((option) =>
-          option !=
-          null) // Filter out null values, in case some lists are too short
-      .toList();
-  //print(secondOptionsIndexValue);
   // Check if variation list is not empty
-  if (secondOptionsIndexValue.isEmpty) {
-    // print(firstOptionsIndexValue);
-    // print(secondOptionsIndexValue);
-
+  if (singleOrMultipleController.firstIndexOptionsValue.isEmpty) {
     // If there are no variations, proceed with adding the product to the cart
     final product = productController.dataList[productIndex];
-    selcectController.selectedOptions.value = firstOptionsIndexValue
+    selcectController.selectedOptions.value = singleOrMultipleController
+        .zeroIndexOptionsValue
         .map((value) =>
             int.tryParse(value ?? '0') ??
             0) // Convert each item to an int, defaulting to 0 if parsing fails

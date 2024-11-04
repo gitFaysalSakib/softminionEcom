@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:softminion/Core/utils/binding/all_binding_controller.dart';
 import 'package:softminion/Core/utils/sizer.dart';
+import 'package:softminion/Ssystem_Architecture/View/All%20Product%20View%20Page/product_display.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/category_bottom_page/category_bottom_screen_new.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/connect_all_bottom_page/all_bottom_screen_add.dart';
 import 'package:softminion/Ssystem_Architecture/View/all_bottom_page/favorites_bottom_page/favorites_bottom_screen.dart';
@@ -50,6 +51,16 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/app_home_page',
           page: () => HomeBottomScreenTWO(),
+        ),
+
+        GetPage(
+          name: '/product_display',
+          page: () => ProductDisplay(),
+        ),
+
+        GetPage(
+          name: '/category_page',
+          page: () => CategoriesBottomScreen(),
         ),
         GetPage(
           name: '/category_page',

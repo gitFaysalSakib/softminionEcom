@@ -62,6 +62,8 @@ class FeaturedCategoriesProductItemShow extends StatelessWidget {
                     onItemTap: (homeProductModel) {
                       final id = homeProductModel
                           .id.value; // Assuming this is an Rx type
+                      print("000000000000000000000000");
+                      print(id);
                       Get.toNamed('/product_details', arguments: {
                         'productId': id,
                         'isSingleProductView': true,
